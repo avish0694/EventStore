@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.IO;
 using EventStore.Common.Utils;
-
+using NLog;
+using NLog.Common;
 namespace EventStore.Common.Log
 {
     public static class LogManager
@@ -68,6 +69,7 @@ namespace EventStore.Common.Log
             if(!String.IsNullOrEmpty(configFilePath))
             {
                 NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(configFilePath);
+                    InternalLogger.LogToConsole = true; 
             }
             else
             {
