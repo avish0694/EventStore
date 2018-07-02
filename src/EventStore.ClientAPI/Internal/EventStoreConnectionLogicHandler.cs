@@ -588,12 +588,12 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@_esConnection.ConnectionName}': {@parameters.Length == 0 ? message : string.Format(message}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
 
         private void LogInfo(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{0}': {1}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{@_esConnection.ConnectionName}': {@parameters.Length == 0 ? message : string.Format(message}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
 
         private void RaiseConnectedEvent(IPEndPoint remoteEndPoint)

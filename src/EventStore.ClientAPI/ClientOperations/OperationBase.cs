@@ -123,7 +123,7 @@ namespace EventStore.ClientAPI.ClientOperations
                                                 masterInfo.ExternalTcpEndPoint, masterInfo.ExternalSecureTcpEndPoint);
 
                 default:
-                    Log.Error("Unknown NotHandledReason: {0}.", message.Reason);
+                    Log.Error("Unknown NotHandledReason: {@message.Reason}.", message.Reason);
                     return new InspectionResult(InspectionDecision.Retry, "NotHandled - <unknown>");
             }
         }
@@ -134,8 +134,8 @@ namespace EventStore.ClientAPI.ClientOperations
                 throw new ArgumentException(string.Format("Command should not be {0}.", package.Command));
 
             Log.Error("Unexpected TcpCommand received.");
-            Log.Error("Expected: {0}, Actual: {1}, Flags: {2}, CorrelationId: {3}", expectedCommand, package.Command, package.Flags, package.CorrelationId);
-            Log.Error("Operation ({0}): {1}", GetType().Name, this);
+            Log.Error("Expected: {@Actual: {@Flags: {@expectedCommand}}}, Actual: {@Flags: {@expectedCommand}}, Flags: {@expectedCommand}, CorrelationId: {@package.Command}", expectedCommand, package.Command, package.Flags, package.CorrelationId);
+            Log.Error("Operation ({@GetType(.Name}): {@this}", GetType().Name, this);
             Log.Error("TcpPackage Data Dump:");
             Log.Error(Helper.FormatBinaryDump(package.Data));
 

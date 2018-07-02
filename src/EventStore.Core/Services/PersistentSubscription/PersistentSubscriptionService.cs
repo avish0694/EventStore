@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             _state = message.State;
 
             if (message.State == VNodeState.Master) return;
-            Log.Debug(string.Format("Subscriptions received state change to {0} stopping listening.", _state));
+            Log.Debug(string.Format("Subscriptions received state change to {@_state} stopping listening.", _state));
             ShutdownSubscriptions();
             Stop();
         }
@@ -187,7 +187,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                                     message.NamedConsumerStrategy,
                                     ToTimeout(message.MessageTimeoutMilliseconds)
                                     );
-            Log.Debug("New persistent subscription {0}.", message.GroupName);
+            Log.Debug("New persistent subscription {@message.GroupName}.", message.GroupName);
             _config.Updated = DateTime.Now;
             _config.UpdatedBy = message.User.Identity.Name;
             _config.Entries.Add(new PersistentSubscriptionEntry
@@ -450,7 +450,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 message.Envelope.ReplyWith(new ClientMessage.SubscriptionDropped(message.CorrelationId, SubscriptionDropReason.SubscriberMaxCountReached));
                 return;
             }
-            Log.Debug("New connection to persistent subscription {0}.", message.SubscriptionId);
+            Log.Debug("New connection to persistent subscription {@message.SubscriptionId}.", message.SubscriptionId);
             var lastEventNumber = _readIndex.GetStreamLastEventNumber(message.EventStreamId);
             var lastCommitPos = _readIndex.LastCommitPosition;
             var subscribedMessage = new ClientMessage.PersistentSubscriptionConfirmation(key, message.CorrelationId, lastCommitPos, lastEventNumber);
@@ -503,7 +503,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {0}", eventRecord.ToString());
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@Log.ErrorException(exc}", eventRecord.ToString());
                 }
 
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);
@@ -651,7 +651,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         {
                             if (!_consumerStrategyRegistry.ValidateStrategy(entry.NamedConsumerStrategy))
                             {
-                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{0}'. Ignoring it.", entry.NamedConsumerStrategy);
+                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{@entry.NamedConsumerStrategy}'. Ignoring it.", entry.NamedConsumerStrategy);
                                 continue;
                             }
 

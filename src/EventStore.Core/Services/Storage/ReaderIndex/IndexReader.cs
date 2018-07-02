@@ -457,7 +457,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
                 Interlocked.Increment(ref _hashCollisions);
                 if(count > _hashCollisionReadLimit)
                 {
-                    Log.Error("A hash collision resulted in not finding the last event number for the stream {0}.", streamId);
+                    Log.Error("A hash collision resulted in not finding the last event number for the stream {@streamId}.", streamId);
                     return EventNumber.Invalid;
                 }
             }

@@ -439,7 +439,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             }
             else
             {
-                Log.Trace("Using unbuffered access for TFChunk '{0}'...", _filename);
+                Log.Trace("Using unbuffered access for TFChunk '{@_filename}'...", _filename);
                 return UnbufferedFileStream.Create(
                                     _filename,
                                     FileMode.Open,
@@ -514,7 +514,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             if (!IsReadOnly)
                 throw new InvalidOperationException("You can't verify hash of not-completed TFChunk.");
 
-            Log.Trace("Verifying hash for TFChunk '{0}'...", _filename);
+            Log.Trace("Verifying hash for TFChunk '{@_filename}'...", _filename);
             using (var reader = AcquireReader())
             {
                 reader.Stream.Seek(0, SeekOrigin.Begin);
@@ -605,13 +605,13 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             }
             catch (OutOfMemoryException)
             {
-                Log.Error("CACHING FAILED due to OutOfMemory exception in TFChunk {0}.", this);
+                Log.Error("CACHING FAILED due to OutOfMemory exception in TFChunk {@this}.", this);
                 _isCached = 0;
                 return;
             }
             catch (FileBeingDeletedException)
             {
-                Log.Debug("CACHING FAILED due to FileBeingDeleted exception (TFChunk is being disposed) in TFChunk {0}.", this);
+                Log.Debug("CACHING FAILED due to FileBeingDeleted exception (TFChunk is being disposed) in TFChunk {@this}.", this);
                 _isCached = 0;
                 return;
             }
@@ -621,7 +621,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             {
                 if (Interlocked.Add(ref _memStreamCount, -_maxReaderCount) == 0)
                     FreeCachedData();
-                Log.Trace("CACHING ABORTED for TFChunk {0} as TFChunk was probably marked for deletion.", this);
+                Log.Trace("CACHING ABORTED for TFChunk {@this} as TFChunk was probably marked for deletion.", this);
                 return;
             }
 
@@ -642,7 +642,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
             _readSide.Uncache();
 
-            Log.Trace("CACHED TFChunk {0} in {1}.", this, sw.Elapsed);
+            Log.Trace("CACHED TFChunk {@this} in {@sw.Elapsed}.", this, sw.Elapsed);
 
             if (_selfdestructin54321)
                 TryDestructMemStreams();
@@ -709,7 +709,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
                 TryDestructMemStreams();
 
-                Log.Trace("UNCACHED TFChunk {0}.", this);
+                Log.Trace("UNCACHED TFChunk {@this}.", this);
             }
         }
 
@@ -1004,7 +1004,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
                 if (_deleteFile)
                 {
-                    Log.Info("File {0} has been marked for delete and will be deleted in TryDestructFileStreams.", Path.GetFileName(_filename));
+                    Log.Info("File {@Path.GetFileName(_filename} has been marked for delete and will be deleted in TryDestructFileStreams.", Path.GetFileName(_filename));
                     Helper.EatException(() => File.Delete(_filename));
                 }
             }

@@ -211,7 +211,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@_connectionName}': {@parameters.Length == 0 ? message : string.Format(message}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
     }
 }

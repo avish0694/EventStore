@@ -44,7 +44,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception e)
             {
-                Log.ErrorException(e, "'{0}' is not a valid serialized {1}", text, typeof(T).FullName);
+                Log.ErrorException(e, "'{@Log.ErrorException(e}' is not a valid serialized {@text}", text, typeof(T).FullName);
                 return default(T);
             }
         }
@@ -80,7 +80,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error serializing object of type {0}", value.GetType().FullName);
+                Log.ErrorException(exc, "Error serializing object of type {@Log.ErrorException(exc}", value.GetType().FullName);
                 return null;
             }
         }

@@ -24,7 +24,7 @@ namespace EventStore.Transport.Http
                 {
                     //Exceptions may be thrown when client shutdowned and we were unable to write all the data,
                     //Nothing we can do, ignore (another option - globally ignore write errors)
-                    Log.Info("Error while closing stream : {0}", e.Message);
+                    Log.Info("Error while closing stream : {@e.Message}", e.Message);
                 }
             }
         }

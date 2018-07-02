@@ -73,7 +73,7 @@ namespace EventStore.Projections.Core.v8
                         DoEmit(commandBody);
                         break;
                     default:
-                        Log.Debug("Ignoring unknown reverse command: '{0}'", commandName);
+                        Log.Debug("Ignoring unknown reverse command: '{@commandName}'", commandName);
                         break;
                 }
             }

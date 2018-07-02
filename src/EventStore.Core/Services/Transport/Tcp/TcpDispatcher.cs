@@ -72,7 +72,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error while wrapping message {0}.", message);
+                Log.ErrorException(exc, "Error while wrapping message {@Log.ErrorException(exc}.", message);
             }
             return null;
         }
@@ -95,7 +95,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while unwrapping TcpPackage with command {0}.", package.Command);
+                    Log.ErrorException(exc, "Error while unwrapping TcpPackage with command {@Log.ErrorException(exc}.", package.Command);
                 }
             }
             return null;

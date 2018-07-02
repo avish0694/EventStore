@@ -26,7 +26,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.Debug("Deserialization to {0} failed : {1}", typeof(T).FullName, e);
+                Log.Debug("Deserialization to {@typeof(T.FullName} failed : {@e}", typeof(T).FullName, e);
                 return default(T);
             }
         }

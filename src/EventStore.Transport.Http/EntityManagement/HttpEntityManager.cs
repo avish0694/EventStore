@@ -104,7 +104,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (ArgumentException e)
             {
-                Log.ErrorException(e, "Description string '{0}' did not pass validation. Status description was not set.", desc);
+                Log.ErrorException(e, "Description string '{@Log.ErrorException(e}' did not pass validation. Status description was not set.", desc);
             }
         }
 
@@ -120,7 +120,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content type on HTTP response: {0}.", e.Message);
+                Log.Debug("Error during setting content type on HTTP response: {@e.Message}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -140,11 +140,11 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content length on HTTP response: {0}.", e.Message);
+                Log.Debug("Error during setting content length on HTTP response: {@e.Message}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
-                Log.ErrorException(e, "Attempt to set invalid value '{0}' as content length.", length);
+                Log.ErrorException(e, "Attempt to set invalid value '{@Log.ErrorException(e}' as content length.", length);
             }
         }
 
@@ -165,7 +165,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set required response headers: {0}.", e.Message);
+                Log.Debug("Failed to set required response headers: {@e.Message}.", e.Message);
             }
         }
 
@@ -177,7 +177,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set Content-Encoding header: {0}.", e.Message);
+                Log.Debug("Failed to set Content-Encoding header: {@e.Message}.", e.Message);
             }
         }
 
@@ -196,7 +196,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set additional response headers: {0}.", e.Message);
+                Log.Debug("Failed to set additional response headers: {@e.Message}.", e.Message);
             }
         }
 
@@ -348,7 +348,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.ErrorException(e, "Failed to set up forwarded response parameters for '{0}'.", RequestedUrl);
+                Log.ErrorException(e, "Failed to set up forwarded response parameters for '{@Log.ErrorException(e}'.", RequestedUrl);
             }
         }
 
@@ -387,7 +387,7 @@ namespace EventStore.Transport.Http.EntityManagement
             if (copier.Error != null)
             {
                 state.Dispose();
-                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {0}", exc.Message));
+                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@exc.Message}", exc.Message));
 
                 state.OnError(copier.Error);
                 return;

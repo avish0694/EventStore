@@ -33,7 +33,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception exc)
             {
-                Log.Debug("Getting disk IO error: {0}.", exc.Message);
+                Log.Debug("Getting disk IO error: {@exc.Message}.", exc.Message);
                 return null;
             }
         }
