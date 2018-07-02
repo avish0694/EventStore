@@ -78,7 +78,7 @@ namespace EventStore.Core.Cluster.Settings
         public readonly bool SkipIndexScanOnReads;
 
         public readonly bool GossipOnSingleNode;
-
+        public readonly bool StructuredLog;
         public ClusterVNodeSettings(Guid instanceId, int debugIndex,
                                     IPEndPoint internalTcpEndPoint,
                                     IPEndPoint internalSecureTcpEndPoint,
@@ -140,7 +140,8 @@ namespace EventStore.Core.Cluster.Settings
                                     int readerThreadsCount = 4,
                                     bool alwaysKeepScavenged = false,
                                     bool gossipOnSingleNode = false,
-                                    bool skipIndexScanOnReads = false)
+                                    bool skipIndexScanOnReads = false,
+                                    bool structuredLog = false)
         {
             Ensure.NotEmptyGuid(instanceId, "instanceId");
             Ensure.NotNull(internalTcpEndPoint, "internalTcpEndPoint");

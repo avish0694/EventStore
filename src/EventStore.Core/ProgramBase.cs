@@ -23,6 +23,7 @@ namespace EventStore.Core
         private readonly ManualResetEventSlim _exitEvent = new ManualResetEventSlim(false);
 
         protected abstract string GetLogsDirectory(TOptions options);
+        protected abstract bool GetIsStructuredLog(TOptions options);
         protected abstract string GetComponentName(TOptions options);
 
         protected abstract void Create(TOptions options);
@@ -139,9 +140,11 @@ namespace EventStore.Core
             var componentName = GetComponentName(options);
 
             Console.Title = string.Format("{0}, {1}", projName, componentName);
-
+        
             string logsDirectory = Path.GetFullPath(options.Log.IsNotEmptyString() ? options.Log : GetLogsDirectory(options));
-            LogManager.Init(componentName, logsDirectory, Locations.DefaultConfigurationDirectory);
+            bool structuredLog = GetIsStructuredLog(options);
+            
+            LogManager.Init(componentName, logsDirectory, structuredLog, Locations.DefaultConfigurationDirectory);
 
             Log.Info("\n{0,-25} {1} ({2}/{3}, {4})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
             Log.Info("{0,-25} {1} ({2})", "OS:", OS.OsFlavor, Environment.OSVersion);

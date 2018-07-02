@@ -36,6 +36,8 @@ namespace EventStore.Core.Util
         public const bool DisableHttpCachingDefault = false;
 
         public const string LogsDescr = "Path where to keep log files.";
+        public const string StructuredLogDescr = "Enable structured logging(Default: False).";
+        public const bool StructuredLog = false;
 
         public const string ConfigsDescr = "Configuration files.";
         public static readonly string[] ConfigsDefault = new string[0];
@@ -165,6 +167,9 @@ namespace EventStore.Core.Util
 
         public const string SkipIndexScanOnReadsDescr = "Skip Index Scan on Reads. This skips the index scan which was used to stop reading duplicates.";
         public static readonly bool SkipIndexScanOnReadsDefault = false;
+
+        public const string ReduceFileCachePressureDescr = "Change the way the DB files are opened to reduce their stickiness in the system file cache.";
+        public static readonly bool ReduceFileCachePressureDefault = false;
 
         //Loading certificates from files
         public const string CertificateFileDescr = "The path to certificate file.";

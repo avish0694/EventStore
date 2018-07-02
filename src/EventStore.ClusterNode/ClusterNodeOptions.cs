@@ -232,6 +232,9 @@ namespace EventStore.ClusterNode
         [ArgDescription(Opts.SkipIndexScanOnReadsDescr, Opts.AppGroup)]
         public bool SkipIndexScanOnReads { get; set; }
 
+        [ArgDescription(Opts.StructuredLogDescr, Opts.DbGroup)]
+        public bool StructuredLog { get; set; }
+
         public ClusterNodeOptions()
         {
             Config = "";

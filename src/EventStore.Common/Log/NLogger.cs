@@ -20,6 +20,12 @@ namespace EventStore.Common.Log
         {
             return Runtime.IsMono;
         }
+
+        [ConditionMethod("is-structured")]
+        public static bool IsStructured()
+        {
+            return LogManager._isStructured;
+        }
     }
 
     public class NLogger : ILogger
@@ -64,6 +70,7 @@ namespace EventStore.Common.Log
         public void Trace(string format, params object[] args)
         {
             _logger.Trace(format, args);
+            
         }
 
         public void FatalException(Exception exc, string format, params object[] args)
@@ -72,23 +79,23 @@ namespace EventStore.Common.Log
         }
 
         public void ErrorException(Exception exc, string format, params object[] args)
-        {
-            _logger.Error(format, args, exc);
+        {   
+            _logger.Error(format,args,exc);
         }
 
         public void InfoException(Exception exc, string format, params object[] args)
         {
-            _logger.Info(format, args, exc);
+            _logger.Info(format,args,exc);
         }
 
         public void DebugException(Exception exc, string format, params object[] args)
         {
-            _logger.Debug(format, args, exc);
+           _logger.Debug(format, args,exc);
         }
 
         public void TraceException(Exception exc, string format, params object[] args)
         {
-            _logger.Trace(format, args , exc);
+            _logger.Trace(format,args,exc);
         }
 
         public static void FlushLog(TimeSpan? maxTimeToWait = null)

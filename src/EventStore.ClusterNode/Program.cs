@@ -281,6 +281,8 @@ namespace EventStore.ClusterNode
                 builder.EnableWriteThrough();
             if (options.SkipIndexScanOnReads)
                 builder.SkipIndexScanOnReads();
+            if (options.StructuredLog)
+                builder.StructuredLog(options.StructuredLog);
 
             if (options.IntSecureTcpPort > 0 || options.ExtSecureTcpPort > 0)
             {
@@ -404,6 +406,11 @@ namespace EventStore.ClusterNode
 
             if (_dbLock != null && _dbLock.IsAcquired)
                 _dbLock.Release();
+        }
+
+        protected override bool GetIsStructuredLog(ClusterNodeOptions options)
+        {
+            return options.StructuredLog;
         }
     }
 }
