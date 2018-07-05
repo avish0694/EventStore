@@ -1,4 +1,4 @@
-﻿using EventStore.Common.Log;
+using EventStore.Common.Log;
 using EventStore.Common.Utils;
 using EventStore.Core.Data;
 using EventStore.Core.Helpers;
@@ -93,7 +93,7 @@ namespace EventStore.Projections.Core.Services.Processing
                 }
                 else
                 {
-                    Log.Error("PROJECTIONS: Failed to write a tracked stream id of {0} to the {1} stream. Retry limit of {2} reached. Reason: {3}", streamId, _projectionNamesBuilder.GetEmittedStreamsName(), MaxRetryCount, completed.Result);
+                    Log.Error("PROJECTIONS: Failed to write a tracked stream id of {@streamId} to the {@fixthisvar} stream. Retry limit of {@maxRetryCount} reached. Reason: {@result}", streamId, _projectionNamesBuilder.GetEmittedStreamsName(), MaxRetryCount, completed.Result); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
                 }
             }
         }

@@ -82,7 +82,7 @@ namespace EventStore.Core.Services.Gossip
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while retrieving cluster members through DNS.");
+                Log.ErrorException(ex, "Error while retrieving cluster members through DNS."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 _bus.Publish(TimerMessage.Schedule.Create(DnsRetryTimeout, _publishEnvelope, new GossipMessage.RetrieveGossipSeedSources()));
             }
         }
@@ -96,7 +96,7 @@ namespace EventStore.Core.Services.Gossip
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while retrieving cluster members through DNS.");
+                Log.ErrorException(ex, "Error while retrieving cluster members through DNS."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 _bus.Publish(TimerMessage.Schedule.Create(DnsRetryTimeout, _publishEnvelope, new GossipMessage.RetrieveGossipSeedSources()));
             }
         }
@@ -183,11 +183,11 @@ namespace EventStore.Core.Services.Gossip
 
             if (CurrentMaster != null && node.InstanceId == CurrentMaster.InstanceId)
             {
-                Log.Trace("Looks like master [{0}, {1:B}] is DEAD (Gossip send failed), though we wait for TCP to decide.",
-                          message.Recipient, node.InstanceId);
+                Log.Trace("Looks like master [{@recipient}, {1:B}] is DEAD (Gossip send failed), though we wait for TCP to decide.",
+                          message.Recipient, node.InstanceId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1:B}*/
                 return;
             }
-            Log.Trace("Looks like node [{0}] is DEAD (Gossip send failed).", message.Recipient);
+            Log.Trace("Looks like node [{@recipient}] is DEAD (Gossip send failed).", message.Recipient);
 
             var oldCluster = _cluster;
             _cluster = UpdateCluster(_cluster, x => x.Is(message.Recipient) ? x.Updated(isAlive: false) : x);
@@ -202,7 +202,7 @@ namespace EventStore.Core.Services.Gossip
             if (node == null || !node.IsAlive)
                 return;
 
-            Log.Trace("Looks like node [{0}] is DEAD (TCP connection lost).", message.VNodeEndPoint);
+            Log.Trace("Looks like node [{@vNodeEndPoint}] is DEAD (TCP connection lost).", message.VNodeEndPoint);
 
             var oldCluster = _cluster;
             _cluster = UpdateCluster(_cluster, x => x.Is(message.VNodeEndPoint) ? x.Updated(isAlive: false) : x);
@@ -232,9 +232,9 @@ namespace EventStore.Core.Services.Gossip
                 {
                     if ((DateTime.UtcNow - member.TimeStamp).Duration() > AllowedTimeDifference)
                     {
-                        Log.Error("Time difference between us and [{0}] is too great! "
+                        Log.Error("Time difference between us and [{@fixthisvar}] is too great! "
                                   + "UTC now: {1:yyyy-MM-dd HH:mm:ss.fff}, peer's time stamp: {2:yyyy-MM-dd HH:mm:ss.fff}.",
-                                  peerEndPoint, DateTime.UtcNow, member.TimeStamp);
+                                  peerEndPoint, DateTime.UtcNow, member.TimeStamp); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                     }
                     mems[member.InternalHttpEndPoint] = member;
                 }
@@ -277,19 +277,19 @@ namespace EventStore.Core.Services.Gossip
 
         private static void LogClusterChange(ClusterInfo oldCluster, ClusterInfo newCluster, string source)
         {
-            Log.Trace("CLUSTER HAS CHANGED{0}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty);
-            Log.Trace("Old:");
+            Log.Trace("CLUSTER HAS CHANGED{@fixthisvar}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Trace("Old:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             var ipEndPointComparer = new IPEndPointComparer();
             foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {
-                Log.Trace(oldMember.ToString());
+                Log.Trace(oldMember.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             }
-            Log.Trace("New:");
+            Log.Trace("New:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             foreach (var newMember in newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {
-                Log.Trace(newMember.ToString());
+                Log.Trace(newMember.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             }
-            Log.Trace(new string('-', 80));
+            Log.Trace(new string('-', 80)); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
     }
 }

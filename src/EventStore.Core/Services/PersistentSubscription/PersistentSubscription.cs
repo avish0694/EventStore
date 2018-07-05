@@ -86,9 +86,9 @@ namespace EventStore.Core.Services.PersistentSubscription
                 _state = PersistentSubscriptionState.Behind;
                 if (!checkpoint.HasValue)
                 {
-                    Log.Debug(string.Format("Subscription {0}: read no checksum.", _settings.SubscriptionId));
+                    Log.Debug(string.Format("Subscription {@fixthisvar}: read no checksum.", _settings.SubscriptionId)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
 
-                    Log.Debug("strtfrom = " + _settings.StartFrom);
+                    Log.Debug("strtfrom = " + _settings.StartFrom); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     _nextEventToPullFrom = _settings.StartFrom >= 0 ? _settings.StartFrom : 0;
                     _streamBuffer = new StreamBuffer(_settings.BufferSize, _settings.LiveBufferSize, -1,
                         _settings.StartFrom >= 0);
@@ -97,8 +97,8 @@ namespace EventStore.Core.Services.PersistentSubscription
                 else
                 {
                     _nextEventToPullFrom = checkpoint.Value + 1;
-                    Log.Debug(string.Format("Subscription {0}: read checksum {1}", _settings.SubscriptionId,
-                        checkpoint.Value));
+                    Log.Debug(string.Format("Subscription {@subscriptionId}: read checksum {@fixthisvar}", _settings.SubscriptionId,
+                        checkpoint.Value)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
                     _streamBuffer = new StreamBuffer(_settings.BufferSize, _settings.LiveBufferSize, -1, true);
                     TryReadingNewBatch();
                 }
@@ -341,7 +341,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             {
                 foreach (var id in processedEventIds)
                 {
-                    Log.Info("Message NAK'ed id {0} action to take {1} reason '{2}'", id, action, reason ?? "");
+                    Log.Info("Message NAK'ed id {@id} action to take {@action} reason '{@fixthisvar}'", id, action, reason ?? ""); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
                     HandleNackedMessage(action, id, reason);
                 }
                 RemoveProcessingMessages(correlationId, processedEventIds);
@@ -392,12 +392,12 @@ namespace EventStore.Core.Services.PersistentSubscription
                 {
                     if (count < 5)
                     {
-                        Log.Info("Unable to park message {0}/{1} operation failed {2} retrying.", e.OriginalStreamId,
+                        Log.Info("Unable to park message {@originalStreamId}/{@originalEventNumber} operation failed {@result} retrying.", e.OriginalStreamId,
                         e.OriginalEventNumber, result);
                         ParkMessage(e, reason, count + 1);
                         return;
                     }
-                    Log.Error("Unable to park message {0}/{1} operation failed {2} after retries. Possible message loss.", e.OriginalStreamId,
+                    Log.Error("Unable to park message {@originalStreamId}/{@originalEventNumber} operation failed {@result} after retries. Possible message loss.", e.OriginalStreamId,
                         e.OriginalEventNumber, result);
                 }
                 lock (_lock)
@@ -450,7 +450,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         break;
                     }
 
-                    Log.Debug("Retrying event {0} on subscription {1}", ev.OriginalEvent.EventId, _settings.SubscriptionId);
+                    Log.Debug("Retrying event {@eventId} on subscription {@subscriptionId}", ev.OriginalEvent.EventId, _settings.SubscriptionId);
                     _streamBuffer.AddRetry(new OutstandingMessage(ev.OriginalEvent.EventId, null, ev, 0));
                 }
 
@@ -475,7 +475,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
             if (result == StartMessageResult.SkippedDuplicate)
             {
-                Log.Warn("Skipping message {0}/{1} with duplicate eventId {2}",
+                Log.Warn("Skipping message {@originalStreamId}/{@originalEventNumber} with duplicate eventId {@eventId}",
                     message.ResolvedEvent.OriginalStreamId,
                     message.ResolvedEvent.OriginalEventNumber,
                     message.EventId);
@@ -531,7 +531,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         private void RetryMessage(ResolvedEvent @event, int count)
         {
-            Log.Debug("Retrying message {0} {1}/{2}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition);
+            Log.Debug("Retrying message {@subscriptionId} {@fixthisvar}/{@fixthisvar}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
             _outstandingMessages.Remove(@event.OriginalEvent.EventId);
             _pushClients.RemoveProcessingMessage(@event.OriginalEvent.EventId);
             _streamBuffer.AddRetry(new OutstandingMessage(@event.OriginalEvent.EventId, null, @event, count + 1));

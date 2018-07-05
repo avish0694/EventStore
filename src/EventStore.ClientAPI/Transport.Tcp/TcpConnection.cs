@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -81,7 +81,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
         private void InitSocket(Socket socket)
         {
             InitConnectionBase(socket);
-            //_log.Info("TcpConnection::InitSocket[{0}, L{1}]", RemoteEndPoint, LocalEndPoint);
+            //_log.Info("TcpConnection::InitSocket[{@remoteEndPoint}, L{@localEndPoint}]", RemoteEndPoint, LocalEndPoint);
             lock (_sendLock)
             {
                 _socket = socket;
@@ -301,11 +301,11 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             NotifyClosed();
 
-            _log.Info("ClientAPI {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
-            _log.Info("Received bytes: {0}, Sent bytes: {1}", TotalBytesReceived, TotalBytesSent);
-            _log.Info("Send calls: {0}, callbacks: {1}", SendCalls, SendCallbacks);
-            _log.Info("Receive calls: {0}, callbacks: {1}", ReceiveCalls, ReceiveCallbacks);
-            _log.Info("Close reason: [{0}] {1}", socketError, reason);
+            _log.Info("ClientAPI {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+            _log.Info("Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}", TotalBytesReceived, TotalBytesSent);
+            _log.Info("Send calls: {@sendCalls}, callbacks: {@sendCallbacks}", SendCalls, SendCallbacks);
+            _log.Info("Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}", ReceiveCalls, ReceiveCallbacks);
+            _log.Info("Close reason: [{@socketError}] {@reason}", socketError, reason);
 
             if (_socket != null)
             {

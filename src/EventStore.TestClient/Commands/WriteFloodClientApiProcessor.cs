@@ -102,10 +102,10 @@ namespace EventStore.TestClient.Commands
                             {
                                 var elapsed = sw2.Elapsed;
                                 sw2.Restart();
-                                context.Log.Trace("\nDONE TOTAL {0} WRITES IN {1} ({2:0.0}/s).",
+                                context.Log.Trace("\nDONE TOTAL {@localAll} WRITES IN {@elapsed} ({2:0.0}/s).",
                                                   localAll,
                                                   elapsed,
-                                                  1000.0*100000/elapsed.TotalMilliseconds);
+                                                  1000.0*100000/elapsed.TotalMilliseconds); /*TODO: structured-log @avish0694: the following parameters need attention: {2:0.0}*/
                             }
                             if (localAll == requestsCnt)
                             {
@@ -124,10 +124,10 @@ namespace EventStore.TestClient.Commands
             clients.ForEach(x => x.Close());
             sw.Stop();
 
-            context.Log.Info("Completed. Successes: {0}.", succ);
+            context.Log.Info("Completed. Successes: {@succ}.", succ);
 
             var reqPerSec = (succ + 0.0) / sw.ElapsedMilliseconds * 1000;
-            context.Log.Info("{0} requests completed in {1}ms ({2:0.00} reqs per sec).", succ, sw.ElapsedMilliseconds, reqPerSec);
+            context.Log.Info("{@succ} requests completed in {@elapsedMilliseconds}ms ({2:0.00} reqs per sec).", succ, sw.ElapsedMilliseconds, reqPerSec); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:0.00}*/
 
             var fail = requestsCnt - succ;
             PerfUtils.LogData(

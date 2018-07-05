@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using EventStore.Common.Log;
 using EventStore.Core.Data;
@@ -152,7 +152,7 @@ namespace EventStore.Core.Services.Transport.Http
             }
             catch (Exception e)
             {
-                Log.InfoException(e, "Failed to load xml. Invalid format");
+                Log.InfoException(e, "Failed to load xml. Invalid format"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 return null;
             }
         }

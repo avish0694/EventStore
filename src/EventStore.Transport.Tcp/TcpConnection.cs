@@ -206,7 +206,7 @@ namespace EventStore.Transport.Tcp
             {
                 if (_receiveCallback != null)
                 {
-                    Log.Fatal("ReceiveAsync called again while previous call was not fulfilled");
+                    Log.Fatal("ReceiveAsync called again while previous call was not fulfilled"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                     throw new InvalidOperationException("ReceiveAsync called again while previous call was not fulfilled");
                 }
                 _receiveCallback = callback;
@@ -333,18 +333,18 @@ namespace EventStore.Transport.Tcp
 
             if (_verbose)
             {
-                Log.Info("ES {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:Received bytes: {5}, Sent bytes: {6}",
+                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        TotalBytesReceived, TotalBytesSent);
-                Log.Info("ES {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:Send calls: {5}, callbacks: {6}",
+                        TotalBytesReceived, TotalBytesSent); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        SendCalls, SendCallbacks);
-                Log.Info("ES {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:Receive calls: {5}, callbacks: {6}",
+                        SendCalls, SendCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        ReceiveCalls, ReceiveCallbacks);
-                Log.Info("ES {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:Close reason: [{5}] {6}",
+                        ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Close reason: [{@socketError}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        socketError, reason);
+                        socketError, reason); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
             }
 
             if (_socket != null)

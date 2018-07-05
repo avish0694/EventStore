@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -83,7 +83,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (PackageFramingException exc)
             {
-                Log.InfoException(exc, "Invalid TCP frame received.");
+                Log.InfoException(exc, "Invalid TCP frame received."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 Close("Invalid TCP frame received.");
                 return;
             }

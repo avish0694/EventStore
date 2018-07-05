@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EventStore.Core.Bus;
 using EventStore.Core.Messages;
 using EventStore.Common.Log;
@@ -98,7 +98,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var message = new UserManagementMessage.Create(
                         envelope, http.User, data.LoginName, data.FullName, data.Groups, data.Password);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed."));
+                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
         }
 
         private void PutUser(HttpEntityManager http, UriTemplateMatch match)
@@ -113,7 +113,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var data = http.RequestCodec.From<PutUserData>(s);
                     var message = new UserManagementMessage.Update(envelope, http.User, login, data.FullName, data.Groups);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed."));
+                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
 
         private void DeleteUser(HttpEntityManager http, UriTemplateMatch match)
@@ -158,7 +158,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var data = http.RequestCodec.From<ResetPasswordData>(s);
                     var message = new UserManagementMessage.ResetPassword(envelope, http.User, login, data.NewPassword);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed."));
+                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
         }
 
         private void PostCommandChangePassword(HttpEntityManager http, UriTemplateMatch match)
@@ -176,7 +176,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Publish(message);
 
                     },
-                x => Log.DebugException(x, "Reply Text Content Failed."));
+                x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
         }
 
         private SendToHttpEnvelope<T> CreateReplyEnvelope<T>(

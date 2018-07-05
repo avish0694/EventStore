@@ -104,7 +104,7 @@ namespace EventStore.Core.Services.Storage
             {
                 _queueStats.EnterIdle();
                 _queueStats.ProcessingStarted<FaultedIndexCommitterServiceState>(0);
-                Log.FatalException(exc, "Error in IndexCommitterService. Terminating...");
+                Log.FatalException(exc, "Error in IndexCommitterService. Terminating..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 Application.Exit(ExitCode.Error, "Error in IndexCommitterService. Terminating...\nError: " + exc.Message);
                 while (!_stop)
                 {

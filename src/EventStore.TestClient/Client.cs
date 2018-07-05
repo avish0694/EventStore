@@ -115,7 +115,7 @@ namespace EventStore.TestClient
                         }
                         catch (Exception exc)
                         {
-                            Log.ErrorException(exc, "Error during executing command.");
+                            Log.ErrorException(exc, "Error during executing command."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                         }
                     }
                     finally
@@ -135,14 +135,14 @@ namespace EventStore.TestClient
 
         private int Execute(string[] args)
         {
-            Log.Info("Processing command: {0}.", string.Join(" ", args));
+            Log.Info("Processing command: {@fixthisvar}.", string.Join(" ", args)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
 
             var context = new CommandProcessorContext(this, Log, new ManualResetEventSlim(true));
 
             int exitCode;
             if (_commands.TryProcess(context, args, out exitCode))
             {
-                Log.Info("Command exited with code {0}.", exitCode);
+                Log.Info("Command exited with code {@exitCode}.", exitCode);
                 return exitCode;
             }
 
@@ -166,7 +166,7 @@ namespace EventStore.TestClient
                 ThreadPool.QueueUserWorkItem(_ => 
                 {
                     if (!InteractiveMode)
-                        Log.Info("TcpTypedConnection: connected to [{0}, L{1}, {2:B}].", conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId);
+                        Log.Info("TcpTypedConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {2:B}].", conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B}*/
                     if (connectionEstablished != null)
                     {
                         if (!connectionCreatedEvent.Wait(10000))
@@ -179,7 +179,7 @@ namespace EventStore.TestClient
             {
                 var message = string.Format("TcpTypedConnection: connection to [{0}, L{1}, {2:B}] failed. Error: {3}.",
                                             conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId, error);
-                Log.Error(message);
+                Log.Error(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
 
                 if (connectionClosed != null)
                     connectionClosed(null, error);
@@ -222,15 +222,15 @@ namespace EventStore.TestClient
                 {
                     if (!InteractiveMode || error != SocketError.Success)
                     {
-                        Log.Info("TcpTypedConnection: connection [{0}, L{1}] was closed {2}",
+                        Log.Info("TcpTypedConnection: connection [{@remoteEndPoint}, L{@localEndPoint}] was closed {@fixthisvar}",
                                  conn.RemoteEndPoint, conn.LocalEndPoint,
-                                 error == SocketError.Success ? "cleanly." : "with error: " + error + ".");
+                                 error == SocketError.Success ? "cleanly." : "with error: " + error + "."); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
                     }
 
                     if (connectionClosed != null)
                         connectionClosed(conn, error);
                     else
-                        Log.Info("connectionClosed callback was null");
+                        Log.Info("connectionClosed callback was null"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 };
             connectionCreatedEvent.Set();
 
@@ -256,9 +256,9 @@ namespace EventStore.TestClient
                     catch (Exception ex)
                     {
                         Log.InfoException(ex,
-                                          "TcpTypedConnection: [{0}, L{1}] ERROR for {2}. Connection will be closed.",
+                                          "TcpTypedConnection: [{@remoteEndPoint}, L{@localEndPoint}] ERROR for {@fixthisvar}. Connection will be closed.",
                                           conn.RemoteEndPoint, conn.LocalEndPoint,
-                                          validPackage ? package.Command as object : "<invalid package>");
+                                          validPackage ? package.Command as object : "<invalid package>"); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
                         conn.Close(ex.Message);
 
                         if (failContextOnError)

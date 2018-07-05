@@ -46,11 +46,11 @@ namespace EventStore.Projections.Core.Services.Management
         {
             if (_cancellationScope != null)
             {
-                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now");
+                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 _cancellationScope.Cancel();
             }
             _cancellationScope = new IODispatcherAsync.CancellationScope();
-            Log.Debug("PROJECTIONS: Starting Projection Manager Response Reader (reads from $projections-$master)");
+            Log.Debug("PROJECTIONS: Starting Projection Manager Response Reader (reads from $projections-$master)"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             _numberOfStartedWorkers = 0;
             PerformStartReader(message.EpochId).Run();
         }
@@ -102,7 +102,7 @@ namespace EventStore.Projections.Core.Services.Management
             if (writeResult.Result != OperationResult.Success)
                 throw new Exception("Cannot start response reader. Write result: " + writeResult.Result);
 
-            Log.Debug("PROJECTIONS: Finished Starting Projection Manager Response Reader (reads from $projections-$master)");
+            Log.Debug("PROJECTIONS: Finished Starting Projection Manager Response Reader (reads from $projections-$master)"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
 
             ReadForward();
         }
@@ -119,7 +119,7 @@ namespace EventStore.Projections.Core.Services.Management
                     SystemAccount.Principal,
                     ReadForwardCompleted,
                     () => {
-                        Log.Warn("Read forward of stream {0} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream);
+                        Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                         ReadForward();
                     },
                     _correlationId)
@@ -157,7 +157,7 @@ namespace EventStore.Projections.Core.Services.Management
             }
             else
             {
-                Log.Error("Failed reading stream {0}. Read result: {1}, Error: '{2}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
+                Log.Error("Failed reading stream {@fixthisvar}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 ReadForward();
             }
         }
@@ -165,7 +165,7 @@ namespace EventStore.Projections.Core.Services.Management
         public void Handle(ProjectionManagementMessage.Internal.ReadTimeout timeout)
         {
             if (timeout.CorrelationId != _correlationId) return;
-            Log.Debug("Read forward of stream {0} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream);
+            Log.Debug("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
             ReadForward();
         }
 
@@ -187,7 +187,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(x => x == command))
             {
-                Log.Debug("PROJECTIONS: Response received: {0}@{1}", resolvedEvent.OriginalEventNumber, command);
+                Log.Debug("PROJECTIONS: Response received: {@originalEventNumber}@{@command}", resolvedEvent.OriginalEventNumber, command);
             }
             switch (command)
             {

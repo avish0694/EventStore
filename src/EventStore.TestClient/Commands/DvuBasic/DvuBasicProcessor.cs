@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -51,7 +51,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
             if (args.Length != 0 && args.Length != 5)
             {
-                context.Log.Error("Invalid number of arguments. Should be 0 or 5");
+                context.Log.Error("Invalid number of arguments. Should be 0 or 5"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 return false;
             }
 
@@ -64,35 +64,35 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
                 if (!int.TryParse(args[0], out writersArg))
                 {
-                    context.Log.Error("Invalid argument value for <writers>");
+                    context.Log.Error("Invalid argument value for <writers>"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                     return false;
                 }
                 if (!int.TryParse(args[1], out readersArg))
                 {
-                    context.Log.Error("Invalid argument value for <readers>");
+                    context.Log.Error("Invalid argument value for <readers>"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     return false;
                 }
                 if (!int.TryParse(args[2], out eventsArg))
                 {
-                    context.Log.Error("Invalid argument value for <events>");
+                    context.Log.Error("Invalid argument value for <events>"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                     return false;
                 }
                 if (!int.TryParse(args[3], out streamsArg))
                 {
-                    context.Log.Error("Invalid argument value for <streams>");
+                    context.Log.Error("Invalid argument value for <streams>"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                     return false;
                 }
                 string[] producersArg = args[4].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => p.Trim().ToLower()).Distinct().ToArray();
                 if (producersArg.Length <= 0)
                 {
-                    context.Log.Error("Invalid argument value for <plugins>");
+                    context.Log.Error("Invalid argument value for <plugins>"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     return false;
                 }
                 if (producersArg.Any(p => !AvailableProducers.Contains(p)))
                 {
-                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{0}]",
-                                      string.Join(",", AvailableProducers));
+                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{@fixthisvar}]",
+                                      string.Join(",", AvailableProducers)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                     return false;
                 }
                 writers = writersArg;
@@ -167,7 +167,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 readNotification.Wait();
             }
 
-            context.Log.Info("dvub finished execution : ");
+            context.Log.Info("dvub finished execution : "); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
             var writersTable = new ConsoleTable("WRITER ID", "Status");
             
@@ -182,8 +182,8 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 readersTable.AppendRow(rs.ThreadId.ToString(), rs.Success ? "Success" : "Fail");
             }
 
-            context.Log.Info(writersTable.CreateIndentedTable());
-            context.Log.Info(readersTable.CreateIndentedTable());
+            context.Log.Info(writersTable.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            context.Log.Info(readersTable.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
 
             var success = writeStatuses.All(s => s.Success) && readStatuses.All(s => s.Success);
             if (success)

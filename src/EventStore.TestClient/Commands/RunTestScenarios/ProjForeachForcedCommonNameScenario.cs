@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -49,8 +49,8 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)(DateTime.Now - started).TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info(msg);
-                Log.Info("##teamcity[message '{0}']", msg);
+                Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Info("##teamcity[message '{@msg}']", msg);
 
                 
                 InnerRun();
@@ -159,7 +159,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 var position = GetProjectionPosition(projectionName);
                 if (position == expectedAllEventsCount)
                 {
-                    Log.Debug("Expected position reached in {0}, done.", projectionName);
+                    Log.Debug("Expected position reached in {@projectionName}, done.", projectionName);
                     completed = true;
                 }
             }
@@ -176,7 +176,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             var w3 = Write(WriteMode.Transactional, slices[2], EventsPerStream, CreateBankEvent);
 
             var task = Task.Factory.ContinueWhenAll(new[] { w1, w2, w3 }, Task.WaitAll);
-            return task.ContinueWith(x => Log.Info("Data written for iteration {0}.", GetIterationCode()));
+            return task.ContinueWith(x => Log.Info("Data written for iteration {@fixthisvar}.", GetIterationCode())); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
         }
 
         protected string CreateSumCheckForBankAccounts(string projectionName, string suffix = "")

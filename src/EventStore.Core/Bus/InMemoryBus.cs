@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -109,7 +109,7 @@ namespace EventStore.Core.Bus
 
                         var elapsed = DateTime.UtcNow - start;
                         if (elapsed > _slowMsgThreshold)
-                            Log.Trace("SLOW BUS MSG [{0}]: {1} - {2}ms. Handler: {3}.", Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName);
+                            Log.Trace("SLOW BUS MSG [{@name}]: {@fixthisvar} - {@fixthisvar}ms. Handler: {@handlerName}.", Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
                     }
                     else
                     {
@@ -226,8 +226,8 @@ namespace EventStore.Core.Bus
                     var elapsed = DateTime.UtcNow - start;
                     if (elapsed > _slowMsgThreshold)
                     {
-                        Log.Trace("SLOW BUS MSG [{0}]: {1} - {2}ms. Handler: {3}.",
-                                  Name, message.GetType().Name, (int) elapsed.TotalMilliseconds, handler.HandlerName);
+                        Log.Trace("SLOW BUS MSG [{@name}]: {@fixthisvar} - {@fixthisvar}ms. Handler: {@handlerName}.",
+                                  Name, message.GetType().Name, (int) elapsed.TotalMilliseconds, handler.HandlerName); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
                     }
                 }
                 else
@@ -324,11 +324,11 @@ namespace EventStore.Core.Bus
                     var elapsed = DateTime.UtcNow - start;
                     if (elapsed > _slowMsgThreshold)
                     {
-                        Log.Trace("SLOW BUS MSG [{0}]: {1} - {2}ms. Handler: {3}.",
-                                  Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName);
+                        Log.Trace("SLOW BUS MSG [{@name}]: {@fixthisvar} - {@fixthisvar}ms. Handler: {@handlerName}.",
+                                  Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{2}*/
                         if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(message is SystemMessage.SystemInit))
-                            Log.Error("---!!! VERY SLOW BUS MSG [{0}]: {1} - {2}ms. Handler: {3}.",
-                                      Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName);
+                            Log.Error("---!!! VERY SLOW BUS MSG [{@name}]: {@fixthisvar} - {@fixthisvar}ms. Handler: {@handlerName}.",
+                                      Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
                     }
                 }
                 else

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Text;
 using EventStore.Common.Log;
@@ -105,13 +105,13 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
         private static void LogExpected(object generated, object actual, string reason)
         {
-            Log.Info("Expected: {0}\n" +
+            Log.Info("Expected: {@fixthisvar}\n" +
                      "  Actual: {1}\n" +
                      " Details: {2}",
                      generated.ToString(),
                      (actual == null ? "<null>" : actual.ToString()),
                      reason
-                );
+                ); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
         }
       
     }

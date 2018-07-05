@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
@@ -137,15 +137,15 @@ namespace EventStore.Core.Bus
                                     var elapsed = DateTime.UtcNow - start;
                                     if (elapsed > _slowMsgThreshold)
                                     {
-                                        Log.Trace("SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
+                                        Log.Trace("SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@estimatedQueueCount}/{@fixthisvar}.",
                                             Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
                                             estimatedQueueCount,
-                                            _queue.EstimageCurrentQueueCount());
+                                            _queue.EstimageCurrentQueueCount()); /*TODO: structured-log @shaan1337: the following parameters need attention: {2},{4}*/
                                         if (elapsed > QueuedHandler.VerySlowMsgThreshold &&
                                             !(msg is SystemMessage.SystemInit))
-                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
+                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@estimatedQueueCount}/{@fixthisvar}.",
                                                 Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
-                                                estimatedQueueCount, _queue.EstimageCurrentQueueCount());
+                                                estimatedQueueCount, _queue.EstimageCurrentQueueCount()); /*TODO: structured-log @avish0694: the following parameters need attention: {2},{4}*/
                                     }
                                 }
                                 else
@@ -155,7 +155,7 @@ namespace EventStore.Core.Bus
                             }
                             catch (Exception ex)
                             {
-                                Log.ErrorException(ex, "Error while processing message {0} in queued handler '{1}'.", msg, Name);
+                                Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@name}'.", msg, Name);
                             }
 
                             estimatedQueueCount -= 1;
@@ -165,7 +165,7 @@ namespace EventStore.Core.Bus
                 }
                 catch (Exception ex)
                 {
-                    Log.ErrorException(ex, "Error while processing message {0} in queued handler '{1}'.", msg, Name);
+                    Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@name}'.", msg, Name);
                 }
             }
             _queueStats.Stop();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -91,13 +91,13 @@ namespace EventStore.TestClient.Commands
                 step++;
             }
 
-            Log.Info("Sent {0} packages. {1} invalid dtos, {2} bar formatted packages. Got {3} BadRequests. Success",
+            Log.Info("Sent {@fixthisvar} packages. {@commandsToCkeck} invalid dtos, {@fixthisvar} bar formatted packages. Got {@fixthisvar} BadRequests. Success",
                      packages.Count(),
                      commandsToCkeck.Length,
                      packages.Count() - commandsToCkeck.Length,
-                     packages.Count());
+                     packages.Count()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{2},{3}*/
 
-            Log.Info("Now sending raw bytes...");
+            Log.Info("Now sending raw bytes..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             try
             {
                 SendRaw(context.Client.TcpEndpoint, BitConverter.GetBytes(int.MaxValue));

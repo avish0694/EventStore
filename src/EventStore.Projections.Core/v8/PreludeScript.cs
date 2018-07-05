@@ -78,7 +78,7 @@ namespace EventStore.Projections.Core.v8
             }
             catch (DllNotFoundException ex)
             {
-                Log.Info("{0}\n{1}\n{2}",ex.ToString(), ex.Message, ex.StackTrace);
+                Log.Info("{@fixthisvar}\n{@message}\n{@stackTrace}",ex.ToString(), ex.Message, ex.StackTrace); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 throw new ApplicationException(
                     "The projection subsystem failed to load a libjs1.so/js1.dll/... or one of its dependencies.  The original error message is: "
                     + ex.Message, ex);
@@ -90,7 +90,7 @@ namespace EventStore.Projections.Core.v8
             if (_logger != null)
                 _logger(message, new object[] {});
             else
-                Log.Debug(message);
+                Log.Debug(message); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         private IntPtr GetModule(IntPtr prelude, string moduleName)
@@ -110,7 +110,7 @@ namespace EventStore.Projections.Core.v8
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Cannot load module '{0}'", moduleName);
+                Log.ErrorException(ex, "Cannot load module '{@moduleName}'", moduleName);
                 //TODO: this is not a good way to report missing module and other exceptions back to caller
                 return IntPtr.Zero;
             }

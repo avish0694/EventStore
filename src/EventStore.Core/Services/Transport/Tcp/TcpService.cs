@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
@@ -118,8 +118,8 @@ namespace EventStore.Core.Services.Transport.Tcp
             var conn = _securityType == TcpSecurityType.Secure
                 ? TcpConnectionSsl.CreateServerFromSocket(Guid.NewGuid(), endPoint, socket, _certificate, verbose: true)
                 : TcpConnection.CreateAcceptedTcpConnection(Guid.NewGuid(), endPoint, socket, verbose: true);
-            Log.Info("{0} TCP connection accepted: [{1}, {2}, L{3}, {4:B}].",
-                     _serviceType, _securityType, conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId);
+            Log.Info("{@serviceType} TCP connection accepted: [{@securityType}, {@remoteEndPoint}, L{@localEndPoint}, {4:B}].",
+                     _serviceType, _securityType, conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId); /*TODO: structured-log @shaan1337: the following parameters need attention: {4:B}*/
 
             var dispatcher = _dispatcherFactory(conn.ConnectionId, _serverEndPoint);
             var manager = new TcpConnectionManager(

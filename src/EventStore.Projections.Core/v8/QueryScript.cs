@@ -73,7 +73,7 @@ namespace EventStore.Projections.Core.v8
                         DoEmit(commandBody);
                         break;
                     default:
-                        Log.Debug("Ignoring unknown reverse command: '{0}'", commandName);
+                        Log.Debug("Ignoring unknown reverse command: '{@commandName}'", commandName);
                         break;
                 }
             }
@@ -135,7 +135,7 @@ namespace EventStore.Projections.Core.v8
                     break;
                 default:
                     Log.Debug(
-                        string.Format("Unknown command handler registered. Command name: {0}", commandName));
+                        string.Format("Unknown command handler registered. Command name: {@fixthisvar}", commandName)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                     break;
             }
         }

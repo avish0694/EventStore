@@ -45,7 +45,7 @@ namespace EventStore.Transport.Http.Server
         {
             try
             {
-                Logger.Info("Starting HTTP server on [{0}]...", string.Join(",", _listener.Prefixes));
+                Logger.Info("Starting HTTP server on [{@fixthisvar}]...", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                 try
                 {
                     _listener.Start();
@@ -57,20 +57,20 @@ namespace EventStore.Transport.Http.Server
                         if (_listenPrefixes.Length > 0)
                             TryAddAcl(_listenPrefixes[0]);
                         CreateListener(_listenPrefixes);
-                        Logger.Info("Retrying HTTP server on [{0}]...", string.Join(",", _listener.Prefixes));
+                        Logger.Info("Retrying HTTP server on [{@fixthisvar}]...", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                         _listener.Start();
                     }
                 }
 
                 _listener.BeginGetContext(ContextAcquired, null);
 
-                Logger.Info("HTTP server is up and listening on [{0}]", string.Join(",", _listener.Prefixes));
+                Logger.Info("HTTP server is up and listening on [{@fixthisvar}]", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
 
                 return true;
             }
             catch (Exception e)
             {
-                Logger.FatalException(e, "Failed to start http server");
+                Logger.FatalException(e, "Failed to start http server"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 return false;
             }
         }
@@ -81,7 +81,7 @@ namespace EventStore.Transport.Http.Server
                 return;
 
             var args = string.Format("http add urlacl url={0} user=\"{1}\\{2}\"", address, Environment.UserDomainName, Environment.UserName);
-            Logger.Info("Attempting to add permissions for " + address + " using netsh " + args);
+            Logger.Info("Attempting to add permissions for " + address + " using netsh " + args); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             var startInfo = new ProcessStartInfo("netsh", args)
                           {
                               Verb = "runas",
@@ -116,7 +116,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.ErrorException(e, "Error while shutting down http server");
+                Logger.ErrorException(e, "Error while shutting down http server"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             }
         }
 
@@ -145,7 +145,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.DebugException(e, "EndGetContext exception. Status : {0}.", IsListening ? "listening" : "stopped");
+                Logger.DebugException(e, "EndGetContext exception. Status : {@fixthisvar}.", IsListening ? "listening" : "stopped"); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
             }
 
             if (success)
@@ -164,7 +164,7 @@ namespace EventStore.Transport.Http.Server
                 }
                 catch(Exception ex) 
                 {
-                    Logger.ErrorException(ex, "ProcessRequest error");
+                    Logger.ErrorException(ex, "ProcessRequest error"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 }
 
             try
@@ -185,7 +185,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.ErrorException(e, "BeginGetContext error. Status : {0}.", IsListening ? "listening" : "stopped");
+                Logger.ErrorException(e, "BeginGetContext error. Status : {@fixthisvar}.", IsListening ? "listening" : "stopped"); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
             }
         }
 

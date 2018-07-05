@@ -9,7 +9,7 @@ namespace EventStore.TestClient.Commands
 
         public bool Execute(CommandProcessorContext context, string[] args)
         {
-            context.Log.Info("Exiting...");
+            context.Log.Info("Exiting..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             Application.Exit(ExitCode.Success, "Exit processor called.");
             return true;
         }

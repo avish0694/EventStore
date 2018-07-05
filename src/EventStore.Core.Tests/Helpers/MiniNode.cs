@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -136,7 +136,7 @@ namespace EventStore.Core.Tests.Helpers
                 }
             }
 
-            Log.Info("\n{0,-25} {1} ({2}/{3}, {4})\n"
+            Log.Info("\n{0,-25} {@fixthisvar} ({@fixthisvar}/{@fixthisvar}, {@fixthisvar})\n"
                      + "{5,-25} {6} ({7})\n"
                      + "{8,-25} {9} ({10}-bit)\n"
                      + "{11,-25} {12}\n"
@@ -151,7 +151,7 @@ namespace EventStore.Core.Tests.Helpers
                      "DBPATH:", DbPath,
                      "TCP ENDPOINT:", TcpEndPoint,
                      "TCP SECURE ENDPOINT:", TcpSecEndPoint,
-                     "HTTP ENDPOINT:", ExtHttpEndPoint);
+                     "HTTP ENDPOINT:", ExtHttpEndPoint); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{2},{3},{4}*/
             
             Node = builder.Build();
             Db = ((TestVNodeBuilder)builder).GetDb();

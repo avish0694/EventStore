@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EventStore.ClientAPI.ClientOperations;
@@ -110,7 +110,7 @@ namespace EventStore.ClientAPI.Internal
                     var err = String.Format("EventStoreConnection '{0}': subscription never got confirmation from server.\n" +
                                             "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
                                             _connectionName, DateTime.UtcNow, subscription);
-                    _settings.Log.Error(err);
+                    _settings.Log.Error(err); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
 
                     if (_settings.FailOnNoServerResponse)
                     {
@@ -211,7 +211,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
         }
     }
 }

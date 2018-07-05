@@ -47,7 +47,7 @@ namespace EventStore.TestClient.Commands
                 context,
                 connectionEstablished: conn =>
                 {
-                    context.Log.Info("[{0}, L{1}]: Writing...", conn.RemoteEndPoint, conn.LocalEndPoint);
+                    context.Log.Info("[{@remoteEndPoint}, L{@localEndPoint}]: Writing...", conn.RemoteEndPoint, conn.LocalEndPoint);
                     var writeDto = new TcpClientMessageDto.WriteEvents(
                         eventStreamId,
                         expectedVersion,
@@ -72,7 +72,7 @@ namespace EventStore.TestClient.Commands
                 handlePackage: (conn, pkg) =>
                 {
                     sw.Stop();
-                    context.Log.Info("Write request took: {0}.", sw.Elapsed);
+                    context.Log.Info("Write request took: {@elapsed}.", sw.Elapsed);
 
                     if (pkg.Command != TcpCommand.WriteEventsCompleted)
                     {
@@ -83,13 +83,13 @@ namespace EventStore.TestClient.Commands
                     var dto = pkg.Data.Deserialize<TcpClientMessageDto.WriteEventsCompleted>();
                     if (dto.Result == TcpClientMessageDto.OperationResult.Success)
                     {
-                        context.Log.Info("Successfully written.");
+                        context.Log.Info("Successfully written."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                         PerfUtils.LogTeamCityGraphData(string.Format("{0}-latency-ms", Keyword), (int)Math.Round(sw.Elapsed.TotalMilliseconds));
                         context.Success();
                     }
                     else
                     {
-                        context.Log.Info("Error while writing: {0} ({1}).", dto.Message, dto.Result);
+                        context.Log.Info("Error while writing: {@message} ({@result}).", dto.Message, dto.Result);
                         context.Fail();
                     }
 

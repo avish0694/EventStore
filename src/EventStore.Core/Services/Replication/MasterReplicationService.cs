@@ -132,8 +132,8 @@ namespace EventStore.Core.Services.Replication
                 {
                     ReplicaSubscription existingSubscr;
                     _subscriptions.TryGetValue(subscription.SubscriptionId, out existingSubscr);
-                    Log.Error("There is already a subscription with SubscriptionID {0:B}: {1}.", subscription.SubscriptionId, existingSubscr);
-                    Log.Error("Subscription we tried to add: {0}.", existingSubscr);
+                    Log.Error("There is already a subscription with SubscriptionID {0:B}: {@existingSubscr}.", subscription.SubscriptionId, existingSubscr); /*TODO: structured-log @shaan1337: the following parameters need attention: {0:B}*/
+                    Log.Error("Subscription we tried to add: {@existingSubscr}.", existingSubscr);
                     subscription.SendBadRequestAndClose(message.CorrelationId, string.Format("There is already a subscription with SubscriptionID {0:B}: {1}.\nSubscription we tried to add: {2}",
                                             subscription.SubscriptionId, existingSubscr, subscription));
                     subscription.Dispose();
@@ -174,9 +174,9 @@ namespace EventStore.Core.Services.Replication
             try
             {
                 var epochs = lastEpochs ?? new Epoch[0];
-                Log.Info("SUBSCRIBE REQUEST from [{0},C:{1:B},S:{2:B},{3}(0x{3:X}),{4}]...",
+                Log.Info("SUBSCRIBE REQUEST from [{@replicaEndPoint},C:{1:B},S:{2:B},{@logPosition}(0x{3:X}),{4}]...",
                          replica.ReplicaEndPoint, replica.ConnectionId, replica.SubscriptionId, logPosition,
-                         string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x))));
+                         string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x)))); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {4}*/
 
                 var epochCorrectedLogPos = GetValidLogPosition(logPosition, epochs, replica.ReplicaEndPoint, replica.SubscriptionId);
                 var subscriptionPos = SetSubscriptionPosition(replica, epochCorrectedLogPos, chunkId, 
@@ -186,7 +186,7 @@ namespace EventStore.Core.Services.Replication
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception while subscribing replica. Connection will be dropped.");
+                Log.ErrorException(exc, "Exception while subscribing replica. Connection will be dropped."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 replica.SendBadRequestAndClose(correlationId, string.Format("Exception while subscribing replica. Connection will be dropped. Error: {0}", exc.Message));
                 return false;
             }
@@ -203,7 +203,7 @@ namespace EventStore.Core.Services.Replication
                     var msg = string.Format("Replica [{0},S:{1},{2}] has positive LogPosition {3} (0x{3:X}), but does not have epochs.",
                                             replicaEndPoint, subscriptionId,
                                             string.Join(", ", epochs.Select(x => x.AsString())), logPosition);
-                    Log.Info(msg);
+                    Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                     throw new Exception(msg);
                 }
                 return 0;
@@ -224,10 +224,10 @@ namespace EventStore.Core.Services.Replication
             }
             if (commonEpoch == null)
             {
-                Log.Error("No common epoch found for replica [{0},S{1},{2}(0x{2:X}),{3}]. Subscribing at 0. Master LogPosition: {4} (0x{4:X}), known epochs: {5}.",
+                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{2:X}),{3}]. Subscribing at 0. Master LogPosition: {4} (0x{4:X}), known epochs: {5}.",
                           replicaEndPoint, subscriptionId, logPosition,
                           string.Join(", ", epochs.Select(x => x.AsString())),
-                          masterCheckpoint, string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())));
+                          masterCheckpoint, string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString()))); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {3}*/
                 return 0;
             }
 
@@ -252,7 +252,7 @@ namespace EventStore.Core.Services.Replication
                                         string.Join("\n", epochs.Select(x => x.AsString())),
                                         string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())), masterCheckpoint,
                                         commonEpoch.AsString(), afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString());
-                Log.Error(msg);
+                Log.Error(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                 throw new Exception(msg);
             }
 
@@ -280,12 +280,12 @@ namespace EventStore.Core.Services.Replication
                     var chunkStartPos = chunk.ChunkHeader.ChunkStartPosition;
                     if (verbose)
                     {
-                        Log.Info("Subscribed replica [{0}, S:{1}] for raw send at {2} (0x{2:X}) (requested {3} (0x{3:X})).", 
-                                 sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, logPosition);
+                        Log.Info("Subscribed replica [{@replicaEndPoint}, S:{@subscriptionId}] for raw send at {@chunkStartPos} (0x{2:X}) (requested {3} (0x{3:X})).", 
+                                 sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, logPosition); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
                         if (chunkStartPos != logPosition)
                         {
-                            Log.Info("Forcing replica [{0}, S:{1}] to recreate chunk from position {2} (0x{2:X})...",
-                                     sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos);
+                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPos} (0x{2:X})...",
+                                     sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos); /*TODO: structured-log @avish0694: the following parameters need attention: {2:X}*/
                         }
                     }
 
@@ -303,7 +303,7 @@ namespace EventStore.Core.Services.Replication
                 else
                 {
                     if (verbose)
-                        Log.Info("Subscribed replica [{0},S:{1}] for data send at {2} (0x{2:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition);
+                        Log.Info("Subscribed replica [{@replicaEndPoint},S:{@subscriptionId}] for data send at {@logPosition} (0x{2:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:X}*/
 
                     sub.LogPosition = logPosition;
                     sub.RawSend = false;
@@ -359,7 +359,7 @@ namespace EventStore.Core.Services.Replication
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "Error during master replication iteration.");
+                    Log.InfoException(exc, "Error during master replication iteration."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 }
             }
 
@@ -422,7 +422,7 @@ namespace EventStore.Core.Services.Replication
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "Error during replication send to replica: {0}.", subscription);
+                    Log.InfoException(exc, "Error during replication send to replica: {@subscription}.", subscription);
                 }
             }
             return dataFound;

@@ -71,10 +71,10 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     {
                         var msg = string.Format("Received as RESPONSE invalid ClusterInfo from [{0}]. Content-Type: {1}, Body:\n{2}.",
                                                 url, response.ContentType, response.Body);
-                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{0}]. Content-Type: {1}.",
-                                                url, response.ContentType));
-                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{0}]. Body: {1}.",
-                                                url, response.Body));
+                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{@url}]. Content-Type: {@fixthisvar}.",
+                                                url, response.ContentType)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{@url}]. Body: {@fixthisvar}.",
+                                                url, response.Body)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
                         Publish(new GossipMessage.GossipSendFailed(msg, endPoint));
                         return;
                     }
@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
 
         private void OnPostGossip(HttpEntityManager entity, UriTemplateMatch match)
         {
-            entity.ReadTextRequestAsync(OnPostGossipRequestRead, e => Log.Debug("Error while reading request (gossip): {0}", e.Message));
+            entity.ReadTextRequestAsync(OnPostGossipRequestRead, e => Log.Debug("Error while reading request (gossip): {@fixthisvar}", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
         }
 
         private void OnPostGossipRequestRead(HttpEntityManager manager, string body)
@@ -96,10 +96,10 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
             {
                 var msg = string.Format("Received as POST invalid ClusterInfo from [{0}]. Content-Type: {1}, Body:\n{2}.",
                                         manager.RequestedUrl, manager.RequestCodec.ContentType, body);
-                Log.Error(string.Format("Received as POST invalid ClusterInfo from [{0}]. Content-Type: {1}.",
-                                        manager.RequestedUrl, manager.RequestCodec.ContentType));
-                Log.Error(string.Format("Received as POST invalid ClusterInfo from [{0}]. Body: {1}.",
-                                        manager.RequestedUrl, body));
+                Log.Error(string.Format("Received as POST invalid ClusterInfo from [{@requestedUrl}]. Content-Type: {@fixthisvar}.",
+                                        manager.RequestedUrl, manager.RequestCodec.ContentType)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                Log.Error(string.Format("Received as POST invalid ClusterInfo from [{@requestedUrl}]. Body: {@fixthisvar}.",
+                                        manager.RequestedUrl, body)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
                 SendBadRequest(manager, msg);
                 return;
             }

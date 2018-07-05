@@ -88,9 +88,9 @@ namespace EventStore.Common.Log
             {
                 var exc = e.ExceptionObject as Exception;
                 if (exc != null)
-                    GlobalLogger.FatalException(exc, "Global Unhandled Exception occurred.");
+                    GlobalLogger.FatalException(exc, "Global Unhandled Exception occurred."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 else
-                    GlobalLogger.Fatal("Global Unhandled Exception object: {0}.", e.ExceptionObject);
+                    GlobalLogger.Fatal("Global Unhandled Exception object: {@exceptionObject}.", e.ExceptionObject);
                 GlobalLogger.Flush(TimeSpan.FromMilliseconds(500));
             };
         }
@@ -123,7 +123,7 @@ namespace EventStore.Common.Log
             }
             catch (Exception exc)
             {
-                GlobalLogger.ErrorException(exc, "Exception while flushing logs, ignoring...");
+                GlobalLogger.ErrorException(exc, "Exception while flushing logs, ignoring..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             }
         }
 

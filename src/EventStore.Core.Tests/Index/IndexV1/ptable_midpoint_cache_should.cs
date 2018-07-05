@@ -33,7 +33,7 @@ namespace EventStore.Core.Tests.Index.IndexV1
                     PTable ptable = null;
                     try
                     {
-                        Log.Trace("Creating PTable with count {0}, depth {1}", count, depth);
+                        Log.Trace("Creating PTable with count {@count}, depth {@depth}", count, depth);
                         ptable = ConstructPTable(GetFilePathFor(string.Format("{0}-{1}-indexv{2}.ptable", count, depth,_ptableVersion)), count, rnd,depth);
                         ValidateCache(ptable.GetMidPoints(), count, depth);
                     }

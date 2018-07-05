@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text;
 using EventStore.Common.Utils;
@@ -60,7 +60,7 @@ namespace EventStore.TestClient.Commands
                 context,
                 connectionEstablished: conn =>
                 {
-                    context.Log.Info("[{0}, L{1}]: Reading all {2}...", conn.RemoteEndPoint, conn.LocalEndPoint, forward ? "FORWARD" : "BACKWARD");
+                    context.Log.Info("[{@remoteEndPoint}, L{@localEndPoint}]: Reading all {@fixthisvar}...", conn.RemoteEndPoint, conn.LocalEndPoint, forward ? "FORWARD" : "BACKWARD"); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
 
                     var readDto = new TcpClientMessageDto.ReadAllEvents(commitPos, preparePos, 10, resolveLinkTos, requireMaster);
                     var package = new TcpPackage(tcpCommand, Guid.NewGuid(), readDto.Serialize()).AsByteArray();
@@ -79,7 +79,7 @@ namespace EventStore.TestClient.Commands
                     if (dto.Events.IsEmpty())
                     {
                         sw.Stop();
-                        context.Log.Info("=== Reading ALL {2} completed in {0}. Total read: {1}", sw.Elapsed, total, forward ? "FORWARD" : "BACKWARD");
+                        context.Log.Info("=== Reading ALL {2} completed in {0}. Total read: {1}", sw.Elapsed, total, forward ? "FORWARD" : "BACKWARD"); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {2}*/
                         context.Success();
                         conn.Close();
                         return;
@@ -96,7 +96,7 @@ namespace EventStore.TestClient.Commands
                                         evnt.EventType);
                         total += 1;
                     }
-                    context.Log.Info("Next {0} events read:\n{1}", dto.Events.Length, sb.ToString());
+                    context.Log.Info("Next {@events} events read:\n{@fixthisvar}", dto.Events.Length, sb.ToString()); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
 
                     var readDto = new TcpClientMessageDto.ReadAllEvents(dto.NextCommitPosition, dto.NextPreparePosition, 10, resolveLinkTos, requireMaster);
                     var package = new TcpPackage(tcpCommand, Guid.NewGuid(), readDto.Serialize()).AsByteArray();

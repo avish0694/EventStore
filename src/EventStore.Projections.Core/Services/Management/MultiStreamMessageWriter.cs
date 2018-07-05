@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EventStore.Common.Log;
@@ -27,7 +27,7 @@ namespace EventStore.Projections.Core.Services.Management
 
         public void Reset()
         {
-            Log.Debug("PROJECTIONS: Resetting Worker Writer");
+            Log.Debug("PROJECTIONS: Resetting Worker Writer"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             _cancellationScope.Cancel();
             _cancellationScope = new IODispatcherAsync.CancellationScope();
             _queues.Clear();
@@ -44,7 +44,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                Log.Debug("PROJECTIONS: Scheduling the writing of {0} to {1}. Current status of Writer: Busy: {2}", command, "$projections-$" + workerId, queue.Busy);
+                Log.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@fixthisvar}. Current status of Writer: Busy: {@busy}", command, "$projections-$" + workerId, queue.Busy); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
             }
             queue.Items.Add(new Queue.Item { Command = command, Body = body });
             if (!queue.Busy)
@@ -75,7 +75,7 @@ namespace EventStore.Projections.Core.Services.Management
                             //TODO: PROJECTIONS: Remove before release
                             if (!Logging.FilteredMessages.Contains(evt.EventType))
                             {
-                                Log.Debug("PROJECTIONS: Finished writing events to {0}: {1}", streamId, evt.EventType);
+                                Log.Debug("PROJECTIONS: Finished writing events to {@streamId}: {@eventType}", streamId, evt.EventType);
                             }
                         }
                     }
@@ -84,7 +84,7 @@ namespace EventStore.Projections.Core.Services.Management
                         var message = String.Format("PROJECTIONS: Failed writing events to {0} because of {1}: {2}", 
                             streamId, 
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}", x.EventType))));
-                        Log.Debug(message); //Can't do anything about it, log and move on
+                        Log.Debug(message); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/ //Can't do anything about it, log and move on
                         //throw new Exception(message);
                     }
 

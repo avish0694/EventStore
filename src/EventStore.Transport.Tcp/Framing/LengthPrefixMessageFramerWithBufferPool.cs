@@ -72,8 +72,8 @@ namespace EventStore.Transport.Tcp.Framing
                     {
                         if (_packageLength <= 0 || _packageLength > _maxPackageSize)
                         {
-                            Log.Error("FRAMING ERROR! Data:");
-                            Log.Error(Common.Utils.Helper.FormatBinaryDump(bytes));
+                            Log.Error("FRAMING ERROR! Data:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                            Log.Error(Common.Utils.Helper.FormatBinaryDump(bytes)); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
                             throw new PackageFramingException(string.Format("Package size is out of bounds: {0} (max: {1}).",
                                                                             _packageLength, _maxPackageSize));
                         }

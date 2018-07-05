@@ -85,7 +85,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             Ensure.NotNull(targetHost, "targetHost");
 
             InitConnectionBase(socket);
-            //_log.Info("TcpConnectionSsl::InitClientSocket({0}, L{1})", RemoteEndPoint, LocalEndPoint);
+            //_log.Info("TcpConnectionSsl::InitClientSocket({@remoteEndPoint}, L{@localEndPoint})", RemoteEndPoint, LocalEndPoint);
 
             _validateServer = validateServer;
 
@@ -108,7 +108,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 }
                 catch (AuthenticationException exc)
                 {
-                    _log.Info(exc, "[S{0}, L{1}]: Authentication exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                    _log.Info(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
                 catch (ObjectDisposedException)
@@ -117,7 +117,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 }
                 catch (Exception exc)
                 {
-                    _log.Info(exc, "[S{0}, L{1}]: Exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                    _log.Info(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
             }
@@ -139,7 +139,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (AuthenticationException exc)
             {
-                _log.Info(exc, "[S{0}, L{1}]: Authentication exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                _log.Info(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
             catch (ObjectDisposedException)
@@ -148,7 +148,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Info(exc, "[S{0}, L{1}]: Exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                _log.Info(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
         }
@@ -161,7 +161,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
-            _log.Error("[S{0}, L{1}]: Certificate error: {1}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
+            _log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {1}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
             // Do not allow this client to communicate with unauthenticated servers. 
             return false;
         }
@@ -196,7 +196,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             else
                 sb.AppendFormat("Remote certificate is null.\n");
 
-            _log.Info(sb.ToString());
+            _log.Info(sb.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
 
         public void EnqueueSend(IEnumerable<ArraySegment<byte>> data)
@@ -241,7 +241,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                _log.Debug(exc, "SocketException '{0}' during BeginWrite.", exc.SocketErrorCode);
+                _log.Debug(exc, "SocketException '{@socketErrorCode}' during BeginWrite.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginWrite.");
             }
             catch (ObjectDisposedException)
@@ -250,7 +250,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during BeginWrite.");
+                _log.Debug(exc, "Exception during BeginWrite."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 CloseInternal(SocketError.SocketError, "Exception during BeginWrite");
             }
         }
@@ -270,7 +270,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                _log.Debug(exc, "SocketException '{0}' during EndWrite.", exc.SocketErrorCode);
+                _log.Debug(exc, "SocketException '{@socketErrorCode}' during EndWrite.", exc.SocketErrorCode);
                 NotifySendCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndWrite.");
             }
@@ -281,7 +281,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during EndWrite.");
+                _log.Debug(exc, "Exception during EndWrite."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 NotifySendCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndWrite.");
             }
@@ -293,7 +293,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             if (Interlocked.Exchange(ref _receiveCallback, callback) != null)
             {
-                _log.Error("ReceiveAsync called again while previous call was not fulfilled");
+                _log.Error("ReceiveAsync called again while previous call was not fulfilled"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 throw new InvalidOperationException("ReceiveAsync called again while previous call was not fulfilled");
             }
             TryDequeueReceivedData();
@@ -308,7 +308,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                _log.Debug(exc, "SocketException '{0}' during BeginRead.", exc.SocketErrorCode);
+                _log.Debug(exc, "SocketException '{@socketErrorCode}' during BeginRead.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginRead.");
             }
             catch (ObjectDisposedException)
@@ -317,7 +317,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during BeginRead.");
+                _log.Debug(exc, "Exception during BeginRead."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 CloseInternal(SocketError.SocketError, "Exception during BeginRead.");
             }
         }
@@ -331,7 +331,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                _log.Debug(exc, "SocketException '{0}' during EndRead.", exc.SocketErrorCode);
+                _log.Debug(exc, "SocketException '{@socketErrorCode}' during EndRead.", exc.SocketErrorCode);
                 NotifyReceiveCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndRead.");
                 return;
@@ -344,7 +344,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during EndRead.");
+                _log.Debug(exc, "Exception during EndRead."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 NotifyReceiveCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndRead.");
                 return;
@@ -377,7 +377,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                     var callback = Interlocked.Exchange(ref _receiveCallback, null);
                     if (callback == null)
                     {
-                        _log.Error("Threading issue in TryDequeueReceivedData. Callback is null.");
+                        _log.Error("Threading issue in TryDequeueReceivedData. Callback is null."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                         throw new Exception("Threading issue in TryDequeueReceivedData. Callback is null.");
                     }
 
@@ -415,11 +415,11 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             NotifyClosed();
 
-            _log.Info("ClientAPI {0} closed [{1:HH:mm:ss.fff}: S{2}, L{3}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
-            _log.Info("Received bytes: {0}, Sent bytes: {1}", TotalBytesReceived, TotalBytesSent);
-            _log.Info("Send calls: {0}, callbacks: {1}", SendCalls, SendCallbacks);
-            _log.Info("Receive calls: {0}, callbacks: {1}", ReceiveCalls, ReceiveCallbacks);
-            _log.Info("Close reason: [{0}] {1}", socketError, reason);
+            _log.Info("ClientAPI {@fixthisvar} closed [{1:HH:mm:ss.fff}: S{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+            _log.Info("Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}", TotalBytesReceived, TotalBytesSent);
+            _log.Info("Send calls: {@sendCalls}, callbacks: {@sendCallbacks}", SendCalls, SendCallbacks);
+            _log.Info("Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}", ReceiveCalls, ReceiveCallbacks);
+            _log.Info("Close reason: [{@socketError}] {@reason}", socketError, reason);
 
             if (_sslStream != null)
                 Helper.EatException(() => _sslStream.Close());

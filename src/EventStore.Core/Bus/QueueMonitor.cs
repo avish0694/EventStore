@@ -33,7 +33,7 @@ namespace EventStore.Core.Bus
         {
             var stats = _queues.Keys.OrderBy(x => x.Name).Select(queue => queue.GetStatistics()).ToArray();
             if (Application.IsDefined(Application.DumpStatistics))
-                Log.Trace(Environment.NewLine + string.Join(Environment.NewLine, stats.Select(x => x.ToString())));
+                Log.Trace(Environment.NewLine + string.Join(Environment.NewLine, stats.Select(x => x.ToString()))); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             return stats;
         }
     }

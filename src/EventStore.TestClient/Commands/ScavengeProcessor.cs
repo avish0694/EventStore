@@ -12,7 +12,7 @@ namespace EventStore.TestClient.Commands
         public bool Execute(CommandProcessorContext context, string[] args)
         {
             var package = new TcpPackage(TcpCommand.ScavengeDatabase, Guid.NewGuid(), null);
-            context.Log.Info("Sending SCAVENGE request...");
+            context.Log.Info("Sending SCAVENGE request..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
 
             var connection = context.Client.CreateTcpConnection(
                 context,

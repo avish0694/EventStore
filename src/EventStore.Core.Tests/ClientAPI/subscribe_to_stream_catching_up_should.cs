@@ -58,7 +58,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (_, __, ___) => dropped.Signal());
+                                                               (_, __, ___) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
                 Thread.Sleep(100); // give time for first pull phase
                 store.SubscribeToStreamAsync(stream, false, (s, x) => Task.CompletedTask, (s, r, e) => { }).Wait();
@@ -89,7 +89,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (_, __, ___) => dropped.Signal());
+                                                               (_, __, ___) => dropped.Signal()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
 
                 store.AppendToStreamAsync(stream, ExpectedVersion.EmptyStream, TestEvent.NewTestEvent()).Wait();
 
@@ -125,7 +125,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                            return Task.CompletedTask;
                                                        },
                                                         _ => Log.Info("Live processing started."),
-                                                       (x, y, z) => dropped1.Set());
+                                                       (x, y, z) => dropped1.Set()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 var sub2 = store.SubscribeToStreamFrom(stream,
                                                        null,
                                                        CatchUpSubscriptionSettings.Default,
@@ -135,7 +135,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                            return Task.CompletedTask;
                                                        },
                                                         _ => Log.Info("Live processing started."),
-                                                       (x, y, z) => dropped2.Set());
+                                                       (x, y, z) => dropped2.Set()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
                 store.AppendToStreamAsync(stream, ExpectedVersion.EmptyStream, TestEvent.NewTestEvent()).Wait();
 
@@ -170,7 +170,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                CatchUpSubscriptionSettings.Default,
                                                                (x, y) => Task.CompletedTask,
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal());
+                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 Assert.IsFalse(dropped.Wait(0));
                 subscription.Stop(Timeout);
                 Assert.IsTrue(dropped.Wait(Timeout));
@@ -191,7 +191,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                CatchUpSubscriptionSettings.Default,
                                                (x, y) => { throw new Exception("Error"); },
                                                _ => Log.Info("Live processing started."),
-                                               (x, y, z) => dropped.Signal());
+                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 Assert.IsTrue(dropped.Wait(Timeout));
             }
         }
@@ -223,7 +223,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal());
+                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 for (int i = 10; i < 20; ++i)
                 {
                     store.AppendToStreamAsync(stream, i-1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
@@ -274,7 +274,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal());
+                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 for (int i = 20; i < 30; ++i)
                 {
                     store.AppendToStreamAsync(stream, i-1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
@@ -329,7 +329,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal());
+                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");

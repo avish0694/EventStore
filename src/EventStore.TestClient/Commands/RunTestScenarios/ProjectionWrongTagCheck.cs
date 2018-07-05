@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
@@ -43,8 +43,8 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                            _executionPeriod.TotalMinutes,
                            GetType().Name);
 
-                Log.Info(msg);
-                Log.Info("##teamcity[message '{0}']", msg);
+                Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Info("##teamcity[message '{@msg}']", msg);
 
                 var iterationTask = RunIteration();
                 iterationTask.Wait();
@@ -121,7 +121,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
             });
 
-            return Task.Factory.ContinueWhenAll(new[] { writeTask, successTask }, tasks => { Log.Info("Iteration {0} tasks completed", GetIterationCode()); Task.WaitAll(tasks); Log.Info("Iteration {0} successfull", GetIterationCode()); });
+            return Task.Factory.ContinueWhenAll(new[] { writeTask, successTask }, tasks => { Log.Info("Iteration {@fixthisvar} tasks completed", GetIterationCode()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/ Task.WaitAll(tasks); Log.Info("Iteration {@fixthisvar} successfull", GetIterationCode()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/ });
         }
     }
 }

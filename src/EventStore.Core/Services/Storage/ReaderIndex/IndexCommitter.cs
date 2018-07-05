@@ -52,7 +52,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
 
         public void Init(long buildToPosition)
         {
-            Log.Info("TableIndex initialization...");
+            Log.Info("TableIndex initialization..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
 
             _tableIndex.Initialize(buildToPosition);
             _persistedPreparePos = _tableIndex.PrepareCheckpoint;
@@ -66,7 +66,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             var lastTime = DateTime.UtcNow;
             var reportPeriod = TimeSpan.FromSeconds(5);
 
-            Log.Info("ReadIndex building...");
+            Log.Info("ReadIndex building..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
 
             _indexRebuild = true;
             using (var reader = _backend.BorrowReader())
@@ -116,12 +116,12 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
                     processed += 1;
                     if (DateTime.UtcNow - lastTime > reportPeriod || processed % 100000 == 0)
                     {
-                        Log.Debug("ReadIndex Rebuilding: processed {0} records ({1:0.0}%).",
-                                  processed, (result.RecordPostPosition - startPosition) * 100.0 / (buildToPosition - startPosition));
+                        Log.Debug("ReadIndex Rebuilding: processed {@processed} records ({1:0.0}%).",
+                                  processed, (result.RecordPostPosition - startPosition) * 100.0 / (buildToPosition - startPosition)); /*TODO: structured-log @avish0694: the following parameters need attention: {1:0.0}*/
                         lastTime = DateTime.UtcNow;
                     }
                 }
-                Log.Debug("ReadIndex rebuilding done: total processed {0} records, time elapsed: {1}.", processed, DateTime.UtcNow - startTime);
+                Log.Debug("ReadIndex rebuilding done: total processed {@processed} records, time elapsed: {@fixthisvar}.", processed, DateTime.UtcNow - startTime); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
                 _bus.Publish(new StorageMessage.TfEofAtNonCommitRecord());
                 _backend.SetSystemSettings(GetSystemSettings());
             }
@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             }
             catch (TimeoutException exc)
             {
-                Log.ErrorException(exc, "Timeout exception when trying to close TableIndex.");
+                Log.ErrorException(exc, "Timeout exception when trying to close TableIndex."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 throw;
             }
         }
@@ -414,7 +414,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error deserializing SystemSettings record.");
+                Log.ErrorException(exc, "Error deserializing SystemSettings record."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             }
             return null;
         }

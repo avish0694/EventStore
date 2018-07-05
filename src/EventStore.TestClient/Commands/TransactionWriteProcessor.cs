@@ -40,7 +40,7 @@ namespace EventStore.TestClient.Commands
                     context,
                     connectionEstablished: conn =>
                     {
-                        context.Log.Info("[{0}, L{1}]: Starting transaction...", conn.RemoteEndPoint, conn.LocalEndPoint);
+                        context.Log.Info("[{@remoteEndPoint}, L{@localEndPoint}]: Starting transaction...", conn.RemoteEndPoint, conn.LocalEndPoint);
                         sw.Start();
                         
                         var tranStart = new TcpClientMessageDto.TransactionStart(eventStreamId, expectedVersion, false);
@@ -63,13 +63,13 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while starting transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg);
+                                    context.Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                                     context.Fail(reason: msg);
                                 }
                                 else
                                 {
-                                    context.Log.Info("Successfully started transaction. TransactionId: {0}.", dto.TransactionId);
-                                    context.Log.Info("Now sending transactional events...", dto.TransactionId);
+                                    context.Log.Info("Successfully started transaction. TransactionId: {@transactionId}.", dto.TransactionId);
+                                    context.Log.Info("Now sending transactional events...", dto.TransactionId); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
                                     transactionId = dto.TransactionId;
                                     stage = Stage.Writing;
@@ -105,7 +105,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while writing transactional event: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg);
+                                    context.Log.Info(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                                     context.Fail(reason: msg);
                                 }
                                 else
@@ -113,7 +113,7 @@ namespace EventStore.TestClient.Commands
                                     writtenEvents += 1;
                                     if (writtenEvents == eventsCnt)
                                     {
-                                        context.Log.Info("Written all events. Committing...");
+                                        context.Log.Info("Written all events. Committing..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
 
                                         stage = Stage.Committing;
                                         var commitDto = new TcpClientMessageDto.TransactionCommit(transactionId, false);
@@ -137,14 +137,14 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while committing transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg);
-                                    context.Log.Info("Transaction took: {0}.", sw.Elapsed);
+                                    context.Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                                    context.Log.Info("Transaction took: {@elapsed}.", sw.Elapsed);
                                     context.Fail(reason: msg);
                                 }
                                 else
                                 {
-                                    context.Log.Info("Successfully committed transaction [{0}]!", dto.TransactionId);
-                                    context.Log.Info("Transaction took: {0}.", sw.Elapsed);
+                                    context.Log.Info("Successfully committed transaction [{@transactionId}]!", dto.TransactionId);
+                                    context.Log.Info("Transaction took: {@elapsed}.", sw.Elapsed);
                                     PerfUtils.LogTeamCityGraphData(string.Format("{0}-latency-ms", Keyword), (int)Math.Round(sw.Elapsed.TotalMilliseconds));
                                     context.Success();
                                 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
@@ -107,11 +107,11 @@ namespace EventStore.Core.Bus
                             var elapsed = DateTime.UtcNow - start;
                             if (elapsed > _slowMsgThreshold)
                             {
-                                Log.Trace("SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
-                                          _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
+                                Log.Trace("SLOW QUEUE MSG [{@queueStats}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@queueCnt}/{@queue}.",
+                                          _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
                                 if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(msg is SystemMessage.SystemInit))
-                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
-                                              _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
+                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{@queueStats}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@queueCnt}/{@queue}.",
+                                              _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count); /*TODO: structured-log @shaan1337: the following parameters need attention: {2}*/
                             }
                         }
                         else
@@ -123,7 +123,7 @@ namespace EventStore.Core.Bus
                     }
                     catch (Exception ex)
                     {
-                        Log.ErrorException(ex, "Error while processing message {0} in queued handler '{1}'.", msg, _queueStats.Name);
+                        Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@queueStats}'.", msg, _queueStats.Name);
                     }
                 }
 

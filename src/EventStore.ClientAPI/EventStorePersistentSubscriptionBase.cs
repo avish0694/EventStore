@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,7 +156,7 @@ namespace EventStore.ClientAPI
         /// <exception cref="TimeoutException"></exception>
         public void Stop(TimeSpan timeout)
         {
-            if (_verbose) _log.Debug("Persistent Subscription to {0}: requesting stop...", _streamId);
+            if (_verbose) _log.Debug("Persistent Subscription to {@streamId}: requesting stop...", _streamId);
             EnqueueSubscriptionDropNotification(SubscriptionDropReason.UserInitiated, null);
             if (!_stopped.Wait(timeout))
                 throw new TimeoutException(string.Format("Could not stop {0} in time.", GetType().Name));
@@ -221,7 +221,7 @@ namespace EventStore.ClientAPI
                             if (_autoAck)
                                 _subscription.NotifyEventsProcessed(new[] { e.Event.OriginalEvent.EventId });
                             if (_verbose)
-                                _log.Debug("Persistent Subscription to {0}: processed event ({1}, {2}, {3} @ {4}).",
+                                _log.Debug("Persistent Subscription to {@streamId}: processed event ({@eventStreamId}, {@eventNumber}, {@eventType} @ {@originalEventNumber}).",
                                           _streamId,
                                           e.Event.OriginalEvent.EventStreamId, e.Event.OriginalEvent.EventNumber, e.Event.OriginalEvent.EventType, e.Event.OriginalEventNumber);
                         }
@@ -243,8 +243,8 @@ namespace EventStore.ClientAPI
             if (Interlocked.CompareExchange(ref _isDropped, 1, 0) == 0)
             {
                 if (_verbose)
-                    _log.Debug("Persistent Subscription to {0}: dropping subscription, reason: {1} {2}.",
-                              _streamId, reason, error == null ? string.Empty : error.ToString());
+                    _log.Debug("Persistent Subscription to {@streamId}: dropping subscription, reason: {@reason} {@fixthisvar}.",
+                              _streamId, reason, error == null ? string.Empty : error.ToString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
 
                 if (_subscription != null)
                     _subscription.Unsubscribe();

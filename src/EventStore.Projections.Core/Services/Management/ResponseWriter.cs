@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EventStore.Common.Log;
@@ -35,7 +35,7 @@ namespace EventStore.Projections.Core.Services.Management
 
         public void Reset()
         {
-            _logger.Debug("PROJECTIONS: Resetting Master Writer");
+            _logger.Debug("PROJECTIONS: Resetting Master Writer"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             _cancellationScope.Cancel();
             _cancellationScope = new IODispatcherAsync.CancellationScope();
             Items.Clear();
@@ -47,7 +47,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                _logger.Debug("PROJECTIONS: Scheduling the writing of {0} to {1}. Current status of Writer: Busy: {2}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy);
+                _logger.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@fixthisvar}. Current status of Writer: Busy: {@busy}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
             }
             Items.Add(new Item { Command = command, Body = body });
             if (!Busy)
@@ -77,7 +77,7 @@ namespace EventStore.Projections.Core.Services.Management
                             //TODO: PROJECTIONS: Remove before release
                             if (!Logging.FilteredMessages.Contains(evt.EventType))
                             {
-                                _logger.Debug("PROJECTIONS: Finished writing events to {0}: {1}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType);
+                                _logger.Debug("PROJECTIONS: Finished writing events to {@fixthisvar}: {@eventType}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                             }
                         }
                     }
@@ -86,7 +86,7 @@ namespace EventStore.Projections.Core.Services.Management
                         var message = String.Format("PROJECTIONS: Failed writing events to {0} because of {1}: {2}",
                             ProjectionNamesBuilder._projectionsMasterStream,
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data)))));
-                        _logger.Debug(message); //Can't do anything about it, log and move on
+                        _logger.Debug(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/ //Can't do anything about it, log and move on
                         //throw new Exception(message);
                     }
 

@@ -118,7 +118,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.FatalException(exc, "Error in StorageChaser. Terminating...");
+                Log.FatalException(exc, "Error in StorageChaser. Terminating..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 _queueStats.EnterIdle();
                 _queueStats.ProcessingStarted<FaultedChaserState>(0);
                 Application.Exit(ExitCode.Error, "Error in StorageChaser. Terminating...\nError: " + exc.Message);

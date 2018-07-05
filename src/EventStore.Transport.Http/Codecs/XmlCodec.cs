@@ -44,7 +44,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception e)
             {
-                Log.ErrorException(e, "'{0}' is not a valid serialized {1}", text, typeof(T).FullName);
+                Log.ErrorException(e, "'{@text}' is not a valid serialized {@fixthisvar}", text, typeof(T).FullName); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
                 return default(T);
             }
         }
@@ -80,7 +80,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error serializing object of type {0}", value.GetType().FullName);
+                Log.ErrorException(exc, "Error serializing object of type {@fixthisvar}", value.GetType().FullName); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 return null;
             }
         }

@@ -83,8 +83,8 @@ namespace EventStore.Core.Services
             _subscriptionId = message.SubscriptionId;
             _ackedSubscriptionPos = _subscriptionPos = message.SubscriptionPosition;
 
-            Log.Info("=== SUBSCRIBED to [{0},{1:B}] at {2} (0x{2:X}). SubscriptionId: {3:B}.",
-                     message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionId);
+            Log.Info("=== SUBSCRIBED to [{@masterEndPoint},{1:B}] at {@subscriptionPosition} (0x{2:X}). SubscriptionId: {3:B}.",
+                     message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1:B},{2:X},{3:B}*/
 
             var writerCheck = Db.Config.WriterCheckpoint.ReadNonFlushed();
             if (message.SubscriptionPosition > writerCheck)
@@ -95,21 +95,21 @@ namespace EventStore.Core.Services
             
             if (message.SubscriptionPosition < writerCheck)
             {
-                Log.Info("Master [{0},{1:B}] subscribed us at {2} (0x{2:X}), which is less than our writer checkpoint {3} (0x{3:X}). TRUNCATION IS NEEDED.",
-                         message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, writerCheck);
+                Log.Info("Master [{@masterEndPoint},{1:B}] subscribed us at {@subscriptionPosition} (0x{2:X}), which is less than our writer checkpoint {3} (0x{3:X}). TRUNCATION IS NEEDED.",
+                         message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, writerCheck); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
 
                 var lastCommitPosition = _getLastCommitPosition();
                 if (message.SubscriptionPosition > lastCommitPosition)
-                    Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE.");
+                    Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 else
-                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {0} (0x{0:X}) <= LastCommitPosition {1} (0x{1:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition, lastCommitPosition);
+                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {@subscriptionPosition} (0x{0:X}) <= LastCommitPosition {1} (0x{1:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition, lastCommitPosition); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
 
                 EpochRecord lastEpoch = EpochManager.GetLastEpoch();
                 if (AreAnyCommittedRecordsTruncatedWithLastEpoch(message.SubscriptionPosition, lastEpoch, lastCommitPosition))
                 {
-                    Log.Error("Master [{0},{1:B}] subscribed us at {2} (0x{2:X}), which is less than our last epoch and LastCommitPosition {3} (0x{3:X}) >= lastEpoch.EpochPosition {4} (0x{4:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
-                                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, lastCommitPosition, lastEpoch.EpochPosition);
-                    Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION.");
+                    Log.Error("Master [{@masterEndPoint},{1:B}] subscribed us at {@subscriptionPosition} (0x{2:X}), which is less than our last epoch and LastCommitPosition {3} (0x{3:X}) >= lastEpoch.EpochPosition {4} (0x{4:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
+                                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, lastCommitPosition, lastEpoch.EpochPosition); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
+                    Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 }
 
                 Db.Config.TruncateCheckpoint.Write(message.SubscriptionPosition);
@@ -166,14 +166,14 @@ namespace EventStore.Core.Services
 
             if (_activeChunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || _activeChunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
             {
-                Log.Error("Received RawChunkBulk for TFChunk {0}-{1}, but active chunk is {2}.",
+                Log.Error("Received RawChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {@activeChunk}.",
                           message.ChunkStartNumber, message.ChunkEndNumber, _activeChunk);
                 return;
             }
             if (_activeChunk.RawWriterPosition != message.RawPosition)
             {
-                Log.Error("Received RawChunkBulk at raw pos {0} (0x{0:X}) while current writer raw pos is {1} (0x{1:X}).",
-                          message.RawPosition, _activeChunk.RawWriterPosition);
+                Log.Error("Received RawChunkBulk at raw pos {@rawPosition} (0x{0:X}) while current writer raw pos is {1} (0x{1:X}).",
+                          message.RawPosition, _activeChunk.RawWriterPosition); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
                 return;
             }
 
@@ -187,7 +187,7 @@ namespace EventStore.Core.Services
 
             if (message.CompleteChunk)
             {
-                Log.Trace("Completing raw chunk {0}-{1}...", message.ChunkStartNumber, message.ChunkEndNumber);
+                Log.Trace("Completing raw chunk {@chunkStartNumber}-{@chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
                 Writer.CompleteReplicatedRawChunk(_activeChunk);
 
                 _subscriptionPos = _activeChunk.ChunkHeader.ChunkEndPosition;
@@ -213,15 +213,15 @@ namespace EventStore.Core.Services
                 var chunk = Writer.CurrentChunk;
                 if (chunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || chunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
                 {
-                    Log.Error("Received DataChunkBulk for TFChunk {0}-{1}, but active chunk is {2}-{3}.",
-                              message.ChunkStartNumber, message.ChunkEndNumber, chunk.ChunkHeader.ChunkStartNumber, chunk.ChunkHeader.ChunkEndNumber);
+                    Log.Error("Received DataChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {2}-{3}.",
+                              message.ChunkStartNumber, message.ChunkEndNumber, chunk.ChunkHeader.ChunkStartNumber, chunk.ChunkHeader.ChunkEndNumber); /*TODO: structured-log @shaan1337: duplicate variable name detected: {@chunkStartNumber}*/
                     return;
                 }
 
                 if (_subscriptionPos != message.SubscriptionPosition)
                 {
-                    Log.Error("Received DataChunkBulk at SubscriptionPosition {0} (0x{0:X}) while current SubscriptionPosition is {1} (0x{1:X}).",
-                              message.SubscriptionPosition, _subscriptionPos);
+                    Log.Error("Received DataChunkBulk at SubscriptionPosition {@subscriptionPosition} (0x{0:X}) while current SubscriptionPosition is {1} (0x{1:X}).",
+                              message.SubscriptionPosition, _subscriptionPos); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {1}*/
                     return;
                 }
 
@@ -230,7 +230,7 @@ namespace EventStore.Core.Services
 
                 if (message.CompleteChunk)
                 {
-                    Log.Trace("Completing data chunk {0}-{1}...", message.ChunkStartNumber, message.ChunkEndNumber);
+                    Log.Trace("Completing data chunk {@chunkStartNumber}-{@chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
                     Writer.CompleteChunk();
 
                     if (_framer.HasData) 
@@ -242,7 +242,7 @@ namespace EventStore.Core.Services
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -268,7 +268,7 @@ namespace EventStore.Core.Services
         private void ReplicationFail(string message, params object[] args)
         {
             var msg = args.Length == 0 ? message : string.Format(message, args);
-            Log.Fatal(msg);
+            Log.Fatal(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             BlockWriter = true;
             Application.Exit(ExitCode.Error, msg);
             throw new Exception(msg);

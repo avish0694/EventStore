@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -144,8 +144,8 @@ namespace EventStore.Core.Services.Storage
         {
             if (BlockWriter && !(message is SystemMessage.StateChangeMessage))
             {
-                Log.Trace("Blocking message {0} in StorageWriterService. Message:", message.GetType().Name);
-                Log.Trace("{0}", message);
+                Log.Trace("Blocking message {@fixthisvar} in StorageWriterService. Message:", message.GetType().Name); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Trace("{@message}", message);
                 return;
             }
 
@@ -153,7 +153,7 @@ namespace EventStore.Core.Services.Storage
             {
                 var msg = string.Format("{0} appeared in StorageWriter during state {1}.", message.GetType().Name,
                     _vnodeState);
-                Log.Fatal(msg);
+                Log.Fatal(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                 Application.Exit(ExitCode.Error, msg);
                 return;
             }
@@ -165,7 +165,7 @@ namespace EventStore.Core.Services.Storage
             catch (Exception exc)
             {
                 BlockWriter = true;
-                Log.FatalException(exc, "Unexpected error in StorageWriterService. Terminating the process...");
+                Log.FatalException(exc, "Unexpected error in StorageWriterService. Terminating the process..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 Application.Exit(ExitCode.Error,
                     string.Format("Unexpected error in StorageWriterService: {0}", exc.Message));
             }
@@ -230,7 +230,7 @@ namespace EventStore.Core.Services.Storage
 
             var totalTime = message.TotalTimeWasted + sw.Elapsed;
             if (totalTime < TimeSpan.FromSeconds(5) || (int) totalTime.TotalSeconds%30 == 0) // too verbose otherwise
-                Log.Debug("Still waiting for chaser to catch up already for {0}...", totalTime);
+                Log.Debug("Still waiting for chaser to catch up already for {@totalTime}...", totalTime);
             Bus.Publish(new SystemMessage.WaitForChaserToCatchUp(message.CorrelationId, totalTime));
         }
 
@@ -302,7 +302,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -409,7 +409,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -438,7 +438,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -484,7 +484,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -514,7 +514,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 throw;
             }
             finally
@@ -527,12 +527,12 @@ namespace EventStore.Core.Services.Storage
         {
             if (transactionInfo.TransactionOffset < -1 || transactionInfo.EventStreamId.IsEmptyString())
             {
-                Log.Error(string.Format("Invalid transaction info found for transaction ID {0}. "
+                Log.Error(string.Format("Invalid transaction info found for transaction ID {@fixthisvar}. "
                                         +
                                         "Possibly wrong transactionId provided. TransactionOffset: {1}, EventStreamId: {2}",
                     transactionId,
                     transactionInfo.TransactionOffset,
-                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId));
+                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                 return false;
             }
             return true;
@@ -571,7 +571,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer.");
+                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 throw;
             }
             finally

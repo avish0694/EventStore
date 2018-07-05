@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception exc)
             {
-                Log.Debug("Getting disk IO error: {0}.", exc.Message);
+                Log.Debug("Getting disk IO error: {@message}.", exc.Message);
                 return null;
             }
         }
@@ -64,7 +64,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception ex)
             {
-                log.InfoException(ex, "Could not parse Linux stats.");
+                log.InfoException(ex, "Could not parse Linux stats."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 return null;
             }
 
@@ -84,7 +84,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception ex)
             {
-                log.InfoException(ex, "Error while reading disk IO on Windows.");
+                log.InfoException(ex, "Error while reading disk IO on Windows."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 return null;
             }
             finally

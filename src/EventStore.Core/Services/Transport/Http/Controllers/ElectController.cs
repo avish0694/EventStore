@@ -61,7 +61,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ViewChangeDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/}); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
         }
 
         public void Send(ElectionMessage.ViewChangeProof message, IPEndPoint endPoint)
@@ -73,7 +73,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ViewChangeProofDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchangeproof)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchangeproof)")*/}); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
 
         public void Send(ElectionMessage.Prepare message, IPEndPoint endPoint)
@@ -85,7 +85,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.PrepareDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepare)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepare)")*/}); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
         }
 
         public void Send(ElectionMessage.PrepareOk message, IPEndPoint endPoint)
@@ -97,7 +97,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.PrepareOkDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepareok)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepareok)")*/}); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
         }
 
         public void Send(ElectionMessage.Proposal message, IPEndPoint endPoint)
@@ -109,7 +109,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ProposalDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/proposal)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/proposal)")*/}); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
 
         public void Send(ElectionMessage.Accept message, IPEndPoint endPoint)
@@ -121,7 +121,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.AcceptDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/accept)")*/});
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/accept)")*/}); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
         }
 
         private void OnPost<TDto, TMessage>(HttpEntityManager manager, Func<TDto, TMessage> unwrapper)
@@ -133,7 +133,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                                    var dto = manager.RequestCodec.From<TDto>(body);
                                                    return dto != null ? unwrapper(dto) : null;
                                                });
-            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {0}.", e.Message));
+            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
         }
 
         private void OnPostRequestRead(HttpEntityManager manager, string body)

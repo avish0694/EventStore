@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
@@ -126,7 +126,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on regular stats collection.");
+                Log.ErrorException(ex, "Error on regular stats collection."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             }
         }
 
@@ -140,7 +140,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while collecting stats");
+                Log.ErrorException(ex, "Error while collecting stats"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 statsContainer = null;
             }
 
@@ -153,12 +153,12 @@ namespace EventStore.Core.Services.Monitoring
             if (header != _lastWrittenCsvHeader)
             {
                 _lastWrittenCsvHeader = header;
-                RegularLog.Info(Environment.NewLine);
-                RegularLog.Info(header);
+                RegularLog.Info(Environment.NewLine); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                RegularLog.Info(header); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             }
 
             var line = StatsCsvEncoder.GetLine(rawStats);
-            RegularLog.Info(line);
+            RegularLog.Info(line); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         private void SaveStatsToStream(Dictionary<string, object> rawStats)
@@ -232,7 +232,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.Success:
                 case OperationResult.WrongExpectedVersion: // already created
                 {
-                    Log.Trace("Created stats stream '{0}', code = {1}", _nodeStatsStream, message.Result);
+                    Log.Trace("Created stats stream '{@nodeStatsStream}', code = {@result}", _nodeStatsStream, message.Result);
                     _statsStreamCreated = true;
                     break;
                 }
@@ -240,7 +240,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.CommitTimeout:
                 case OperationResult.ForwardTimeout:
                 {
-                    Log.Debug("Failed to create stats stream '{0}'. Reason : {1}({2}). Retrying...", _nodeStatsStream, message.Result, message.Message);
+                    Log.Debug("Failed to create stats stream '{@nodeStatsStream}'. Reason : {@result}({@message}). Retrying...", _nodeStatsStream, message.Result, message.Message);
                     SetStatsStreamMetadata();
                     break;
                 }
@@ -252,7 +252,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.StreamDeleted:
                 case OperationResult.InvalidTransaction: // should not happen at all
                 {
-                    Log.Error("Monitoring service got unexpected response code when trying to create stats stream ({0}).", message.Result);
+                    Log.Error("Monitoring service got unexpected response code when trying to create stats stream ({@result}).", message.Result);
                     break;
                 }
                 default:
@@ -288,7 +288,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on getting fresh stats");
+                Log.ErrorException(ex, "Error on getting fresh stats"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             }
         }
 
@@ -353,7 +353,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on getting fresh tcp connection stats");
+                Log.ErrorException(ex, "Error on getting fresh tcp connection stats"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             }
         }
 

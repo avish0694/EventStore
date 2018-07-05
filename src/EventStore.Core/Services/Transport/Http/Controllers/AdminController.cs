@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EventStore.Common.Log;
 using EventStore.Core.Bus;
 using EventStore.Core.Messages;
@@ -29,7 +29,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             if (entity.User != null && (entity.User.IsInRole(SystemRoles.Admins) || entity.User.IsInRole(SystemRoles.Operations)))
             {
-                Log.Info("Request shut down of node because shutdown command has been received.");
+                Log.Info("Request shut down of node because shutdown command has been received."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 Publish(new ClientMessage.RequestShutdown(exitProcess: true, shutdownHttp: true));
                 entity.ReplyStatus(HttpStatusCode.OK, "OK", LogReplyError);
             }
@@ -43,7 +43,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             if (entity.User != null && (entity.User.IsInRole(SystemRoles.Admins) || entity.User.IsInRole(SystemRoles.Operations)))
             {
-                Log.Info("Request scavenging because /admin/scavenge request has been received.");
+                Log.Info("Request scavenging because /admin/scavenge request has been received."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 Publish(new ClientMessage.ScavengeDatabase(new NoopEnvelope(), Guid.Empty, entity.User));
                 entity.ReplyStatus(HttpStatusCode.OK, "OK", LogReplyError);
             }
@@ -55,7 +55,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
 
         private void LogReplyError(Exception exc)
         {
-            Log.Debug("Error while closing HTTP connection (admin controller): {0}.", exc.Message);
+            Log.Debug("Error while closing HTTP connection (admin controller): {@message}.", exc.Message);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -96,9 +96,9 @@ namespace EventStore.Core.TransactionLog.Chunks
                     Manager.AddChunk(lastChunk);
                     if (!readOnly)
                     {
-                        Log.Info("Moving WriterCheckpoint from {0} to {1}, as it points to the scavenged chunk. "
+                        Log.Info("Moving WriterCheckpoint from {@fixthisvar} to {@checkpoint}, as it points to the scavenged chunk. "
                                  + "If that was not caused by replication of scavenged chunks, that could be a bug.",
-                                 checkpoint, lastChunk.ChunkHeader.ChunkEndPosition);
+                                 checkpoint, lastChunk.ChunkHeader.ChunkEndPosition); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                         Config.WriterCheckpoint.Write(lastChunk.ChunkHeader.ChunkEndPosition);
                         Config.WriterCheckpoint.Flush();
                         Manager.AddNewChunk();
@@ -134,15 +134,15 @@ namespace EventStore.Core.TransactionLog.Chunks
                         }
                         catch (FileBeingDeletedException exc)
                         {
-                            Log.Trace("{0} exception was thrown while doing background validation of chunk {1}.",
-                                      exc.GetType().Name, chunk);
-                            Log.Trace("That's probably OK, especially if truncation was request at the same time: {0}.",
+                            Log.Trace("{@fixthisvar} exception was thrown while doing background validation of chunk {@chunk}.",
+                                      exc.GetType().Name, chunk); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                            Log.Trace("That's probably OK, especially if truncation was request at the same time: {@message}.",
                                       exc.Message);
                         }
                         catch (Exception exc)
                         {
                             var msg = string.Format("Verification of chunk {0} failed, terminating server...", chunk);
-                            Log.FatalException(exc, msg);
+                            Log.FatalException(exc, msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                             Application.Exit(ExitCode.Error, msg);
                             return;
                         }
@@ -244,14 +244,14 @@ namespace EventStore.Core.TransactionLog.Chunks
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while trying to delete remaining temp file: '{0}'.", tempFile);
+                    Log.ErrorException(exc, "Error while trying to delete remaining temp file: '{@tempFile}'.", tempFile);
                 }
             }
         }
 
         private void RemoveFile(string reason, string file)
         {
-            Log.Trace(reason, file);
+            Log.Trace(reason, file); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             File.SetAttributes(file, FileAttributes.Normal);
             File.Delete(file);
         }

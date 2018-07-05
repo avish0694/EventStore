@@ -85,8 +85,8 @@ namespace EventStore.Core.Services.Monitoring.Utils
             }
             catch (Exception ex)
             {
-                _log.Trace("Could not create performance counter: category='{0}', counter='{1}', instance='{2}'. Error: {3}",
-                           category, counter, instance ?? string.Empty, ex.Message);
+                _log.Trace("Could not create performance counter: category='{@category}', counter='{@counter}', instance='{@fixthisvar}'. Error: {@message}",
+                           category, counter, instance ?? string.Empty, ex.Message); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
                 return null;
             }
         }
@@ -120,7 +120,7 @@ namespace EventStore.Core.Services.Monitoring.Utils
             }
             catch (InvalidOperationException)
             {
-                _log.Trace("Unable to get performance counter category '{0}' instances.", categoryName);
+                _log.Trace("Unable to get performance counter category '{@categoryName}' instances.", categoryName);
             }
 
             return null;

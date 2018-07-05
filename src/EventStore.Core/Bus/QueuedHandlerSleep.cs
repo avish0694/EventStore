@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
@@ -127,11 +127,11 @@ namespace EventStore.Core.Bus
                             var elapsed = DateTime.UtcNow - start;
                             if (elapsed > _slowMsgThreshold)
                             {
-                                Log.Trace("SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
-                                          Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, cnt, _queue.Count);
+                                Log.Trace("SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@cnt}/{@queue}.",
+                                          Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, cnt, _queue.Count); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
                                 if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(msg is SystemMessage.SystemInit))
-                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{0}]: {1} - {2}ms. Q: {3}/{4}.",
-                                              Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, cnt, _queue.Count);
+                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@cnt}/{@queue}.",
+                                              Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, cnt, _queue.Count); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
                             }
                         }
                         else
@@ -144,7 +144,7 @@ namespace EventStore.Core.Bus
                 }
                 catch (Exception ex)
                 {
-                    Log.ErrorException(ex, "Error while processing message {0} in queued handler '{1}'.", msg, Name);
+                    Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@name}'.", msg, Name);
                 }
             }
             _queueStats.Stop();

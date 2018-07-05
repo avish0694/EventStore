@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -72,7 +72,7 @@ namespace EventStore.Core
                 var msg = String.Format("Application initialization error: {0}", FormatExceptionMessage(ex));
                 if(LogManager.Initialized)
                 {
-                    Log.FatalException(ex, msg);
+                    Log.FatalException(ex, msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                 }
                 else 
                 {
@@ -84,8 +84,8 @@ namespace EventStore.Core
                 var msg = "Unhandled exception while starting application:";
                 if(LogManager.Initialized)
                 {
-                    Log.FatalException(ex, msg);
-                    Log.FatalException(ex, "{0}", FormatExceptionMessage(ex));
+                    Log.FatalException(ex, msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                    Log.FatalException(ex, "{@fixthisvar}", FormatExceptionMessage(ex)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace EventStore.Core
                 }
                 if(OS.IsUnix && !(OS.GetRuntimeVersion().StartsWith("4.6.2")))
                 {
-                    Log.Warn("You appear to be running a version of Mono which is untested and not supported. Only Mono 4.6.2 is supported at this time.");
+                    Log.Warn("You appear to be running a version of Mono which is untested and not supported. Only Mono 4.6.2 is supported at this time."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 }
             }
         }
@@ -146,12 +146,12 @@ namespace EventStore.Core
             
             LogManager.Init(componentName, logsDirectory, structuredLog, Locations.DefaultConfigurationDirectory);
 
-            Log.Info("\n{0,-25} {1} ({2}/{3}, {4})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
-            Log.Info("{0,-25} {1} ({2})", "OS:", OS.OsFlavor, Environment.OSVersion);
-            Log.Info("{0,-25} {1} ({2}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
-            Log.Info("{0,-25} {1}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
-            Log.Info("{0,-25} {1}", "LOGS:", LogManager.LogsDirectory);
-            Log.Info("{0}", EventStoreOptions.DumpOptions());
+            Log.Info("\n{0,-25} {@version} ({@branch}/{@hashtag}, {@timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25}*/
+            Log.Info("{0,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
+            Log.Info("{0,-25} {@fixthisvar} ({@fixthisvar}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{2}*/
+            Log.Info("{0,-25} {@fixthisvar}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25},{1}*/
+            Log.Info("{0,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
+            Log.Info("{@fixthisvar}", EventStoreOptions.DumpOptions()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
 
             if (options.WhatIf)
                 Application.Exit(ExitCode.Success, "WhatIf option specified");

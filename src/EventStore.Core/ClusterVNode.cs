@@ -155,8 +155,8 @@ namespace EventStore.Core
             var truncPos = db.Config.TruncateCheckpoint.Read();
             if (truncPos != -1)
             {
-                Log.Info("Truncate checkpoint is present. Truncate: {0} (0x{0:X}), Writer: {1} (0x{1:X}), Chaser: {2} (0x{2:X}), Epoch: {3} (0x{3:X})",
-                         truncPos, db.Config.WriterCheckpoint.Read(), db.Config.ChaserCheckpoint.Read(), db.Config.EpochCheckpoint.Read());
+                Log.Info("Truncate checkpoint is present. Truncate: {@truncPos} (0x{0:X}), Writer: {1} (0x{1:X}), Chaser: {2} (0x{2:X}), Epoch: {3} (0x{3:X})",
+                         truncPos, db.Config.WriterCheckpoint.Read(), db.Config.ChaserCheckpoint.Read(), db.Config.EpochCheckpoint.Read()); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {1}*/
                 var truncator = new TFChunkDbTruncator(db.Config);
                 truncator.TruncateDb(truncPos);
             }

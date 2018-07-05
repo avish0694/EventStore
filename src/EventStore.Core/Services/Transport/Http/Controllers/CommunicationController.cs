@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
 using EventStore.Core.Bus;
@@ -41,7 +41,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.BadRequest,
                                           reason,
-                                          e => Log.Debug("Error while closing HTTP connection (bad request): {0}.", e.Message));
+                                          e => Log.Debug("Error while closing HTTP connection (bad request): {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
             return new RequestParams(done: true);
         }
 
@@ -49,7 +49,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.RequestEntityTooLarge,
                                           "Too large events received. Limit is 4mb",
-                                          e => Log.Debug("Too large events received over HTTP"));
+                                          e => Log.Debug("Too large events received over HTTP")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             return new RequestParams(done: true);
         }
 
@@ -57,7 +57,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.OK,
                                           "OK",
-                                          e => Log.Debug("Error while closing HTTP connection (ok): {0}.", e.Message));
+                                          e => Log.Debug("Error while closing HTTP connection (ok): {@fixthisvar}.", e.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
             return new RequestParams(done: true);
         }
 

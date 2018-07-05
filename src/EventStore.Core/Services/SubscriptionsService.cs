@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
@@ -310,7 +310,7 @@ namespace EventStore.Core.Services
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {0}", eventRecord.ToString());
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@fixthisvar}", eventRecord.ToString()); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 }
                 // return unresolved link
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);

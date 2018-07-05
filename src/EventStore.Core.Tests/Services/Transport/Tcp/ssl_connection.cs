@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -46,21 +46,21 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                     foreach (var arraySegment in y)
                     {
                         received.Write(arraySegment.Array, arraySegment.Offset, arraySegment.Count);
-                        Log.Info("Received: {0} bytes, total: {1}.", arraySegment.Count, received.Length);
+                        Log.Info("Received: {@arraySegment} bytes, total: {@received}.", arraySegment.Count, received.Length);
                     }
 
                     if (received.Length >= sent.Length)
                     {
-                        Log.Info("Done receiving...");
+                        Log.Info("Done receiving..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                         done.Set();
                     }
                     else
                     {
-                        Log.Info("Receiving...");
+                        Log.Info("Receiving..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                         ssl.ReceiveAsync(callback);
                     }
                 };
-                Log.Info("Receiving...");
+                Log.Info("Receiving..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 ssl.ReceiveAsync(callback);
             }, "Secure");
 
@@ -73,23 +73,23 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                 TcpConnectionManager.ConnectionTimeout,
                 conn =>
                 {
-                    Log.Info("Sending bytes...");
+                    Log.Info("Sending bytes..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     conn.EnqueueSend(new[] {new ArraySegment<byte>(sent)});
                 },
                 (conn, err) =>
                 {
-                    Log.Error("Connecting failed: {0}.", err);
+                    Log.Error("Connecting failed: {@err}.", err);
                     done.Set();
                 },
                 verbose: true);
 
             Assert.IsTrue(done.Wait(20000), "Took too long to receive completion.");
 
-            Log.Info("Stopping listener...");
+            Log.Info("Stopping listener..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             listener.Stop();
-            Log.Info("Closing client ssl connection...");
+            Log.Info("Closing client ssl connection..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             clientSsl.Close("Normal close.");
-            Log.Info("Checking received data...");
+            Log.Info("Checking received data..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             Assert.AreEqual(sent, received.ToArray());
         }
 

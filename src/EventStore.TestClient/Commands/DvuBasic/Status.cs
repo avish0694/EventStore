@@ -39,9 +39,9 @@ namespace EventStore.TestClient.Commands.DvuBasic
                             wrongExpctdVersions.ToString(), streamsDeleted.ToString());
 
             if (failsP > 50d)
-                _log.Fatal(table.CreateIndentedTable());
+                _log.Fatal(table.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             else
-                _log.Info(table.CreateIndentedTable());
+                _log.Info(table.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
 
         public void ReportReadsProgress(int threadId, int successes, int fails)
@@ -52,19 +52,19 @@ namespace EventStore.TestClient.Commands.DvuBasic
             table.AppendRow(threadId.ToString(), fails.ToString(), all.ToString());
 
             if (fails != 0)
-                _log.Fatal(table.CreateIndentedTable());
+                _log.Fatal(table.CreateIndentedTable()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             else
-                _log.Info(table.CreateIndentedTable());
+                _log.Info(table.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void ReportReadError(int threadId, string stream, int indx)
         {
-            _log.Fatal("FATAL : READER [{0}] encountered an error in {1} ({2})", threadId, stream, indx);
+            _log.Fatal("FATAL : READER [{@threadId}] encountered an error in {@stream} ({@indx})", threadId, stream, indx);
         }
 
         public void ReportNotFoundOnRead(int threadId, string stream, int indx)
         {
-            _log.Fatal("FATAL : READER [{0}] asked for event {1} in '{2}' but server returned 'Not Found'", threadId,
+            _log.Fatal("FATAL : READER [{@threadId}] asked for event {@indx} in '{@stream}' but server returned 'Not Found'", threadId,
                        indx, stream);
         }
 

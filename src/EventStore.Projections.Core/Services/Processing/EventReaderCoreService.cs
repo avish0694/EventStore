@@ -115,8 +115,8 @@ namespace EventStore.Projections.Core.Services.Processing
             var eventReader = projectionSubscription.CreatePausedEventReader(
                 _publisher, _ioDispatcher, distibutionPointCorrelationId);
 //            _logger.Trace(
-//                "The '{0}' projection subscribed to the '{1}' distribution point", subscriptionId,
-//                distibutionPointCorrelationId);
+//                "The '{@subscriptionId}' projection subscribed to the '{@fixthisvar}' distribution point", subscriptionId,
+//                distibutionPointCorrelationId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
             _eventReaders.Add(distibutionPointCorrelationId, eventReader);
             _subscriptionEventReaders.Add(subscriptionId, distibutionPointCorrelationId);
             _eventReaderSubscriptions.Add(distibutionPointCorrelationId, subscriptionId);
@@ -291,25 +291,25 @@ namespace EventStore.Projections.Core.Services.Processing
 
             if (_subscriptions.Count > 0)
             {
-                _logger.Info("_subscriptions is not empty after all the projections have been killed");
+                _logger.Info("_subscriptions is not empty after all the projections have been killed"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 _subscriptions.Clear();
             }
 
             if (_eventReaders.Count > 0)
             {
-                _logger.Info("_eventReaders is not empty after all the projections have been killed");
+                _logger.Info("_eventReaders is not empty after all the projections have been killed"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 _eventReaders.Clear();
             }
 
             if (_subscriptionEventReaders.Count > 0)
             {
-                _logger.Info("_subscriptionEventReaders is not empty after all the projections have been killed");
+                _logger.Info("_subscriptionEventReaders is not empty after all the projections have been killed"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 _subscriptionEventReaders.Clear();
             }
 
             if (_eventReaderSubscriptions.Count > 0)
             {
-                _logger.Info("_eventReaderSubscriptions is not empty after all the projections have been killed");
+                _logger.Info("_eventReaderSubscriptions is not empty after all the projections have been killed"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 _eventReaderSubscriptions.Clear();
             }
 

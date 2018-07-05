@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using EventStore.Common.Log;
@@ -61,9 +61,9 @@ namespace EventStore.Common.Utils
                 var message = string.Format("Exiting with exit code: {0}.\nExit reason: {1}", exitCode, reason);
                 Console.WriteLine(message);
                 if (exitCode != 0)
-                    Log.Error(message);
+                    Log.Error(message); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                 else
-                    Log.Info(message);
+                    Log.Info(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             }
 
             var exit = _exit;

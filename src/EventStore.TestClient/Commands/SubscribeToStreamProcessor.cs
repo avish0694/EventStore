@@ -30,8 +30,8 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionConfirmation:
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionConfirmation>();
-                                context.Log.Info("Subscription to <{0}> WAS CONFIRMED! Subscribed at {1} ({2})", 
-                                                 streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber);
+                                context.Log.Info("Subscription to <{@fixthisvar}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
+                                                 streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
                                 break;
                             }
                             case TcpCommand.StreamEventAppeared:
@@ -47,13 +47,13 @@ namespace EventStore.TestClient.Commands
                                                  dto.Event.Event.EventNumber,
                                                  dto.Event.Event.EventType,
                                                  Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Data ?? new byte[0]),
-                                                 Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Metadata ?? new byte[0]));
+                                                 Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Metadata ?? new byte[0])); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                                 break;
                             }
                             case TcpCommand.SubscriptionDropped:
                             {
                                 pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionDropped>();
-                                context.Log.Error("Subscription to <{0}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]);
+                                context.Log.Error("Subscription to <{@fixthisvar}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                                 break;
                             }
                             default:
@@ -71,7 +71,7 @@ namespace EventStore.TestClient.Commands
 
             if (args.Length == 0)
             {
-                context.Log.Info("SUBSCRIBING TO ALL STREAMS...");
+                context.Log.Info("SUBSCRIBING TO ALL STREAMS..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 var cmd = new TcpClientMessageDto.SubscribeToStream(string.Empty, resolveLinkTos: false);
                 Guid correlationId = Guid.NewGuid();
                 streamByCorrId[correlationId] = "$all";
@@ -81,7 +81,7 @@ namespace EventStore.TestClient.Commands
             {
                 foreach (var stream in args)
                 {
-                    context.Log.Info("SUBSCRIBING TO STREAM <{0}>...", stream);
+                    context.Log.Info("SUBSCRIBING TO STREAM <{@stream}>...", stream);
                     var cmd = new TcpClientMessageDto.SubscribeToStream(stream, resolveLinkTos: false);
                     var correlationId = Guid.NewGuid();
                     streamByCorrId[correlationId] = stream;

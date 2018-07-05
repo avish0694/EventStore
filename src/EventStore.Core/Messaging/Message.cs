@@ -93,9 +93,9 @@ namespace EventStore.Core.Messaging
 
                 foreach (var wrongType in wrongTypes)
                 {
-                    Log.Fatal("MsgTypeId {0} is assigned to type: {1}",
+                    Log.Fatal("MsgTypeId {@typeId} is assigned to type: {@fixthisvar}",
                               wrongType.TypeId,
-                              string.Join(", ", wrongType.MsgTypes.Select(x => x.Name)));
+                              string.Join(", ", wrongType.MsgTypes.Select(x => x.Name))); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
                 }
 
                 throw new Exception("Incorrect Message Type IDs setup.");
@@ -125,7 +125,7 @@ namespace EventStore.Core.Messaging
                 DescendantsByType.Add(typeIdMap.Key, DescendantsByTypeId[typeIdMap.Value]);
             }
 
-            Log.Trace("MessageHierarchy initialization took {0}.", sw.Elapsed);
+            Log.Trace("MessageHierarchy initialization took {@elapsed}.", sw.Elapsed);
         }
 
         static Type[] LoadAvailableTypes(Assembly assembly)
@@ -138,10 +138,10 @@ namespace EventStore.Core.Messaging
             {
                 if(ex.LoaderExceptions.Length >0)
                     Log.Info("The exception(s) occured when scanning for message types: ",
-                        string.Join(",", ex.LoaderExceptions.Select(x => x.Message)));
+                        string.Join(",", ex.LoaderExceptions.Select(x => x.Message))); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 else
                 {
-                    Log.InfoException(ex, "Exception while scanning for message types");
+                    Log.InfoException(ex, "Exception while scanning for message types"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 }
                 return ex.Types;
             }

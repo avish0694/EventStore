@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading;
 using System.Collections.Concurrent;
@@ -60,7 +60,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.InfoException(e, "Deserialization to {0} failed", typeof (T).FullName);
+                Log.InfoException(e, "Deserialization to {@fixthisvar} failed", typeof (T).FullName); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
                 return default(T);
             }
         }

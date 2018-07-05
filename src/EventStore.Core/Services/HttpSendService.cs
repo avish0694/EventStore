@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -71,7 +71,7 @@ namespace EventStore.Core.Services
             if(message.LiveUntil > DateTime.Now) {
                 _httpPipe.Push(message.Message, message.EndPoint);
             } else {
-                Log.Debug("Dropping HTTP send message due to TTL being over. {1} To : {0}", message.EndPoint, message.Message.GetType().Name.ToString());
+                Log.Debug("Dropping HTTP send message due to TTL being over. {1} To : {0}", message.EndPoint, message.Message.GetType().Name.ToString()); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
             }
         }
 
@@ -93,7 +93,7 @@ namespace EventStore.Core.Services
                 message.HttpEntityManager.ReplyStatus(
                     code,
                     deniedToHandle.Details,
-                    exc => Log.Debug("Error occurred while replying to HTTP with message {0}: {1}.", message.Message, exc.Message));
+                    exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
                 HistogramService.SetValue(_httpSendHistogram,
                    (long)((((double)_watch.ElapsedTicks - start) / Stopwatch.Frequency) * 1000000000));
             }
@@ -110,7 +110,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {0}: {1}.", message.Message, exc.Message));
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {0}: {1}.", message.Message, exc.Message));
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
                 }
                 HistogramService.SetValue(_httpSendHistogram,
                    (long)((((double)_watch.ElapsedTicks - start) / Stopwatch.Frequency) * 1000000000));
@@ -142,11 +142,11 @@ namespace EventStore.Core.Services
             var response = message.Data;
             message.HttpEntityManager.ContinueReplyTextContent(
                 response,
-                exc => Log.Debug("Error occurred while replying to HTTP with message {0}: {1}.", message, exc.Message),
+                exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message, exc.Message),
                 () =>
                 {
                     if (message.Envelope != null)
-                        message.Envelope.ReplyWith(new HttpMessage.HttpCompleted(message.CorrelationId, message.HttpEntityManager));
+                        message.Envelope.ReplyWith(new HttpMessage.HttpCompleted(message.CorrelationId, message.HttpEntityManager)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
                 });
         }
 
@@ -250,13 +250,13 @@ namespace EventStore.Core.Services
                     }
                     catch(Exception ex) 
                     {
-                        Log.Debug("Error in SendAsync for forwarded request for '{0}': {1}.",
+                        Log.Debug("Error in SendAsync for forwarded request for '{@requestedUrl}': {@message}.",
                                   manager.RequestedUrl, ex.InnerException.Message);
                         ForwardReplyFailed(manager);
                         return;
                     }
 
-                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{0}': {1}.", manager.RequestedUrl, exc.Message));
+                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{@requestedUrl}': {@fixthisvar}.", manager.RequestedUrl, exc.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
                 });
         }
     }

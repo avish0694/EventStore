@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,7 +106,7 @@ namespace EventStore.ClientAPI.Internal
                     var err = string.Format("EventStoreConnection '{0}': operation never got response from server.\n"
                                             + "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
                                             _connectionName, DateTime.UtcNow, operation);
-                    _settings.Log.Debug(err);
+                    _settings.Log.Debug(err); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
 
                     if (_settings.FailOnNoServerResponse)
                     {
@@ -209,7 +209,7 @@ namespace EventStore.ClientAPI.Internal
             var err = string.Format("EventStoreConnection '{0}': request expired.\n"
                                                     + "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
                                                     _connectionName, DateTime.UtcNow, operation);
-            _settings.Log.Debug(err);
+            _settings.Log.Debug(err); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             operation.Operation.Fail(new OperationExpiredException(err));
             return true;
         }
@@ -239,7 +239,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
         }
 
         internal class OperationItemSeqNoComparer : IComparer<OperationItem>

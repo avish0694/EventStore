@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2012, Event Store LLP
+// Copyright (c) 2012, Event Store LLP
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
@@ -79,7 +79,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             while (stopWatch.Elapsed < TimeSpan.FromMilliseconds(1000 + 10 * streams.Length * EventsPerStream))
             {
                 state = projectionManager.GetState(countItemsProjectionName);
-                Log.Info("Raw state: {0}", state);
+                Log.Info("Raw state: {@state}", state);
                 if (state.Contains(expectedAllEventsCount))
                 {
                     success = true;

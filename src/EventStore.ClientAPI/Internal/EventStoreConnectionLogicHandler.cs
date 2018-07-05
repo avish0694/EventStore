@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
@@ -378,7 +378,7 @@ namespace EventStore.ClientAPI.Internal
                 var msg = string.Format("EventStoreConnection '{0}': closing TCP connection [{1}, {2}, {3}] due to HEARTBEAT TIMEOUT at pkgNum {4}.",
                                         _esConnection.ConnectionName, _connection.RemoteEndPoint, _connection.LocalEndPoint,
                                         _connection.ConnectionId, packageNumber);
-                _settings.Log.Info(msg);
+                _settings.Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                 CloseTcpConnection(msg);
             }
         }
@@ -578,7 +578,7 @@ namespace EventStore.ClientAPI.Internal
 
             var msg = string.Format("EventStoreConnection '{0}': going to reconnect to [{1}]. Current endpoint: [{2}, L{3}].",
                                     _esConnection.ConnectionName, endPoint, _connection.RemoteEndPoint, _connection.LocalEndPoint);
-            if (_settings.VerboseLogging) _settings.Log.Info(msg);
+            if (_settings.VerboseLogging) _settings.Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             CloseTcpConnection(msg);
 
             _state = ConnectionState.Connecting;
@@ -588,12 +588,12 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
         }
 
         private void LogInfo(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{0}': {1}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
         }
 
         private void RaiseConnectedEvent(IPEndPoint remoteEndPoint)

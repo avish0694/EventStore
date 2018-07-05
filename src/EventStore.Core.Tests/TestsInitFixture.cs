@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -28,14 +28,14 @@ namespace EventStore.Core.Tests
         {
             var log = LogManager.GetLoggerFor<TestsInitFixture>();
 
-            log.Info("\n{0,-25} {1} ({2}/{3}, {4})\n"
+            log.Info("\n{0,-25} {@fixthisvar} ({@fixthisvar}/{@fixthisvar}, {@version})\n"
                      + "{5,-25} {6} ({7})\n"
                      + "{8,-25} {9} ({10}-bit)\n"
                      + "{11,-25} {12}\n\n",
                      "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp,
                      "OS:", OS.OsFlavor, Environment.OSVersion,
                      "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8,
-                     "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
+                     "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1)); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25},{1},{2},{3}*/
         }
 
         [OneTimeTearDown]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Principal;
 using EventStore.Common.Log;
@@ -47,7 +47,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<ClientMessage.ReadEvent>.Handle(ClientMessage.ReadEvent msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Read Event operation has expired for Stream: {0}, Event Number: {1}. Operation Expired at {2}", msg.EventStreamId, msg.EventNumber, msg.Expires);
+                Log.Debug("Read Event operation has expired for Stream: {@eventStreamId}, Event Number: {@eventNumber}. Operation Expired at {@expires}", msg.EventStreamId, msg.EventNumber, msg.Expires);
                 return;
             }
             msg.Envelope.ReplyWith(ReadEvent(msg));
@@ -56,7 +56,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<ClientMessage.ReadStreamEventsForward>.Handle(ClientMessage.ReadStreamEventsForward msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Read Stream Events Forward operation has expired for Stream: {0}, From Event Number: {1}, Max Count: {2}. Operation Expired at {3}", msg.EventStreamId, msg.FromEventNumber, msg.MaxCount, msg.Expires);
+                Log.Debug("Read Stream Events Forward operation has expired for Stream: {@eventStreamId}, From Event Number: {@fromEventNumber}, Max Count: {@maxCount}. Operation Expired at {@expires}", msg.EventStreamId, msg.FromEventNumber, msg.MaxCount, msg.Expires);
                 return;
             }
             using (HistogramService.Measure(_readerStreamRangeHistogram))
@@ -92,7 +92,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<ClientMessage.ReadStreamEventsBackward>.Handle(ClientMessage.ReadStreamEventsBackward msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Read Stream Events Backward operation has expired for Stream: {0}, From Event Number: {1}, Max Count: {2}. Operation Expired at {3}", msg.EventStreamId, msg.FromEventNumber, msg.MaxCount, msg.Expires);
+                Log.Debug("Read Stream Events Backward operation has expired for Stream: {@eventStreamId}, From Event Number: {@fromEventNumber}, Max Count: {@maxCount}. Operation Expired at {@expires}", msg.EventStreamId, msg.FromEventNumber, msg.MaxCount, msg.Expires);
                 return;
             }
             msg.Envelope.ReplyWith(ReadStreamEventsBackward(msg));
@@ -101,7 +101,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<ClientMessage.ReadAllEventsForward>.Handle(ClientMessage.ReadAllEventsForward msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Read All Stream Events Forward operation has expired for C:{0}/P:{1}. Operation Expired at {2}", msg.CommitPosition, msg.PreparePosition, msg.Expires);
+                Log.Debug("Read All Stream Events Forward operation has expired for C:{@commitPosition}/P:{@preparePosition}. Operation Expired at {@expires}", msg.CommitPosition, msg.PreparePosition, msg.Expires);
                 return;
             }
             using (HistogramService.Measure(_readerAllRangeHistogram))
@@ -142,7 +142,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<ClientMessage.ReadAllEventsBackward>.Handle(ClientMessage.ReadAllEventsBackward msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Read All Stream Events Backward operation has expired for C:{0}/P:{1}. Operation Expired at {2}", msg.CommitPosition, msg.PreparePosition, msg.Expires);
+                Log.Debug("Read All Stream Events Backward operation has expired for C:{@commitPosition}/P:{@preparePosition}. Operation Expired at {@expires}", msg.CommitPosition, msg.PreparePosition, msg.Expires);
                 return;
             }
             msg.Envelope.ReplyWith(ReadAllEventsBackward(msg));
@@ -151,7 +151,7 @@ namespace EventStore.Core.Services.Storage
         void IHandle<StorageMessage.CheckStreamAccess>.Handle(StorageMessage.CheckStreamAccess msg)
         {
             if (msg.Expires < DateTime.UtcNow){
-                Log.Debug("Check Stream Access operation has expired for Stream: {0}. Operation Expired at {1}", msg.EventStreamId, msg.Expires);
+                Log.Debug("Check Stream Access operation has expired for Stream: {@eventStreamId}. Operation Expired at {@expires}", msg.EventStreamId, msg.Expires);
                 return;
             }
             msg.Envelope.ReplyWith(CheckStreamAccess(msg));
@@ -185,7 +185,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadEvent request.");
+                    Log.ErrorException(exc, "Error during processing ReadEvent request."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                     return NoData(msg, ReadEventResult.Error, exc.Message);
                 }
             }
@@ -225,7 +225,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadStreamEventsForward request.");
+                    Log.ErrorException(exc, "Error during processing ReadStreamEventsForward request."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                     return NoData(msg, ReadStreamResult.Error, lastCommitPosition, error: exc.Message);
                 }
             }
@@ -266,7 +266,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadStreamEventsBackward request.");
+                    Log.ErrorException(exc, "Error during processing ReadStreamEventsBackward request."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     return NoData(msg, ReadStreamResult.Error, lastCommitPosition, error: exc.Message);
                 }
             }
@@ -311,7 +311,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadAllEventsForward request.");
+                    Log.ErrorException(exc, "Error during processing ReadAllEventsForward request."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                     return NoData(msg, ReadAllResult.Error, pos, lastCommitPosition, exc.Message);
                 }
             }
@@ -357,7 +357,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadAllEventsBackward request.");
+                    Log.ErrorException(exc, "Error during processing ReadAllEventsBackward request."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                     return NoData(msg, ReadAllResult.Error, pos, lastCommitPosition, exc.Message);
                 }
             }
@@ -380,7 +380,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error during processing CheckStreamAccess({0}, {1}) request.", msg.EventStreamId, msg.TransactionId);
+                Log.ErrorException(exc, "Error during processing CheckStreamAccess({@eventStreamId}, {@transactionId}) request.", msg.EventStreamId, msg.TransactionId);
                 return new StorageMessage.CheckStreamAccessCompleted(msg.CorrelationId, streamId, msg.TransactionId, 
                                                                      msg.AccessType, new StreamAccess(false));
             }
@@ -498,7 +498,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {0}", eventRecord.ToString());
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@fixthisvar}", eventRecord.ToString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
                 }
                 // return unresolved link
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);

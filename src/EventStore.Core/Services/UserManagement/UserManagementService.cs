@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Security.Principal;
 using EventStore.Common.Log;
@@ -533,7 +533,7 @@ namespace EventStore.Core.Services.UserManagement
                             CreateAdminUser();
                             break;
                         default:
-                            _log.Error("'admin' user account could not be created");
+                            _log.Error("'admin' user account could not be created"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                             NotifyInitialized();
                             break;
                         case OperationResult.Success:
@@ -543,27 +543,27 @@ namespace EventStore.Core.Services.UserManagement
                                         switch (completed.Result)
                                         {
                                             case OperationResult.Success:
-                                                _log.Info("'admin' user account has been created.");
+                                                _log.Info("'admin' user account has been created."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                 WriteUsersStreamEvent("admin", x =>
                                                     {
                                                         if (x.Result == OperationResult.Success)
                                                         {
-                                                            _log.Info("'admin' user added to $users.");
+                                                            _log.Info("'admin' user added to $users."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                                                         }
                                                         else
                                                         {
-                                                            _log.Error(string.Format("unable to add 'admin' to $users. {0}", x.Result));
+                                                            _log.Error(string.Format("unable to add 'admin' to $users. {@fixthisvar}", x.Result)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                                                         }
                                                         NotifyInitialized();
                                                     });
                                                 break;
                                             case OperationResult.CommitTimeout:
                                             case OperationResult.PrepareTimeout:
-                                                _log.Error("'admin' user account creation timed out retrying.");
+                                                _log.Error("'admin' user account creation timed out retrying."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                 CreateAdminUser();
                                                 break;
                                             default:
-                                                _log.Error("'admin' user account could not be created.");
+                                                _log.Error("'admin' user account could not be created."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                                                 NotifyInitialized();
                                                 break;
                                         }
@@ -588,7 +588,7 @@ namespace EventStore.Core.Services.UserManagement
                             CreateOperationsUser();
                             break;
                         default:
-                            _log.Error("'ops' user account could not be created");
+                            _log.Error("'ops' user account could not be created"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                             NotifyInitialized();
                             break;
                         case OperationResult.Success:
@@ -598,27 +598,27 @@ namespace EventStore.Core.Services.UserManagement
                                         switch (completed.Result)
                                         {
                                             case OperationResult.Success:
-                                                _log.Info("'ops' user account has been created.");
+                                                _log.Info("'ops' user account has been created."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                 WriteUsersStreamEvent("ops", x =>
                                                     {
                                                         if (x.Result == OperationResult.Success)
                                                         {
-                                                            _log.Info("'ops' user added to $users.");
+                                                            _log.Info("'ops' user added to $users."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                                                         }
                                                         else
                                                         {
-                                                            _log.Error(string.Format("unable to add 'ops' to $users. {0}", x.Result));
+                                                            _log.Error(string.Format("unable to add 'ops' to $users. {@fixthisvar}", x.Result)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                                                         }
                                                         NotifyInitialized();
                                                     });
                                                 break;
                                             case OperationResult.CommitTimeout:
                                             case OperationResult.PrepareTimeout:
-                                                _log.Error("'ops' user account creation timed out retrying.");
+                                                _log.Error("'ops' user account creation timed out retrying."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                 CreateOperationsUser();
                                                 break;
                                             default:
-                                                _log.Error("'ops' user account could not be created.");
+                                                _log.Error("'ops' user account could not be created."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                                                 NotifyInitialized();
                                                 break;
                                         }

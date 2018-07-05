@@ -134,11 +134,11 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (InvalidOperationException)
             {
-                _log.Info("Received error reading counters. Attempting to rebuild.");
+                _log.Info("Received error reading counters. Attempting to rebuild."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 _perfCounter = new PerfCounterHelper(_log);
                 _giveup = count > 10;
                 if (_giveup)
-                    _log.Error("Maximum rebuild attempts reached. Giving up on rebuilds.");
+                    _log.Error("Maximum rebuild attempts reached. Giving up on rebuilds."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 else
                     GetPerfCounterInformation(stats, count + 1);
             }
@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                _log.DebugException(ex, "Could not get free mem on linux, received memory info raw string: [{0}]", meminfo);
+                _log.DebugException(ex, "Could not get free mem on linux, received memory info raw string: [{@meminfo}]", meminfo);
                 return -1;
             }
         }
@@ -195,7 +195,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                _log.DebugException(ex, "Could not get free memory on BSD.");
+                _log.DebugException(ex, "Could not get free memory on BSD."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 return -1;
             }
         }
@@ -222,7 +222,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                _log.DebugException(ex, "Could not get free memory on OSX.");
+                _log.DebugException(ex, "Could not get free memory on OSX."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 return -1;
             }
         }

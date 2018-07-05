@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
@@ -91,11 +91,11 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             }
             catch (Exception ex)
             {
-                Log.InfoException(ex, "Failed to read projection statistics. Will continue.");
+                Log.InfoException(ex, "Failed to read projection statistics. Will continue."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 rawState = null;
             }
 
-            Log.Info("Raw {0} stats: {1}", projectionName, rawState);
+            Log.Info("Raw {@projectionName} stats: {@rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;
@@ -119,7 +119,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
         {
             var rawState = GetProjectionStateSafe(projectionName);
 
-            Log.Info("Raw {0} state: {1}", projectionName, rawState);
+            Log.Info("Raw {@projectionName} state: {@rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;
@@ -141,7 +141,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             catch (Exception ex)
             {
                 rawState = null;
-                Log.InfoException(ex, "Failed to get projection state");
+                Log.InfoException(ex, "Failed to get projection state"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             }
             return rawState;
         }
@@ -161,12 +161,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                     if (!isRunning)
                     {
-                        Log.Debug(string.Format("Enable *{0}* projection", byCategoryProjection));
+                        Log.Debug(string.Format("Enable *{@fixthisvar}* projection", byCategoryProjection)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
                         GetProjectionsManager().EnableAsync(byCategoryProjection, AdminCredentials).Wait();
                     }
                     else
                     {
-                        Log.Debug(string.Format("Already enabled *{0}* projection", byCategoryProjection));
+                        Log.Debug(string.Format("Already enabled *{@fixthisvar}* projection", byCategoryProjection)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                     }
 
                     exception = null;
@@ -175,7 +175,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 catch (Exception ex)
                 {
                     exception = new ApplicationException("Failed to enable by_category.", ex);
-                    Log.ErrorException(ex, "Failed to enable *$by_category* projection, retry #{0}.", retryCount);
+                    Log.ErrorException(ex, "Failed to enable *$by_category* projection, retry #{@retryCount}.", retryCount);
                 }
                 retryCount += 1;
             }

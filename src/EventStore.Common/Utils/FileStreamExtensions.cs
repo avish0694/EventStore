@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -36,7 +36,7 @@ namespace EventStore.Common.Utils
         {
             if (disableFlushToDisk)
             {
-                Log.Info("FlushToDisk: DISABLED");
+                Log.Info("FlushToDisk: DISABLED"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 FlushSafe = f => f.Flush(flushToDisk: false);
                 return;
             }
@@ -59,7 +59,7 @@ namespace EventStore.Common.Utils
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while compiling sneaky SafeFileHandle getter.");
+                    Log.ErrorException(exc, "Error while compiling sneaky SafeFileHandle getter."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     FlushSafe = f => f.Flush(flushToDisk: true);
                 }
             }

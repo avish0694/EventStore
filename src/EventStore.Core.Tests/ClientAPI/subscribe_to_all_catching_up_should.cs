@@ -62,7 +62,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             CatchUpSubscriptionSettings.Default,
                                                             (x, y) => Task.CompletedTask,
                                                             _ => Log.Info("Live processing started."),
-                                                            (x, y, z) => dropped.Signal());
+                                                            (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
 
                 Assert.IsFalse(dropped.Wait(0));
                 subscription.Stop(Timeout);
@@ -83,7 +83,7 @@ namespace EventStore.Core.Tests.ClientAPI
                 store.SubscribeToAllFrom(null, CatchUpSubscriptionSettings.Default,
                                            (x, y) => { throw new Exception("Error"); },
                                            _ => Log.Info("Live processing started."),
-                                           (x, y, z) => dropped.Signal());
+                                           (x, y, z) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 Assert.IsTrue(dropped.Wait(Timeout));
             }
         }
@@ -106,7 +106,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                 return Task.CompletedTask;
                                                             },
                                                             _ => Log.Info("Live processing started."),
-                                                            (_, __, ___) => dropped.Signal());
+                                                            (_, __, ___) => dropped.Signal()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
 
                 Thread.Sleep(100); // give time for first pull phase
                 store.SubscribeToAllAsync(false, (s, x) => Task.CompletedTask, (s, r, e) => { }).Wait();
@@ -147,7 +147,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                 return Task.CompletedTask;
                                                             },
                                                             _ => Log.Info("Live processing started."),
-                                                            (x, y, z) => dropped.Signal());
+                                                            (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 for (int i = 10; i < 20; ++i)
                 {
                     store.AppendToStreamAsync("stream-" + i.ToString(), -1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
@@ -201,7 +201,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             _ => Log.Info("Live processing started."),
                                                             (x, y, z) =>
                                                             {
-                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z);
+                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                                 dropped.Signal();
                                                             });
 
@@ -209,13 +209,13 @@ namespace EventStore.Core.Tests.ClientAPI
                 {
                     store.AppendToStreamAsync("stream-" + i.ToString(), -1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
                 }
-                Log.Info("Waiting for events...");
+                Log.Info("Waiting for events..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");
                     Assert.Fail("Could not wait for all events.");
                 }
-                Log.Info("Events appeared...");
+                Log.Info("Events appeared..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 Assert.AreEqual(10, events.Count);
                 for (int i = 0; i < 10; ++i)
                 {
@@ -260,17 +260,17 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             _ => Log.Info("Live processing started."),
                                                             (x, y, z) =>
                                                             {
-                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z);
+                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                                                                 dropped.Signal();
                                                             });
 
-                Log.Info("Waiting for events...");
+                Log.Info("Waiting for events..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");
                     Assert.Fail("Could not wait for all events.");
                 }
-                Log.Info("Events appeared...");
+                Log.Info("Events appeared..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 Assert.AreEqual(1, events.Count);
                 Assert.AreEqual("et-9", events[0].OriginalEvent.EventType);
 

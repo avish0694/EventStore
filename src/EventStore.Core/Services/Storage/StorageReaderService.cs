@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
@@ -74,7 +74,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error while stopping readers multi handler.");
+                Log.ErrorException(exc, "Error while stopping readers multi handler."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             }
 
             _bus.Publish(new SystemMessage.ServiceShutdown("StorageReader"));

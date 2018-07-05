@@ -163,7 +163,7 @@ namespace EventStore.Core.Services.Transport.Tcp
 
         private void OnConnectionEstablished(ITcpConnection connection)
         {
-            Log.Info("Connection '{0}' ({1:B}) to [{2}] established.", ConnectionName, ConnectionId, connection.RemoteEndPoint);
+            Log.Info("Connection '{@connectionName}' ({1:B}) to [{@remoteEndPoint}] established.", ConnectionName, ConnectionId, connection.RemoteEndPoint); /*TODO: structured-log @avish0694: the following parameters need attention: {1:B}*/
 
             ScheduleHeartbeat(0);
 
@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionFailed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{0}' ({1:B}) to [{2}] failed: {3}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError);
+            Log.Info("Connection '{@connectionName}' ({1:B}) to [{@remoteEndPoint}] failed: {@socketError}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError); /*TODO: structured-log @Lougarou: the following parameters need attention: {1:B}*/
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
         }
@@ -183,8 +183,8 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionClosed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{0}{1}' [{2}, {3:B}] closed: {4}.", 
-                     ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, connection.RemoteEndPoint, ConnectionId, socketError);
+            Log.Info("Connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, {3:B}] closed: {@socketError}.", 
+                     ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, connection.RemoteEndPoint, ConnectionId, socketError); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{3:B}*/
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
         }
@@ -257,8 +257,8 @@ namespace EventStore.Core.Services.Transport.Tcp
                     try 
                     {
                         var message = (ClientMessage.IdentifyClient)_dispatcher.UnwrapPackage(package, _tcpEnvelope, null, null, null, this, _version);
-                        Log.Info("Connection '{0}' ({1:B}) identified by client. Client connection name: '{2}', Client version: {3}.",
-                            ConnectionName, ConnectionId, message.ConnectionName, (ClientVersion)message.Version);
+                        Log.Info("Connection '{@connectionName}' ({1:B}) identified by client. Client connection name: '{2}', Client version: {3}.",
+                            ConnectionName, ConnectionId, message.ConnectionName, (ClientVersion)message.Version); /*TODO: structured-log @avish0694: duplicate variable name detected: {@connectionName}*/
                         _version = (byte)message.Version;
                         _clientConnectionName = message.ConnectionName;
                         _connection.SetClientConnectionName(_clientConnectionName);
@@ -266,7 +266,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                     }
                     catch (Exception ex)
                     {
-                        Log.Error("Error identifying client: {0}", ex);
+                        Log.Error("Error identifying client: {@ex}", ex);
                     }
                     break;
                 }
@@ -278,7 +278,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                         string.Format("Bad request received from '{0}{1}' [{2}, L{3}, {4:B}], will stop server. CorrelationId: {5:B}, Error: {6}.",
                                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, 
                                       LocalEndPoint, ConnectionId, package.CorrelationId, reason.IsEmptyString() ? "<reason missing>" : reason);
-                    Log.Error(exitMessage);
+                    Log.Error(exitMessage); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                     break;
                 }
                 case TcpCommand.Authenticate:
@@ -359,8 +359,8 @@ namespace EventStore.Core.Services.Transport.Tcp
             Ensure.NotNull(message, "message");
 
             SendPackage(new TcpPackage(TcpCommand.BadRequest, correlationId, Helper.UTF8NoBom.GetBytes(message)), checkQueueSize: false);
-            Log.Error("Closing connection '{0}{1}' [{2}, L{3}, {4:B}] due to error. Reason: {5}",
-                      ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId, message);
+            Log.Error("Closing connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, L{@localEndPoint}, {4:B}] due to error. Reason: {@message}",
+                      ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId, message); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{4:B}*/
             _connection.Close(message);
         }
 
@@ -373,9 +373,9 @@ namespace EventStore.Core.Services.Transport.Tcp
 
         public void Stop(string reason = null)
         {
-            Log.Trace("Closing connection '{0}{1}' [{2}, L{3}, {4:B}] cleanly.{5}",
+            Log.Trace("Closing connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, L{@localEndPoint}, {4:B}] cleanly.{@fixthisvar}",
                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId,
-                      reason.IsEmpty() ? string.Empty : " Reason: " + reason);
+                      reason.IsEmpty() ? string.Empty : " Reason: " + reason); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{4:B},{5}*/
             _connection.Close(reason);
         }
 

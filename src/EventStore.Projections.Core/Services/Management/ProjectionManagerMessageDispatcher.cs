@@ -49,7 +49,7 @@ namespace EventStore.Projections.Core.Services.Management
             if (_queueMap.TryGetValue(workerId, out worker))
                 worker.Publish(message);
             else
-                _logger.Info("Cannot find a worker with ID: " + workerId);
+                _logger.Info("Cannot find a worker with ID: " + workerId); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
 
         public void Handle(PartitionProcessingResultOutputBase message)

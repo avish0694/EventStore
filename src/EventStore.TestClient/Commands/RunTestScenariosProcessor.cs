@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -108,7 +108,7 @@ namespace EventStore.TestClient.Commands
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Invalid arguments ({0})", e.Message);
+                        Log.Error("Invalid arguments ({@message})", e.Message);
                         return false;
                     }
                 }
@@ -131,7 +131,7 @@ namespace EventStore.TestClient.Commands
                      streamDeleteStep,
                      executionPeriodMinutes,
                      dbParentPath,
-                     customNode);
+                     customNode); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
 
             var directTcpSender = CreateDirectTcpSender(context);
             var allScenarios = new IScenario[]
@@ -208,13 +208,13 @@ namespace EventStore.TestClient.Commands
                                             customNode), 
                 };
 
-            Log.Info("Found scenarios {0} total :\n{1}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
-                                                                                                       (sb, s) => sb.AppendFormat("{0}, ", s.GetType().Name)));
+            Log.Info("Found scenarios {@allScenarios} total :\n{@fixthisvar}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
+                                                                                                       (sb, s) => sb.AppendFormat("{0}, ", s.GetType().Name))); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
             var scenarios = allScenarios.Where(x => scenarioName == AllScenariosFlag
                                                     || x.GetType().Name.Equals(scenarioName, StringComparison.InvariantCultureIgnoreCase))
                                         .ToArray();
 
-            Log.Info("Running test scenarios ({0} total)...", scenarios.Length);
+            Log.Info("Running test scenarios ({@scenarios} total)...", scenarios.Length);
 
             foreach (var scenario in scenarios)
             {
@@ -222,10 +222,10 @@ namespace EventStore.TestClient.Commands
                 {
                     try
                     {
-                        Log.Info("Run scenario {0}", scenario.GetType().Name);
+                        Log.Info("Run scenario {@fixthisvar}", scenario.GetType().Name); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                         scenario.Run();
                         scenario.Clean();
-                        Log.Info("Scenario run successfully");
+                        Log.Info("Scenario run successfully"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
                     }
                     catch (Exception e)
                     {
@@ -233,7 +233,7 @@ namespace EventStore.TestClient.Commands
                     }
                 }
             }
-            Log.Info("Finished running test scenarios");
+            Log.Info("Finished running test scenarios"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
 
             if (context.ExitCode == 0)
                 context.Success();

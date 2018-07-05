@@ -58,7 +58,7 @@ namespace EventStore.Core.Authentication
                 var userData = completed.Events[0].Event.Data.ParseJson<UserData>();
                 if (userData.LoginName != authenticationRequest.Name)
                 {
-                    authenticationRequest.Error();
+                    authenticationRequest.Error(); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
                     return;
                 }
                 if (userData.Disabled)

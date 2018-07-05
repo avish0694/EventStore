@@ -90,7 +90,7 @@ namespace EventStore.TestClient.Commands
             clients.ForEach(client => client.Close());
 
             var reqPerSec = (all + 0.0)/sw.ElapsedMilliseconds*1000;
-            context.Log.Info("{0} requests completed in {1}ms ({2:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
+            context.Log.Info("{@all} requests completed in {@elapsedMilliseconds}ms ({2:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:0.00}*/
             PerfUtils.LogData(Keyword,
                               PerfUtils.Row(PerfUtils.Col("clientsCnt", clientsCnt),
                                             PerfUtils.Col("requestsCnt", requestsCnt),

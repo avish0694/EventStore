@@ -286,7 +286,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         "",
                         "");
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed."));
+                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
 
         private void PostSubscription(HttpEntityManager http, UriTemplateMatch match)
@@ -350,7 +350,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         "",
                         "");
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed."));
+                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
         }
 
         private SubscriptionConfigData ParseConfig(SubscriptionConfigData config)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
 
@@ -19,49 +19,49 @@ namespace EventStore.TestClient
         public void Error(string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.Error(format);
+                _log.Error(format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             else
-                _log.Error(format, args);
+                _log.Error(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void Error(Exception ex, string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.ErrorException(ex, format);
+                _log.ErrorException(ex, format); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             else
-                _log.ErrorException(ex, format, args);
+                _log.ErrorException(ex, format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void Info(string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.Info(format);
+                _log.Info(format); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             else
-                _log.Info(format, args);
+                _log.Info(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
 
         public void Info(Exception ex, string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.InfoException(ex, format);
+                _log.InfoException(ex, format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             else
-                _log.InfoException(ex, format, args);
+                _log.InfoException(ex, format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void Debug(string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.Debug(format);
+                _log.Debug(format); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             else
-                _log.Debug(format, args);
+                _log.Debug(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void Debug(Exception ex, string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.DebugException(ex, format);
+                _log.DebugException(ex, format); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             else
-                _log.DebugException(ex, format, args);
+                _log.DebugException(ex, format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
     }
 }

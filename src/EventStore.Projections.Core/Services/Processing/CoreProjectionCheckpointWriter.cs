@@ -61,7 +61,7 @@ namespace EventStore.Projections.Core.Services.Processing
             {
                 if (_logger != null)
                     _logger.Trace(
-                        "Checkpoint has been written for projection {0} at sequence number {1} (current)", _name,
+                        "Checkpoint has been written for projection {@name} at sequence number {@firstWrittenEventNumber} (current)", _name,
                         firstWrittenEventNumber);
                 _lastWrittenCheckpointEventNumber = firstWrittenEventNumber;
 
@@ -73,8 +73,8 @@ namespace EventStore.Projections.Core.Services.Processing
                 if (_logger != null)
                 {
                     _logger.Info(
-                        "Failed to write projection checkpoint to stream {0}. Error: {1}", eventStreamId,
-                        Enum.GetName(typeof (OperationResult), operationResult));
+                        "Failed to write projection checkpoint to stream {@eventStreamId}. Error: {@fixthisvar}", eventStreamId,
+                        Enum.GetName(typeof (OperationResult), operationResult)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
                 }
                 switch (operationResult)
                 {
@@ -104,7 +104,7 @@ namespace EventStore.Projections.Core.Services.Processing
         {
             if (_logger != null)
                 _logger.Trace(
-                    "Writing checkpoint for {0} at {1} with expected version number {2}", _name, _requestedCheckpointPosition, _lastWrittenCheckpointEventNumber);
+                    "Writing checkpoint for {@name} at {@requestedCheckpointPosition} with expected version number {@lastWrittenCheckpointEventNumber}", _name, _requestedCheckpointPosition, _lastWrittenCheckpointEventNumber);
             if (_lastWrittenCheckpointEventNumber == ExpectedVersion.NoStream)
                 PublishWriteStreamMetadata();
             else

@@ -393,9 +393,9 @@ namespace EventStore.Projections.Core.Services.Processing
             if (_logger != null)
             {
                 if (ex != null)
-                    _logger.ErrorException(ex, faultedReason);
+                    _logger.ErrorException(ex, faultedReason); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
                 else
-                    _logger.Error(faultedReason);
+                    _logger.Error(faultedReason); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             }
             _coreProjection.SetFaulting(faultedReason);
         }
@@ -578,7 +578,7 @@ namespace EventStore.Projections.Core.Services.Processing
                         resolvedEvent, orderCheckpointTag, completed);
                     break;
                 case PhaseState.Stopped:
-                    _logger.Error("Should not receive events in stopped state anymore");
+                    _logger.Error("Should not receive events in stopped state anymore"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                     completed(); // allow collecting events for debugging
                     break;
             }

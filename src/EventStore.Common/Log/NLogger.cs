@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using EventStore.Common.Utils;
@@ -44,58 +44,58 @@ namespace EventStore.Common.Log
 
         public void Fatal(string format, params object[] args)
         {
-            _logger.Fatal(format, args);
+            _logger.Fatal(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void Error(string format, params object[] args)
         {
-            _logger.Error(format, args);
+            _logger.Error(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void Info(string format, params object[] args)
         {
-            _logger.Info(format, args);
+            _logger.Info(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
 
         public void Debug(string format, params object[] args)
         {
-            _logger.Debug(format, args);
+            _logger.Debug(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void Warn(string format, params object[] args)
         {
-            _logger.Warn(format, args);
+            _logger.Warn(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void Trace(string format, params object[] args)
         {
-            _logger.Trace(format, args);
+            _logger.Trace(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             
         }
 
         public void FatalException(Exception exc, string format, params object[] args)
         {
-            _logger.Fatal(format, args, exc);
+            _logger.Fatal(format, args, exc); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void ErrorException(Exception exc, string format, params object[] args)
         {   
-            _logger.Error(format,args,exc);
+            _logger.Error(format,args,exc); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public void InfoException(Exception exc, string format, params object[] args)
         {
-            _logger.Info(format,args,exc);
+            _logger.Info(format,args,exc); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
 
         public void DebugException(Exception exc, string format, params object[] args)
         {
-           _logger.Debug(format, args,exc);
+           _logger.Debug(format, args,exc); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
         }
 
         public void TraceException(Exception exc, string format, params object[] args)
         {
-            _logger.Trace(format,args,exc);
+            _logger.Trace(format,args,exc); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
         }
 
         public static void FlushLog(TimeSpan? maxTimeToWait = null)

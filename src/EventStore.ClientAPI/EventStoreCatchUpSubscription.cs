@@ -131,7 +131,7 @@ namespace EventStore.ClientAPI
 
         internal Task StartAsync()
         {
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: starting...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: starting...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
             return RunSubscriptionAsync();
         }
 
@@ -143,7 +143,7 @@ namespace EventStore.ClientAPI
         public void Stop(TimeSpan timeout)
         {
             Stop();
-            if (Verbose) Log.Debug("Waiting on subscription {0} to stop", SubscriptionName);
+            if (Verbose) Log.Debug("Waiting on subscription {@subscriptionName} to stop", SubscriptionName);
             if (!_stopped.Wait(timeout))
                 throw new TimeoutException(string.Format("Could not stop {0} in time.", GetType().Name));
         }
@@ -153,8 +153,8 @@ namespace EventStore.ClientAPI
         /// </summary>
         public void Stop()
         {
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: requesting stop...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: requesting stop...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
             _connection.Connected -= OnReconnect;
 
             ShouldStop = true;
@@ -163,8 +163,8 @@ namespace EventStore.ClientAPI
 
         private void OnReconnect(object sender, ClientConnectionEventArgs clientConnectionEventArgs)
         {
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: recovering after reconnection.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: recovering after reconnection.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
             _connection.Connected -= OnReconnect;
             RunSubscriptionAsync();
         }
@@ -176,14 +176,14 @@ namespace EventStore.ClientAPI
 
         private async Task LoadHistoricalEventsAsync()
         {
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: running...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: running...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
 
             _stopped.Reset();
             _allowProcessing = false;
 
             if (!ShouldStop)
             {
-                if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: pulling events...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+                if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: pulling events...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
 
                 try
                 {
@@ -206,7 +206,7 @@ namespace EventStore.ClientAPI
         {
             if (!ShouldStop)
             {
-                if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: subscribing...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+                if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: subscribing...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
 
                 var subscription =
                     StreamId == string.Empty
@@ -226,7 +226,7 @@ namespace EventStore.ClientAPI
         {
             if (!ShouldStop)
             {
-                if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: pulling events (if left)...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+                if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: pulling events (if left)...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
 
                 await ReadEventsTillAsync(_connection, _resolveLinkTos, _userCredentials, _subscription.LastCommitPosition, _subscription.LastEventNumber).ConfigureAwait(false);
                 StartLiveProcessing();
@@ -245,12 +245,12 @@ namespace EventStore.ClientAPI
                 return;
             }
 
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: processing live events...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: processing live events...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
 
             if (_liveProcessingStarted != null)
                 _liveProcessingStarted(this);
 
-            if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: hooking to connection.Connected", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: hooking to connection.Connected", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
             _connection.Connected += OnReconnect;
 
             _allowProcessing = true;
@@ -261,10 +261,10 @@ namespace EventStore.ClientAPI
         {
             if (Verbose)
             {
-                Log.Debug("Catch-up Subscription {0} to {1}: event appeared ({2}, {3}, {4} @ {5}).",
+                Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: event appeared ({@originalStreamId}, {@originalEventNumber}, {@eventType} @ {@originalPosition}).",
                          SubscriptionName,
                          IsSubscribedToAll ? "<all>" : StreamId,
-                         e.OriginalStreamId, e.OriginalEventNumber, e.OriginalEvent.EventType, e.OriginalPosition);
+                         e.OriginalStreamId, e.OriginalEventNumber, e.OriginalEvent.EventType, e.OriginalPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
             }
 
             if (_liveQueue.Count >= MaxPushQueueSize)
@@ -325,7 +325,7 @@ namespace EventStore.ClientAPI
                     }
                     catch (Exception exc)
                     {
-                        Log.Debug("Catch-up Subscription {0} to {1} Exception occurred in subscription {1}", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId, exc);
+                        Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar} Exception occurred in subscription {1}", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId, exc); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {1}*/
                         DropSubscription(SubscriptionDropReason.EventHandlerException, exc);
                         return;
                     }
@@ -339,10 +339,10 @@ namespace EventStore.ClientAPI
             if (Interlocked.CompareExchange(ref _isDropped, 1, 0) == 0)
             {
                 if (Verbose)
-                    Log.Debug("Catch-up Subscription {0} to {1}: dropping subscription, reason: {2} {3}.",
+                    Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: dropping subscription, reason: {@reason} {@fixthisvar}.",
                               SubscriptionName,
                               IsSubscribedToAll ? "<all>" : StreamId,
-                              reason, error == null ? string.Empty : error.ToString());
+                              reason, error == null ? string.Empty : error.ToString()); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{3}*/
 
                 _subscription?.Unsubscribe();
                 _subscriptionDropped?.Invoke(this, reason, error);
@@ -433,10 +433,10 @@ namespace EventStore.ClientAPI
             if(shouldStopOrDone && Verbose)
             {
                 Log.Debug(
-                    "Catch-up Subscription {0} to {1}: finished reading events, nextReadPosition = {2}.",
+                    "Catch-up Subscription {@subscriptionName} to {@fixthisvar}: finished reading events, nextReadPosition = {@nextReadPosition}.",
                     SubscriptionName,
                     IsSubscribedToAll ? "<all>" : StreamId,
-                    _nextReadPosition);
+                    _nextReadPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
             }
             return shouldStopOrDone;
         }
@@ -482,11 +482,11 @@ namespace EventStore.ClientAPI
             }
             if (Verbose)
             {
-                Log.Debug("Catch-up Subscription {0} to {1}: {2} event ({3}, {4}, {5} @ {6}).",
+                Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: {@fixthisvar} event ({@eventStreamId}, {@eventNumber}, {@eventType} @ {@originalPosition}).",
                          SubscriptionName,
                          IsSubscribedToAll ? "<all>" : StreamId,
                          processed ? "processed" : "skipping",
-                         e.OriginalEvent.EventStreamId, e.OriginalEvent.EventNumber, e.OriginalEvent.EventType, e.OriginalPosition);
+                         e.OriginalEvent.EventStreamId, e.OriginalEvent.EventNumber, e.OriginalEvent.EventType, e.OriginalPosition); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
             }
         }
     }
@@ -552,10 +552,10 @@ namespace EventStore.ClientAPI
             if (shouldStopOrDone && Verbose)
             {
                 Log.Debug(
-                    "Catch-up Subscription {0} to {1}: finished reading events, nextReadEventNumber = {2}.",
+                    "Catch-up Subscription {@subscriptionName} to {@fixthisvar}: finished reading events, nextReadEventNumber = {@nextReadEventNumber}.",
                     SubscriptionName,
                     IsSubscribedToAll ? "<all>" : StreamId,
-                    _nextReadEventNumber);
+                    _nextReadEventNumber); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
             }
             return shouldStopOrDone;
         }
@@ -622,10 +622,10 @@ namespace EventStore.ClientAPI
             }
             if (Verbose)
             {
-                Log.Debug("Catch-up Subscription {0} to {1}: {2} event ({3}, {4}, {5} @ {6}).",
+                Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: {@fixthisvar} event ({@eventStreamId}, {@eventNumber}, {@eventType} @ {@originalEventNumber}).",
                          SubscriptionName,
                          IsSubscribedToAll ? "<all>" : StreamId, processed ? "processed" : "skipping",
-                         e.OriginalEvent.EventStreamId, e.OriginalEvent.EventNumber, e.OriginalEvent.EventType, e.OriginalEventNumber);
+                         e.OriginalEvent.EventStreamId, e.OriginalEvent.EventNumber, e.OriginalEvent.EventType, e.OriginalEventNumber); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
             }
         }
     }

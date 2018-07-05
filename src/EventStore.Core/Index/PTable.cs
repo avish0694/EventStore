@@ -87,7 +87,7 @@ namespace EventStore.Core.Index
             _id = id;
             _filename = filename;
 
-            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{0}' started...", Path.GetFileName(Filename));
+            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{0}' started...", Path.GetFileName(Filename)); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             var sw = Stopwatch.StartNew();
             _size = new FileInfo(_filename).Length;
 
@@ -199,11 +199,11 @@ namespace EventStore.Core.Index
             }
             catch (PossibleToHandleOutOfMemoryException)
             {
-                Log.Error("Unable to create midpoints for PTable '{0}' ({1} entries, depth {2} requested). "
-                          + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth);
+                Log.Error("Unable to create midpoints for PTable '{@fixthisvar}' ({@count} entries, depth {@depth} requested). "
+                          + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
             }
-            Log.Trace("Loading PTable (Version: {0}) '{1}' ({2} entries, cache depth {3}) done in {4}.",
-                      _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed);
+            Log.Trace("Loading PTable (Version: {@version}) '{@fixthisvar}' ({@count} entries, cache depth {@calcdepth}) done in {@elapsed}.",
+                      _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
         }
 
         internal Midpoint[] CacheMidpointsAndVerifyHash(int depth, bool skipIndexVerify)
@@ -216,7 +216,7 @@ namespace EventStore.Core.Index
                 return null;
 
             if(skipIndexVerify){
-                Log.Debug("Disabling Verification of PTable");
+                Log.Debug("Disabling Verification of PTable"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             }
 #if  MONO
             var workItem = GetWorkItem();
@@ -245,7 +245,7 @@ namespace EventStore.Core.Index
                             if(_midpointsCached == midpointsCount){
                                 //index verification is disabled and cached midpoints with the same depth requested are available
                                 //so, we can load them directly from the PTable file
-                                Log.Debug("Loading {0} cached midpoints from PTable",_midpointsCached);
+                                Log.Debug("Loading {@midpointsCached} cached midpoints from PTable",_midpointsCached);
                                 long startOffset = stream.Length - MD5Size - PTableFooter.GetSize(_version) - _midpointsCacheSize;
                                 stream.Seek(startOffset,SeekOrigin.Begin);
                                 for(uint k=0;k<_midpointsCached;k++){
@@ -273,7 +273,7 @@ namespace EventStore.Core.Index
                                 return midpoints;
                             }
                             else
-                                Log.Debug("Skipping loading of cached midpoints from PTable due to count mismatch, cached midpoints: {0} / required midpoints: {1}",_midpointsCached, midpointsCount);
+                                Log.Debug("Skipping loading of cached midpoints from PTable due to count mismatch, cached midpoints: {@midpointsCached} / required midpoints: {@midpointsCount}",_midpointsCached, midpointsCount);
                         }
 
                         if(!skipIndexVerify){
