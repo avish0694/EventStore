@@ -91,7 +91,7 @@ namespace EventStore.Core.Util
                                        config.ContentType,
                                        config.Encoding,
                                        config.Headers,
-                                       ex => Logger.InfoException(ex, "Error while replying from MiniWeb")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                       ex => Logger.InfoException(ex, "Error while replying from MiniWeb"));
                 }
             }
             catch (Exception ex)

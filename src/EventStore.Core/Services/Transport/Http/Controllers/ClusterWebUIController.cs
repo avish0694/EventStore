@@ -46,7 +46,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
 				"application/json",
 				null,
 				ex => Log.InfoException(ex, "Failed to prepare main menu")
-				); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+				);
         }
 
         private static void RegisterRedirectAction(IHttpService service, string fromUrl, string toUrl)

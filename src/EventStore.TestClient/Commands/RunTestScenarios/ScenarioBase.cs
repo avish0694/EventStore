@@ -264,7 +264,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             return Task.Factory.ContinueWhenAll(tasks.ToArray(), tsks =>
             {
                 Task.WaitAll(tsks);
-                Log.Info("Stream deletion verification succeeded."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Stream deletion verification succeeded.");
             });
         }
 
@@ -383,7 +383,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             if (processId != -1)
                 KillStartedNode(processId);
             else
-                Log.Info("Skip killing, procId -1"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Skip killing, procId -1");
         }
 
         private void KillStartedNode(int processId)
@@ -460,7 +460,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             Log.Info("Send scavenge command..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             var package = new TcpPackage(TcpCommand.ScavengeDatabase, Guid.NewGuid(), null).AsByteArray();
             DirectSendOverTcp(new IPEndPoint(_nodeConnection.IpAddress, _nodeConnection.TcpPort), package);
-            Log.Info("Scavenge command was sent."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Info("Scavenge command was sent.");
         }
 
         private Task WriteSingleEventAtTime(string stream, int events, Func<int, EventData> createEvent)

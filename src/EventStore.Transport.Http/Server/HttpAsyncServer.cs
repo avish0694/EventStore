@@ -70,7 +70,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.FatalException(e, "Failed to start http server"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Logger.FatalException(e, "Failed to start http server");
                 return false;
             }
         }

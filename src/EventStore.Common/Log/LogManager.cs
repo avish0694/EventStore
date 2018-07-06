@@ -123,7 +123,7 @@ namespace EventStore.Common.Log
             }
             catch (Exception exc)
             {
-                GlobalLogger.ErrorException(exc, "Exception while flushing logs, ignoring..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                GlobalLogger.ErrorException(exc, "Exception while flushing logs, ignoring...");
             }
         }
 

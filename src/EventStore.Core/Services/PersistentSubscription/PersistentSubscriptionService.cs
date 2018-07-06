@@ -93,7 +93,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         public void Handle(SystemMessage.BecomeMaster message)
         {
-            Log.Debug("Subscriptions Became Master so now handling subscriptions"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Debug("Subscriptions Became Master so now handling subscriptions");
             InitToEmpty();
             _handleTick = true;
             _bus.Publish(_tickRequestMessage);
@@ -338,7 +338,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(ClientMessage.DeletePersistentSubscription message)
         {
             if (!_started) return;
-            Log.Debug("delete subscription " + message.GroupName); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Debug("delete subscription {@groupName}", message.GroupName);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -578,7 +578,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         public void Handle(ClientMessage.ReplayAllParkedMessages message)
         {
-            Log.Debug("Replying parked messages."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Debug("Replying parked messages.");
             PersistentSubscription subscription;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
                         var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
@@ -704,7 +704,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                     break;
                 case OperationResult.CommitTimeout:
                 case OperationResult.PrepareTimeout:
-                    Log.Info("Timeout while trying to save subscription configuration."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.Info("Timeout while trying to save subscription configuration.");
                     SaveConfiguration(continueWith);
                     break;
                 default:

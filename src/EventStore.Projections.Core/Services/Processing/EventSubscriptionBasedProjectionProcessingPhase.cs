@@ -578,7 +578,7 @@ namespace EventStore.Projections.Core.Services.Processing
                         resolvedEvent, orderCheckpointTag, completed);
                     break;
                 case PhaseState.Stopped:
-                    _logger.Error("Should not receive events in stopped state anymore"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    _logger.Error("Should not receive events in stopped state anymore");
                     completed(); // allow collecting events for debugging
                     break;
             }

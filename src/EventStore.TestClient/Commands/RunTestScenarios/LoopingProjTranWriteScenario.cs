@@ -248,7 +248,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 var position = GetProjectionPosition(projectionName);
                 if (position >= (EventsPerStream - 1))
                 { 
-                    Log.Debug("Expected position reached, done."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.Debug("Expected position reached, done.");
                     break;
                 }
 

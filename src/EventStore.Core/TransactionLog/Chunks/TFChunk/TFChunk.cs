@@ -211,7 +211,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             try
             {
                 _chunkHeader = ReadHeader(reader.Stream);
-                Log.Debug("Opened completed " + _filename + " as version " + _chunkHeader.Version); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Debug("Opened completed {@filename} as version {@version}", _filename, _chunkHeader.Version);
                 if (_chunkHeader.Version != (byte) ChunkVersions.Unaligned && _chunkHeader.Version != (byte) ChunkVersions.Aligned)
                     throw new CorruptDatabaseException(new WrongFileVersionException(_filename, _chunkHeader.Version, CurrentChunkVersion));
 

@@ -62,7 +62,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             CatchUpSubscriptionSettings.Default,
                                                             (x, y) => Task.CompletedTask,
                                                             _ => Log.Info("Live processing started."),
-                                                            (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                                            (x, y, z) => dropped.Signal());
 
                 Assert.IsFalse(dropped.Wait(0));
                 subscription.Stop(Timeout);
@@ -147,7 +147,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                 return Task.CompletedTask;
                                                             },
                                                             _ => Log.Info("Live processing started."),
-                                                            (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                                            (x, y, z) => dropped.Signal());
                 for (int i = 10; i < 20; ++i)
                 {
                     store.AppendToStreamAsync("stream-" + i.ToString(), -1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
@@ -215,7 +215,7 @@ namespace EventStore.Core.Tests.ClientAPI
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");
                     Assert.Fail("Could not wait for all events.");
                 }
-                Log.Info("Events appeared..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Events appeared...");
                 Assert.AreEqual(10, events.Count);
                 for (int i = 0; i < 10; ++i)
                 {
@@ -270,7 +270,7 @@ namespace EventStore.Core.Tests.ClientAPI
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");
                     Assert.Fail("Could not wait for all events.");
                 }
-                Log.Info("Events appeared..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Events appeared...");
                 Assert.AreEqual(1, events.Count);
                 Assert.AreEqual("et-9", events[0].OriginalEvent.EventType);
 

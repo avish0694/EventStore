@@ -412,7 +412,7 @@ namespace EventStore.Core.Services.VNode
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error when stopping workers/main queue."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error when stopping workers/main queue.");
                 }
                 Application.Exit(ExitCode.Success, "Shutdown and exit from process was requested.");
             }

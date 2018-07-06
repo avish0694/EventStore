@@ -56,7 +56,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                     }
                     else
                     {
-                        Log.Info("Receiving..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        Log.Info("Receiving...");
                         ssl.ReceiveAsync(callback);
                     }
                 };
@@ -85,7 +85,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
 
             Assert.IsTrue(done.Wait(20000), "Took too long to receive completion.");
 
-            Log.Info("Stopping listener..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Info("Stopping listener...");
             listener.Stop();
             Log.Info("Closing client ssl connection..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             clientSsl.Close("Normal close.");

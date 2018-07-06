@@ -291,7 +291,7 @@ namespace EventStore.Projections.Core.Services.Processing
 
             if (_subscriptions.Count > 0)
             {
-                _logger.Info("_subscriptions is not empty after all the projections have been killed"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                _logger.Info("_subscriptions is not empty after all the projections have been killed");
                 _subscriptions.Clear();
             }
 
@@ -309,7 +309,7 @@ namespace EventStore.Projections.Core.Services.Processing
 
             if (_eventReaderSubscriptions.Count > 0)
             {
-                _logger.Info("_eventReaderSubscriptions is not empty after all the projections have been killed"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                _logger.Info("_eventReaderSubscriptions is not empty after all the projections have been killed");
                 _eventReaderSubscriptions.Clear();
             }
 

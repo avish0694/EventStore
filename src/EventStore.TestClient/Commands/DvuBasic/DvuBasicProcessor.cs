@@ -51,7 +51,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
             if (args.Length != 0 && args.Length != 5)
             {
-                context.Log.Error("Invalid number of arguments. Should be 0 or 5"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                context.Log.Error("Invalid number of arguments. Should be 0 or 5");
                 return false;
             }
 
@@ -74,7 +74,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (!int.TryParse(args[2], out eventsArg))
                 {
-                    context.Log.Error("Invalid argument value for <events>"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <events>");
                     return false;
                 }
                 if (!int.TryParse(args[3], out streamsArg))

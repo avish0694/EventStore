@@ -126,7 +126,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on regular stats collection."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error on regular stats collection.");
             }
         }
 
@@ -353,7 +353,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on getting fresh tcp connection stats"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error on getting fresh tcp connection stats");
             }
         }
 

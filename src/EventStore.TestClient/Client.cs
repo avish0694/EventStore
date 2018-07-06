@@ -230,7 +230,7 @@ namespace EventStore.TestClient
                     if (connectionClosed != null)
                         connectionClosed(conn, error);
                     else
-                        Log.Info("connectionClosed callback was null"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        Log.Info("connectionClosed callback was null");
                 };
             connectionCreatedEvent.Set();
 

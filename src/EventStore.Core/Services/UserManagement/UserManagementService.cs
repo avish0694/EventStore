@@ -533,7 +533,7 @@ namespace EventStore.Core.Services.UserManagement
                             CreateAdminUser();
                             break;
                         default:
-                            _log.Error("'admin' user account could not be created"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                            _log.Error("'admin' user account could not be created");
                             NotifyInitialized();
                             break;
                         case OperationResult.Success:
@@ -588,7 +588,7 @@ namespace EventStore.Core.Services.UserManagement
                             CreateOperationsUser();
                             break;
                         default:
-                            _log.Error("'ops' user account could not be created"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                            _log.Error("'ops' user account could not be created");
                             NotifyInitialized();
                             break;
                         case OperationResult.Success:

@@ -113,7 +113,7 @@ namespace EventStore.TestClient.Commands
                                     writtenEvents += 1;
                                     if (writtenEvents == eventsCnt)
                                     {
-                                        context.Log.Info("Written all events. Committing..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                        context.Log.Info("Written all events. Committing...");
 
                                         stage = Stage.Committing;
                                         var commitDto = new TcpClientMessageDto.TransactionCommit(transactionId, false);

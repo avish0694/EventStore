@@ -46,7 +46,7 @@ namespace EventStore.Projections.Core.Services.Management
         {
             if (_cancellationScope != null)
             {
-                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now");
                 _cancellationScope.Cancel();
             }
             _cancellationScope = new IODispatcherAsync.CancellationScope();

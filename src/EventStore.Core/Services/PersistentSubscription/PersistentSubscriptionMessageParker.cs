@@ -89,7 +89,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                             Log.Error(
                                 "An error occured reading the last event in the parked message stream {@parkedStreamId} due to {@result}.",
                                 _parkedStreamId, comp.Result);
-                            Log.Error("Messages were not removed on retry"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                            Log.Error("Messages were not removed on retry");
                             break;
                     }
                 });

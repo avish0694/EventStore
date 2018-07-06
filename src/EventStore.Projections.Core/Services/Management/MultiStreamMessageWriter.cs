@@ -27,7 +27,7 @@ namespace EventStore.Projections.Core.Services.Management
 
         public void Reset()
         {
-            Log.Debug("PROJECTIONS: Resetting Worker Writer"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Debug("PROJECTIONS: Resetting Worker Writer");
             _cancellationScope.Cancel();
             _cancellationScope = new IODispatcherAsync.CancellationScope();
             _queues.Clear();

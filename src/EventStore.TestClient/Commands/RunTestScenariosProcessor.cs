@@ -233,7 +233,7 @@ namespace EventStore.TestClient.Commands
                     }
                 }
             }
-            Log.Info("Finished running test scenarios"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Info("Finished running test scenarios");
 
             if (context.ExitCode == 0)
                 context.Success();

@@ -291,7 +291,7 @@ namespace EventStore.Transport.Tcp
                 Log.Info("Remote certificate was issued to {@subject} and is valid from {@fixthisvar} until {@fixthisvar}.",
                                 remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
             else
-                Log.Info("Remote certificate is null."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Remote certificate is null.");
         }
 
         public void EnqueueSend(IEnumerable<ArraySegment<byte>> data)
@@ -388,7 +388,7 @@ namespace EventStore.Transport.Tcp
 
             if (Interlocked.Exchange(ref _receiveCallback, callback) != null)
             {
-                Log.Fatal("ReceiveAsync called again while previous call wasn't fulfilled"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/ 
+                Log.Fatal("ReceiveAsync called again while previous call wasn't fulfilled");
                 throw new InvalidOperationException("ReceiveAsync called again while previous call wasn't fulfilled");
             }
             TryDequeueReceivedData();
@@ -475,7 +475,7 @@ namespace EventStore.Transport.Tcp
                     var callback = Interlocked.Exchange(ref _receiveCallback, null);
                     if (callback == null)
                     {
-                        Log.Fatal("Some threading issue in TryDequeueReceivedData! Callback is null!"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        Log.Fatal("Some threading issue in TryDequeueReceivedData! Callback is null!");
                         throw new Exception("Some threading issue in TryDequeueReceivedData! Callback is null!");
                     }
 
