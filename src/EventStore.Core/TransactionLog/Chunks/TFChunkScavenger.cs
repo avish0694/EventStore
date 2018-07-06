@@ -147,7 +147,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             var tmpChunkPath = Path.Combine(_db.Config.Path, Guid.NewGuid() + ".scavenge.tmp");
             var oldChunksList = string.Join("\n", oldChunks);
             Log.Trace("SCAVENGING: started to scavenge & merge chunks: {@oldChunksList}", oldChunksList);
-            Log.Trace("Resulting temp chunk file: {@fixthisvar}.", Path.GetFileName(tmpChunkPath)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+            Log.Trace("Resulting temp chunk file: {@chunk}.", Path.GetFileName(tmpChunkPath));
 
             TFChunk.TFChunk newChunk;
             try

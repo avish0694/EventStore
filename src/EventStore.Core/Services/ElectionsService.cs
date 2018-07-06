@@ -234,8 +234,8 @@ namespace EventStore.Core.Services
 
             if (AmILeaderOf(_lastAttemptedView))
             {
-                Log.Debug("ELECTIONS: (IV={@installedView}) VIEWCHANGEPROOF FROM [{@serverInternalHttp}, {2:B}]. JUMPING TO LEADER STATE.",
-                          message.InstalledView,  message.ServerInternalHttp, message.ServerId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B}*/
+                Log.Debug("ELECTIONS: (IV={@installedView}) VIEWCHANGEPROOF FROM [{@serverInternalHttp}, {@serverId:B}]. JUMPING TO LEADER STATE.",
+                          message.InstalledView,  message.ServerInternalHttp, message.ServerId);
 
                 ShiftToPreparePhase();
             }
@@ -304,10 +304,10 @@ namespace EventStore.Core.Services
             if (_state != ElectionsState.ElectingLeader) return;
             if (msg.View != _lastAttemptedView) return;
 
-            Log.Debug("ELECTIONS: (V={@view}) PREPARE_OK FROM {@fixthisvar}.", msg.View,
+            Log.Debug("ELECTIONS: (V={@view}) PREPARE_OK FROM {@nodeInfo}.", msg.View,
                       FormatNodeInfo(msg.ServerInternalHttp, msg.ServerId,
                                      msg.LastCommitPosition, msg.WriterCheckpoint, msg.ChaserCheckpoint,
-                                     msg.EpochNumber, msg.EpochPosition, msg.EpochId)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                                     msg.EpochNumber, msg.EpochPosition, msg.EpochId));
 
             if (!_prepareOkReceived.ContainsKey(msg.ServerId))
             {

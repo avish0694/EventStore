@@ -280,8 +280,8 @@ namespace EventStore.Transport.Tcp
 
             X509Certificate localCert = stream.LocalCertificate;
             if (localCert != null)
-                Log.Info("Local certificate was issued to {@subject} and is valid from {@fixthisvar} until {@fixthisvar}.",
-                                localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString()); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
+                Log.Info("Local certificate was issued to {@subject} and is valid from {@effectiveDate} until {@expirationDate}.",
+                                localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString());
             else
                 Log.Info("Local certificate is null."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
@@ -528,9 +528,9 @@ namespace EventStore.Transport.Tcp
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         SendCalls, SendCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
-                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        ReceiveCalls, ReceiveCallbacks);
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Close reason: [{@socketError}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         socketError, reason); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/

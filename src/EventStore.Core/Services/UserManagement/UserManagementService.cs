@@ -552,7 +552,7 @@ namespace EventStore.Core.Services.UserManagement
                                                         }
                                                         else
                                                         {
-                                                            _log.Error(string.Format("unable to add 'admin' to $users. {@fixthisvar}", x.Result)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                                                            _log.Error(string.Format("unable to add 'admin' to $users. {@e}", x.Result));
                                                         }
                                                         NotifyInitialized();
                                                     });
@@ -607,7 +607,7 @@ namespace EventStore.Core.Services.UserManagement
                                                         }
                                                         else
                                                         {
-                                                            _log.Error(string.Format("unable to add 'ops' to $users. {@fixthisvar}", x.Result)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                                                            _log.Error(string.Format("unable to add 'ops' to $users. {@e}", x.Result));
                                                         }
                                                         NotifyInitialized();
                                                     });

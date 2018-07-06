@@ -38,7 +38,7 @@ namespace EventStore.Core.Tests.Index.IndexV4
 
                     for(var i=0;i<requiredMidpoints.Count;i++){
                         if(requiredMidpoints[i]!=calculatedMidpoints[i]){
-                            Log.Error("Midpoint mismatch at index {@i} for numIndexEntries: {@numIndexEntries}, depth:{@depth} - Expected {@fixthisvar}, Found {@fixthisvar}",i,numIndexEntries,depth,requiredMidpoints[i],calculatedMidpoints[i]); /*TODO: structured-log @shaan1337: the following parameters need attention: {3},{4}*/
+                            Log.Error("Midpoint mismatch at index {@i} for numIndexEntries: {@numIndexEntries}, depth:{@depth} - Expected {@requiredMidpoints}, Found {@calculatedMidpoints}",i,numIndexEntries,depth,requiredMidpoints[i],calculatedMidpoints[i]);
                         }
                         Assert.AreEqual(requiredMidpoints[i],calculatedMidpoints[i]);
                     }

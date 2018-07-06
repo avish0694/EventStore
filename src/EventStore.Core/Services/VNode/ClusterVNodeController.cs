@@ -785,10 +785,10 @@ namespace EventStore.Core.Services.VNode
         {
             if (IsLegitimateReplicationMessage(message))
             {
-                Log.Info("========== [{@internalHttp}] SLAVE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@fixthisvar},{3:B}].",
+                Log.Info("========== [{@internalHttp}] SLAVE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@internalSecureTcp},{@masterId:B}].",
                          _nodeInfo.InternalHttp,
                          _master.InternalTcp, _master.InternalSecureTcp == null ? "n/a" : _master.InternalSecureTcp.ToString(),
-                         message.MasterId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2},{3:B}*/
+                         message.MasterId);
                 _outputBus.Publish(message);
                 _fsm.Handle(new SystemMessage.BecomeSlave(_stateCorrelationId, _master));
             }

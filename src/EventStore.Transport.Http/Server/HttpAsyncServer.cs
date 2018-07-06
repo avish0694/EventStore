@@ -45,7 +45,7 @@ namespace EventStore.Transport.Http.Server
         {
             try
             {
-                Logger.Info("Starting HTTP server on [{@fixthisvar}]...", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                Logger.Info("Starting HTTP server on [{@listenerPrefixes}]...", string.Join(",", _listener.Prefixes));
                 try
                 {
                     _listener.Start();
@@ -145,7 +145,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.DebugException(e, "EndGetContext exception. Status : {@fixthisvar}.", IsListening ? "listening" : "stopped"); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                Logger.DebugException(e, "EndGetContext exception. Status : {@status}.", IsListening ? "listening" : "stopped");
             }
 
             if (success)

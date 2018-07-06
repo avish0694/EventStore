@@ -86,7 +86,7 @@ namespace EventStore.Transport.Tcp
 
             if (Application.IsDefined(Application.DumpStatistics))
             {
-                Log.Trace("\n# Total connections: {0,3}. Out: {1:0.00}b/s  In: {2:0.00}b/s  Pending Send: {@pendingSend}  " +
+                Log.Trace("\n# Total connections: {@connections,3}. Out: {@sendingSpeed:0.00}b/s  In: {@receivingSpeed:0.00}b/s  Pending Send: {@pendingSend}  " +
                           "In Send: {4}  Pending Received: {5} Measure Time: {6}",
                           stats.Connections,
                           stats.SendingSpeed,
@@ -94,7 +94,7 @@ namespace EventStore.Transport.Tcp
                           stats.PendingSend,
                           stats.InSend,
                           stats.PendingSend,
-                          stats.MeasureTime); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,3},{1:0.00},{2:0.00}*/
+                          stats.MeasureTime);
             }
             return stats;
         }

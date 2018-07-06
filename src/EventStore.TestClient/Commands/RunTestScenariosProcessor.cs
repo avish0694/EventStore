@@ -208,8 +208,8 @@ namespace EventStore.TestClient.Commands
                                             customNode), 
                 };
 
-            Log.Info("Found scenarios {@allScenarios} total :\n{@fixthisvar}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
-                                                                                                       (sb, s) => sb.AppendFormat("{0}, ", s.GetType().Name))); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+            Log.Info("Found scenarios {@scenariosCount} total :\n{@scenarios}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
+                                                                                                       (sb, s) => sb.AppendFormat("{0}, ", s.GetType().Name)));
             var scenarios = allScenarios.Where(x => scenarioName == AllScenariosFlag
                                                     || x.GetType().Name.Equals(scenarioName, StringComparison.InvariantCultureIgnoreCase))
                                         .ToArray();

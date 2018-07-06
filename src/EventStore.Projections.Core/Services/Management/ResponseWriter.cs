@@ -77,7 +77,7 @@ namespace EventStore.Projections.Core.Services.Management
                             //TODO: PROJECTIONS: Remove before release
                             if (!Logging.FilteredMessages.Contains(evt.EventType))
                             {
-                                _logger.Debug("PROJECTIONS: Finished writing events to {@fixthisvar}: {@eventType}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                                _logger.Debug("PROJECTIONS: Finished writing events to {@stream}: {@eventType}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType);
                             }
                         }
                     }

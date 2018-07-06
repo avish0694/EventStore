@@ -91,8 +91,8 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (producersArg.Any(p => !AvailableProducers.Contains(p)))
                 {
-                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{@fixthisvar}]",
-                                      string.Join(",", AvailableProducers)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{@producers}]",
+                                      string.Join(",", AvailableProducers));
                     return false;
                 }
                 writers = writersArg;

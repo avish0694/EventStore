@@ -76,7 +76,7 @@ namespace EventStore.Projections.Core.Services.Processing
                                 readResultForward = completed;
                                 success = true;
                             },
-                            () => Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder.BuildControlStreamName(epochId))); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                            () => Log.Warn("Read forward of stream {@stream} timed out. Retrying", ProjectionNamesBuilder.BuildControlStreamName(epochId)));
                 }
                 if (readResultForward.Result != ReadStreamResult.Success
                     && readResultForward.Result != ReadStreamResult.NoStream)

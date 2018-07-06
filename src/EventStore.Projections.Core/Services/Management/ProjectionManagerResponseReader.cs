@@ -119,7 +119,7 @@ namespace EventStore.Projections.Core.Services.Management
                     SystemAccount.Principal,
                     ReadForwardCompleted,
                     () => {
-                        Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                        Log.Warn("Read forward of stream {@stream} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream);
                         ReadForward();
                     },
                     _correlationId)

@@ -196,10 +196,10 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         protected Task Write(WriteMode mode, string[] streams, int eventsPerStream, Func<int, EventData> createEvent)
         {
-            Log.Info("Writing. Mode : {0,-15} Streams : {1,-10} Events per stream : {2,-10}",
+            Log.Info("Writing. Mode : {@mode,-15} Streams : {@streams,-10} Events per stream : {@eventsPerStream,-10}",
                      mode,
                      streams.Length,
-                     eventsPerStream); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-15},{1,-10},{2,-10}*/
+                     eventsPerStream);
 
             Func<string, int, Func<int, EventData>, Task> handler;
             if (!_writeHandlers.TryGetValue(mode, out handler))
@@ -233,7 +233,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 var s = stream;
                 Log.Info("Deleting stream {@stream}...", stream);
                 var task = store.DeleteStreamAsync(stream, (EventsPerStream - 1), hardDelete: true)
-                                .ContinueWith(x => Log.Info("Stream {@fixthisvar} successfully deleted", s)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                                .ContinueWith(x => Log.Info("Stream {@stream} successfully deleted", s));
 
                 tasks.Add(task);
             }

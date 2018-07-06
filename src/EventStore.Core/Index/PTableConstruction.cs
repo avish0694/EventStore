@@ -181,8 +181,8 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@fixthisvar}] entries merged into {@fixthisvar}).",
-                      watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
+            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@newEntryCount}).",
+                      watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
 

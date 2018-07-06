@@ -387,7 +387,7 @@ namespace EventStore.Transport.Http.EntityManagement
             if (copier.Error != null)
             {
                 state.Dispose();
-                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@fixthisvar}", exc.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@e}", exc.Message));
 
                 state.OnError(copier.Error);
                 return;

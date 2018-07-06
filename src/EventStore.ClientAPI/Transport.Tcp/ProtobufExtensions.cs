@@ -26,7 +26,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.Debug("Deserialization to {@fixthisvar} failed : {@e}", typeof(T).FullName, e); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                Log.Debug("Deserialization to {@type} failed : {@e}", typeof(T).FullName, e);
                 return default(T);
             }
         }

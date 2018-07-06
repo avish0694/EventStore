@@ -135,7 +135,7 @@ namespace EventStore.Projections.Core.v8
                     break;
                 default:
                     Log.Debug(
-                        string.Format("Unknown command handler registered. Command name: {@fixthisvar}", commandName)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                        string.Format("Unknown command handler registered. Command name: {@commandName}", commandName));
                     break;
             }
         }

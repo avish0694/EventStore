@@ -166,7 +166,7 @@ namespace EventStore.TestClient
                 ThreadPool.QueueUserWorkItem(_ => 
                 {
                     if (!InteractiveMode)
-                        Log.Info("TcpTypedConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {2:B}].", conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B}*/
+                        Log.Info("TcpTypedConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}].", conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId);
                     if (connectionEstablished != null)
                     {
                         if (!connectionCreatedEvent.Wait(10000))

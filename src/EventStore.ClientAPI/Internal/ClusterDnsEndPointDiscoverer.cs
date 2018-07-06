@@ -248,7 +248,7 @@ namespace EventStore.ClientAPI.Internal
                            
             if (node == default(ClusterMessages.MemberInfoDto))
             {
-                //_log.Info("Unable to locate suitable node. Gossip info:\n{@fixthisvar}.", string.Join("\n", members.Select(x => x.ToString()))); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                //_log.Info("Unable to locate suitable node. Gossip info:\n{@members}.", string.Join("\n", members.Select(x => x.ToString())));
                 return null;
             }
 

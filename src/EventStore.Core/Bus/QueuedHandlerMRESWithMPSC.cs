@@ -136,10 +136,10 @@ namespace EventStore.Core.Bus
                                     var elapsed = DateTime.UtcNow - start;
                                     if (elapsed > _slowMsgThreshold)
                                     {
-                                        Log.Trace("SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@estimatedQueueCount}/{@fixthisvar}.",
+                                        Log.Trace("SLOW QUEUE MSG [{@queue}]: {@inProgressMessage} - {@elapsed}ms. Q: {@estimatedQueueCount}/{@curEstimatedQueueCount}.",
                                             Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
                                             estimatedQueueCount,
-                                            _queue.EstimageCurrentQueueCount()); /*TODO: structured-log @shaan1337: the following parameters need attention: {2},{4}*/
+                                            _queue.EstimageCurrentQueueCount());
                                         if (elapsed > QueuedHandler.VerySlowMsgThreshold &&
                                             !(msg is SystemMessage.SystemInit))
                                             Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@estimatedQueueCount}/{@fixthisvar}.",
