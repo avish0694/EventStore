@@ -93,9 +93,9 @@ namespace EventStore.Core.Messaging
 
                 foreach (var wrongType in wrongTypes)
                 {
-                    Log.Fatal("MsgTypeId {@typeId} is assigned to type: {@fixthisvar}",
+                    Log.Fatal("MsgTypeId {@typeId} is assigned to type: {@msgTypes}",
                               wrongType.TypeId,
-                              string.Join(", ", wrongType.MsgTypes.Select(x => x.Name))); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                              string.Join(", ", wrongType.MsgTypes.Select(x => x.Name)));
                 }
 
                 throw new Exception("Incorrect Message Type IDs setup.");

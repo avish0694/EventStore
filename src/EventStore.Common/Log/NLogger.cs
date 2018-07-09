@@ -54,7 +54,7 @@ namespace EventStore.Common.Log
 
         public void Info(string format, params object[] args)
         {
-            _logger.Info(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Info(format, args);
         }
 
         public void Debug(string format, params object[] args)
@@ -69,7 +69,7 @@ namespace EventStore.Common.Log
 
         public void Trace(string format, params object[] args)
         {
-            _logger.Trace(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Trace(format, args);
             
         }
 
@@ -85,7 +85,7 @@ namespace EventStore.Common.Log
 
         public void InfoException(Exception exc, string format, params object[] args)
         {
-            _logger.Info(format,args,exc); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Info(format,args,exc);
         }
 
         public void DebugException(Exception exc, string format, params object[] args)

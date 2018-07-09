@@ -413,8 +413,8 @@ namespace EventStore.Core.Services
             var ownInfo = GetOwnInfo();
             if (!IsCandidateGoodEnough(candidate, ownInfo))
             {
-                Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{2:B}] M={@fixthisvar}. ME={@fixthisvar}.",
-                          view, proposingServerEndPoint, proposingServerId, FormatNodeInfo(candidate), FormatNodeInfo(ownInfo)); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B},{3},{4}*/
+                Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{@proposingServerId:B}] M={@candidateInfo}. ME={@ownInfo}.",
+                          view, proposingServerEndPoint, proposingServerId, FormatNodeInfo(candidate), FormatNodeInfo(ownInfo));
                 return false;
             }
             return true;
@@ -485,8 +485,8 @@ namespace EventStore.Core.Services
                 if (master != null)
                 {
                     _master = _masterProposal.InstanceId;
-                    Log.Info("ELECTIONS: (V={@view}) DONE. ELECTED MASTER = {@fixthisvar}. ME={@fixthisvar}.", message.View,
-                             FormatNodeInfo(_masterProposal), FormatNodeInfo(GetOwnInfo())); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
+                    Log.Info("ELECTIONS: (V={@view}) DONE. ELECTED MASTER = {@masterInfo}. ME={@ownInfo}.", message.View,
+                             FormatNodeInfo(_masterProposal), FormatNodeInfo(GetOwnInfo()));
                     _lastElectedMaster = _master;
                     _publisher.Publish(new ElectionMessage.ElectionsDone(message.View, master));
                 }

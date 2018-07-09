@@ -378,7 +378,9 @@ namespace EventStore.ClientAPI.Internal
                 var msg = string.Format("EventStoreConnection '{0}': closing TCP connection [{1}, {2}, {3}] due to HEARTBEAT TIMEOUT at pkgNum {4}.",
                                         _esConnection.ConnectionName, _connection.RemoteEndPoint, _connection.LocalEndPoint,
                                         _connection.ConnectionId, packageNumber);
-                _settings.Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                _settings.Log.Info("EventStoreConnection '{@connectionName}': closing TCP connection [{@remoteEndPoint}, {@localEndPoint}, {@connectionId}] due to HEARTBEAT TIMEOUT at pkgNum {@packageNumber}.",
+                                        _esConnection.ConnectionName, _connection.RemoteEndPoint, _connection.LocalEndPoint,
+                                        _connection.ConnectionId, packageNumber);
                 CloseTcpConnection(msg);
             }
         }
@@ -593,7 +595,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogInfo(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{@connectionName}': {@message}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
 
         private void RaiseConnectedEvent(IPEndPoint remoteEndPoint)

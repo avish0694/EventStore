@@ -181,7 +181,7 @@ namespace EventStore.Core.Services.Storage
         private void WriteScavengeIndexEventCompleted(ClientMessage.WriteEventsCompleted msg, Event linkToEvent, int retryCount){
             if(msg.Result != OperationResult.Success){
                 if(retryCount > 0){
-                    Log.Error("Failed to write an event to the {@scavengesStream} stream. Retrying {@fixthisvar}/{@maxRetryCount}. Reason: {@result}", SystemStreams.ScavengesStream, (MaxRetryCount - retryCount) + 1, MaxRetryCount, msg.Result); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                    Log.Error("Failed to write an event to the {@scavengesStream} stream. Retrying {@retryCount}/{@maxRetryCount}. Reason: {@result}", SystemStreams.ScavengesStream, (MaxRetryCount - retryCount) + 1, MaxRetryCount, msg.Result);
                     WriteScavengeIndexEvent(linkToEvent, --retryCount);
                 }else{
                     Log.Error("Failed to write an event to the {@scavengesStream} stream. Retry limit of {@maxRetryCount} reached. Reason: {@result}", SystemStreams.ScavengesStream, MaxRetryCount, msg.Result);

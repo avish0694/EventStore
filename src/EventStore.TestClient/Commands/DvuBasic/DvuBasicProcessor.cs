@@ -183,7 +183,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
             }
 
             context.Log.Info(writersTable.CreateIndentedTable());
-            context.Log.Info(readersTable.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            context.Log.Info(readersTable.CreateIndentedTable());
 
             var success = writeStatuses.All(s => s.Success) && readStatuses.All(s => s.Success);
             if (success)

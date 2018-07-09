@@ -41,7 +41,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
             if (failsP > 50d)
                 _log.Fatal(table.CreateIndentedTable());
             else
-                _log.Info(table.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                _log.Info(table.CreateIndentedTable());
         }
 
         public void ReportReadsProgress(int threadId, int successes, int fails)

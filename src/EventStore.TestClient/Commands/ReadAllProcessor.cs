@@ -79,7 +79,7 @@ namespace EventStore.TestClient.Commands
                     if (dto.Events.IsEmpty())
                     {
                         sw.Stop();
-                        context.Log.Info("=== Reading ALL {2} completed in {0}. Total read: {1}", sw.Elapsed, total, forward ? "FORWARD" : "BACKWARD"); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {2}*/
+                        context.Log.Info("=== Reading ALL {@readDirection} completed in {@elapsed}. Total read: {@total}", forward ? "FORWARD" : "BACKWARD", sw.Elapsed, total);
                         context.Success();
                         conn.Close();
                         return;

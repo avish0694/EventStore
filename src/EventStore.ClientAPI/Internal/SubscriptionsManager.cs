@@ -213,7 +213,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@message}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
     }
 }

@@ -63,7 +63,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while starting transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                                    context.Log.Info("Error while starting transaction: {@message} ({@result}).", dto.Message, dto.Result);
                                     context.Fail(reason: msg);
                                 }
                                 else

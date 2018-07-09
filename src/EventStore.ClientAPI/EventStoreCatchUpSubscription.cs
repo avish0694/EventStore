@@ -325,7 +325,7 @@ namespace EventStore.ClientAPI
                     }
                     catch (Exception exc)
                     {
-                        Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar} Exception occurred in subscription {1}", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId, exc); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {1}*/
+                        Log.Debug(exc, "Catch-up Subscription {@subscriptionName} to {@streamId} Exception occurred in subscription.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
                         DropSubscription(SubscriptionDropReason.EventHandlerException, exc);
                         return;
                     }

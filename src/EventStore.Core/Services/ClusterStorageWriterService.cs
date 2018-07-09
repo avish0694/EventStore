@@ -89,14 +89,16 @@ namespace EventStore.Core.Services
             var writerCheck = Db.Config.WriterCheckpoint.ReadNonFlushed();
             if (message.SubscriptionPosition > writerCheck)
             {
-                ReplicationFail("Master [{0},{1:B}] subscribed us at {2} (0x{2:X}), which is greater than our writer checkpoint {3} (0x{3:X}). REPLICATION BUG.",
-                                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, writerCheck);
+                ReplicationFail(
+                "Master [{0},{1:B}] subscribed us at {2} (0x{3:X}), which is greater than our writer checkpoint {4} (0x{5:X}). REPLICATION BUG.",
+                "Master [{@masterEndpoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is greater than our writer checkpoint {@writerCheckpoint} (0x{@writerCheckpoint:X}). REPLICATION BUG.",
+                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionPosition, writerCheck, writerCheck);
             }
             
             if (message.SubscriptionPosition < writerCheck)
             {
-                Log.Info("Master [{@masterEndPoint},{1:B}] subscribed us at {@subscriptionPosition} (0x{2:X}), which is less than our writer checkpoint {3} (0x{3:X}). TRUNCATION IS NEEDED.",
-                         message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, writerCheck); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
+                Log.Info("Master [{@masterEndPoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is less than our writer checkpoint {@writerCheckpoint} (0x{@writerCheckpoint:X}). TRUNCATION IS NEEDED.",
+                         message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionPosition, writerCheck, writerCheck);
 
                 var lastCommitPosition = _getLastCommitPosition();
                 if (message.SubscriptionPosition > lastCommitPosition)
@@ -107,8 +109,8 @@ namespace EventStore.Core.Services
                 EpochRecord lastEpoch = EpochManager.GetLastEpoch();
                 if (AreAnyCommittedRecordsTruncatedWithLastEpoch(message.SubscriptionPosition, lastEpoch, lastCommitPosition))
                 {
-                    Log.Error("Master [{@masterEndPoint},{1:B}] subscribed us at {@subscriptionPosition} (0x{2:X}), which is less than our last epoch and LastCommitPosition {3} (0x{3:X}) >= lastEpoch.EpochPosition {4} (0x{4:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
-                                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, lastCommitPosition, lastEpoch.EpochPosition); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
+                    Log.Error("Master [{@masterEndPoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is less than our last epoch and LastCommitPosition {@lastCommitPosition} (0x{@lastCommitPosition:X}) >= lastEpoch.EpochPosition {@lastEpochPosition} (0x{@lastEpochPosition:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
+                                message.MasterEndPoint, message.MasterId, message.SubscriptionPosition,  message.SubscriptionPosition, lastCommitPosition, lastCommitPosition, lastEpoch.EpochPosition, lastEpoch.EpochPosition);
                     Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 }
 
@@ -148,8 +150,10 @@ namespace EventStore.Core.Services
             {
                 if (message.ChunkHeader.ChunkStartNumber != Db.Manager.ChunksCount)
                 {
-                    ReplicationFail("Received request to create a new ongoing chunk #{0}-{1}, but current chunks count is {2}.", 
-                                    message.ChunkHeader.ChunkStartNumber, message.ChunkHeader.ChunkEndNumber, Db.Manager.ChunksCount);
+                    ReplicationFail(
+                        "Received request to create a new ongoing chunk #{0}-{1}, but current chunks count is {2}.",
+                        "Received request to create a new ongoing chunk #{@chunkStartNumber}-{@chunkEndNumber}, but current chunks count is {@chunksCount}.",
+                        message.ChunkHeader.ChunkStartNumber, message.ChunkHeader.ChunkEndNumber, Db.Manager.ChunksCount);
                 }
                 Db.Manager.AddNewChunk(message.ChunkHeader, message.FileSize);
             }
@@ -162,7 +166,10 @@ namespace EventStore.Core.Services
         public void Handle(ReplicationMessage.RawChunkBulk message)
         {
             if (_subscriptionId != message.SubscriptionId) return;
-            if (_activeChunk == null) ReplicationFail("Physical chunk bulk received, but we do not have active chunk.");
+            if (_activeChunk == null)
+                ReplicationFail(
+                    "Physical chunk bulk received, but we do not have active chunk.",
+                    "Physical chunk bulk received, but we do not have active chunk.");
 
             if (_activeChunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || _activeChunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
             {
@@ -179,8 +186,10 @@ namespace EventStore.Core.Services
 
             if (!_activeChunk.TryAppendRawData(message.RawBytes))
             {
-                ReplicationFail("Could not append raw bytes to chunk {0}-{1}, raw pos: {2} (0x{2:X}), bytes length: {3} (0x{3:X}). Chunk file size: {4} (0x{4:X}).",
-                                message.ChunkStartNumber, message.ChunkEndNumber, message.RawPosition, message.RawBytes.Length, _activeChunk.FileSize);
+                ReplicationFail(
+                    "Could not append raw bytes to chunk {0}-{1}, raw pos: {2} (0x{3:X}), bytes length: {4} (0x{5:X}). Chunk file size: {6} (0x{7:X}).",
+                    "Could not append raw bytes to chunk {@chunkStartNumber}-{@chunkEndNumber}, raw pos: {@rawPosition} (0x{@rawPosition:X}), bytes length: {@rawBytesLength} (0x{@rawBytesLength:X}). Chunk file size: {@chunkFileSize} (0x{@chunkFileSize:X}).",
+                    message.ChunkStartNumber, message.ChunkEndNumber, message.RawPosition, message.RawPosition, message.RawBytes.Length,  message.RawBytes.Length, _activeChunk.FileSize, _activeChunk.FileSize);
             }
 
             _subscriptionPos += message.RawBytes.Length;
@@ -208,13 +217,16 @@ namespace EventStore.Core.Services
             try
             {
                 if (_subscriptionId != message.SubscriptionId) return;
-                if (_activeChunk != null) ReplicationFail("Data chunk bulk received, but we have active chunk for receiving raw chunk bulks.");
+                if (_activeChunk != null)
+                    ReplicationFail(
+                        "Data chunk bulk received, but we have active chunk for receiving raw chunk bulks.",
+                        "Data chunk bulk received, but we have active chunk for receiving raw chunk bulks.");
 
                 var chunk = Writer.CurrentChunk;
                 if (chunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || chunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
                 {
-                    Log.Error("Received DataChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {2}-{3}.",
-                              message.ChunkStartNumber, message.ChunkEndNumber, chunk.ChunkHeader.ChunkStartNumber, chunk.ChunkHeader.ChunkEndNumber); /*TODO: structured-log @shaan1337: duplicate variable name detected: {@chunkStartNumber}*/
+                    Log.Error("Received DataChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {@activeChunkStartNumber}-{@activeChunkEndNumber}.",
+                              message.ChunkStartNumber, message.ChunkEndNumber, chunk.ChunkHeader.ChunkStartNumber, chunk.ChunkHeader.ChunkEndNumber);
                     return;
                 }
 
@@ -234,7 +246,9 @@ namespace EventStore.Core.Services
                     Writer.CompleteChunk();
 
                     if (_framer.HasData) 
-                        ReplicationFail("There is some data left in framer when completing chunk.");
+                        ReplicationFail(
+                            "There is some data left in framer when completing chunk.",
+                            "There is some data left in framer when completing chunk.");
 
                     _subscriptionPos = chunk.ChunkHeader.ChunkEndPosition;
                     _framer.Reset();
@@ -262,13 +276,21 @@ namespace EventStore.Core.Services
             var record = LogRecord.ReadFrom(reader);
             long newPos;
             if (!Writer.Write(record, out newPos))
-                ReplicationFail("First write failed when writing replicated record: {0}.", record);
+                ReplicationFail(
+                    "First write failed when writing replicated record: {0}.",
+                    "First write failed when writing replicated record: {@record}.",
+                    record);
         }
 
-        private void ReplicationFail(string message, params object[] args)
+        private void ReplicationFail(string message, string messageStructured, params object[] args)
         {
+            if(args.Length==0){
+                Log.Fatal(messageStructured);
+            }
+            else{
+                Log.Fatal(messageStructured, args);
+            }
             var msg = args.Length == 0 ? message : string.Format(message, args);
-            Log.Fatal(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             BlockWriter = true;
             Application.Exit(ExitCode.Error, msg);
             throw new Exception(msg);

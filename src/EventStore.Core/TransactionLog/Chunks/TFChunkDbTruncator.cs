@@ -102,7 +102,8 @@ namespace EventStore.Core.TransactionLog.Chunks
 
             if (_config.ChaserCheckpoint.Read() > truncateChk)
             {
-                Log.Info("Truncating chaser from {@fixthisvar} (0x{0:X}) to {1} (0x{1:X}).", _config.ChaserCheckpoint.Read(), truncateChk); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {1}*/
+                var chaserChk = _config.ChaserCheckpoint.Read();
+                Log.Info("Truncating chaser from {@chaserCheckpoint} (0x{@chaserCheckpoint:X}) to {@truncateCheckpoint} (0x{@truncateCheckpoint:X}).", chaserChk, chaserChk, truncateChk, truncateChk);
                 _config.ChaserCheckpoint.Write(truncateChk);
                 _config.ChaserCheckpoint.Flush();
             }

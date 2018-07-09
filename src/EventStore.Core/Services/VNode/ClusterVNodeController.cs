@@ -323,8 +323,8 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS CATCHING UP... MASTER IS [{1},{2:B}]",
-                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId); /*TODO: structured-log @shaan1337: duplicate variable name detected: {@internalHttp}*/
+            Log.Info("========== [{@internalHttp}] IS CATCHING UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.CatchingUp;
             _outputBus.Publish(message);
         }
@@ -821,7 +821,9 @@ namespace EventStore.Core.Services.VNode
                 var msg = string.Format("{0} message passed SubscriptionId check, but master is either null or wrong. "
                                         + "Message.Master: [{1:B}], VNode Master: {2}.",
                                         message.GetType().Name, message.MasterId, _master);
-                Log.Fatal(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                Log.Fatal("{@messageType} message passed SubscriptionId check, but master is either null or wrong. "
+                        + "Message.Master: [{@masterId:B}], VNode Master: {@masterInfo}.",
+                        message.GetType().Name, message.MasterId, _master);
                 Application.Exit(ExitCode.Error, msg);
                 return false;
             }

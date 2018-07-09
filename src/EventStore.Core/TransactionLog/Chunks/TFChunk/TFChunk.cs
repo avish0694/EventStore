@@ -605,7 +605,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             }
             catch (OutOfMemoryException)
             {
-                Log.Error("CACHING FAILED due to OutOfMemory exception in TFChunk {@fixthisvar}.", this); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                Log.Error("CACHING FAILED due to OutOfMemory exception in TFChunk {@chunk}.", this);
                 _isCached = 0;
                 return;
             }
@@ -642,7 +642,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
             _readSide.Uncache();
 
-            Log.Trace("CACHED TFChunk {@fixthisvar} in {@elapsed}.", this, sw.Elapsed); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+            Log.Trace("CACHED TFChunk {@chunk} in {@elapsed}.", this, sw.Elapsed);
 
             if (_selfdestructin54321)
                 TryDestructMemStreams();

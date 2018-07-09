@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -183,8 +184,8 @@ namespace EventStore.Core.Services.Gossip
 
             if (CurrentMaster != null && node.InstanceId == CurrentMaster.InstanceId)
             {
-                Log.Trace("Looks like master [{@recipient}, {1:B}] is DEAD (Gossip send failed), though we wait for TCP to decide.",
-                          message.Recipient, node.InstanceId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1:B}*/
+                Log.Trace("Looks like master [{@recipient}, {@instanceId:B}] is DEAD (Gossip send failed), though we wait for TCP to decide.",
+                          message.Recipient, node.InstanceId);
                 return;
             }
             Log.Trace("Looks like node [{@recipient}] is DEAD (Gossip send failed).", message.Recipient);
@@ -277,19 +278,20 @@ namespace EventStore.Core.Services.Gossip
 
         private static void LogClusterChange(ClusterInfo oldCluster, ClusterInfo newCluster, string source)
         {
-            Log.Trace("CLUSTER HAS CHANGED{@source}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty);
-            Log.Trace("Old:");
             var ipEndPointComparer = new IPEndPointComparer();
-            foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
-            {
-                Log.Trace(oldMember.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
-            }
-            Log.Trace("New:");
-            foreach (var newMember in newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
-            {
-                Log.Trace(newMember.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
-            }
-            Log.Trace(new string('-', 80)); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            List<string> oldMembers = oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).Select(x => x.ToString()).ToList();
+            List<string> newMembers = newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).Select(x => x.ToString()).ToList();
+            Log.Trace(
+                "CLUSTER HAS CHANGED {@source}"
+                +"\nOld:"
+                +"\n{@oldMembers}"
+                +"\nNew:"
+                +"\n{@newMembers}"
+                +new string('-', 80)
+                , source.IsNotEmptyString() ? "(" + source + ")" : string.Empty
+                , oldMembers
+                , newMembers
+            ); /*TODO: structured-log test this*/
         }
     }
 }

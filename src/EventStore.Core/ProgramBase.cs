@@ -84,7 +84,7 @@ namespace EventStore.Core
                 var msg = "Unhandled exception while starting application:";
                 if(LogManager.Initialized)
                 {
-                    Log.FatalException(ex, msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                    Log.FatalException(ex, msg);
                     Log.FatalException(ex, "{@fixthisvar}", FormatExceptionMessage(ex)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                 }
                 else

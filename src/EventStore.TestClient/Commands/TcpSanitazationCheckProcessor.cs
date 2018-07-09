@@ -91,11 +91,11 @@ namespace EventStore.TestClient.Commands
                 step++;
             }
 
-            Log.Info("Sent {@packages} packages. {@commandsToCheck} invalid dtos, {@fixthisvar} bar formatted packages. Got {@fixthisvar} BadRequests. Success",
+            Log.Info("Sent {@packages} packages. {@commandsToCheck} invalid dtos, {@barFormattedPackages} bar formatted packages. Got {@badRequests} BadRequests. Success",
                      packages.Count(),
                      commandsToCheck.Length,
                      packages.Count() - commandsToCheck.Length,
-                     packages.Count()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{2},{3}*/
+                     packages.Count());
 
             Log.Info("Now sending raw bytes..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             try

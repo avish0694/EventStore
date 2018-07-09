@@ -20,7 +20,7 @@ namespace EventStore.Common.Log
 
         public void Fatal(string format, params object[] args)
         {
-            _logger.Value.Fatal(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Value.Fatal(format, args);
         }
 
         public void Error(string format, params object[] args)
@@ -35,7 +35,7 @@ namespace EventStore.Common.Log
 
         public void Warn(string format, params object[] args)
         {
-            _logger.Value.Warn(format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Value.Warn(format, args);
         }
 
         public void Debug(string format, params object[] args)
@@ -50,7 +50,7 @@ namespace EventStore.Common.Log
 
         public void FatalException(Exception exc, string format, params object[] args)
         {
-            _logger.Value.FatalException(exc, format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Value.FatalException(exc, format, args);
         }
 
         public void ErrorException(Exception exc, string format, params object[] args)
@@ -65,7 +65,7 @@ namespace EventStore.Common.Log
 
         public void DebugException(Exception exc, string format, params object[] args)
         {
-            _logger.Value.DebugException(exc, format, args); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            _logger.Value.DebugException(exc, format, args);
         }
 
         public void TraceException(Exception exc, string format, params object[] args)

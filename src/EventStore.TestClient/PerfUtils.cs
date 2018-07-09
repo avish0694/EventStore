@@ -36,7 +36,7 @@ namespace EventStore.TestClient
             }
             sb.AppendLine("end]]");
 
-            Log.Debug(sb.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            Log.Debug(sb.ToString());
         }
 
         private static string Format(string name, object value)

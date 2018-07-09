@@ -168,35 +168,45 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
         private void DisplaySslStreamInfo(SslStream stream)
         {
-            var sb = new StringBuilder();
-            sb.AppendFormat("[S{0}, L{1}]:\n", RemoteEndPoint, LocalEndPoint);
-            sb.AppendFormat("Cipher: {0} strength {1}\n", stream.CipherAlgorithm, stream.CipherStrength);
-            sb.AppendFormat("Hash: {0} strength {1}\n", stream.HashAlgorithm, stream.HashStrength);
-            sb.AppendFormat("Key exchange: {0} strength {1}\n", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
-            sb.AppendFormat("Protocol: {0}\n", stream.SslProtocol);
-            sb.AppendFormat("Is authenticated: {0} as server? {1}\n", stream.IsAuthenticated, stream.IsServer);
-            sb.AppendFormat("IsSigned: {0}\n", stream.IsSigned);
-            sb.AppendFormat("Is Encrypted: {0}\n", stream.IsEncrypted);
-            sb.AppendFormat("Can read: {0}, write {1}\n", stream.CanRead, stream.CanWrite);
-            sb.AppendFormat("Can timeout: {0}\n", stream.CanTimeout);
-            sb.AppendFormat("Certificate revocation list checked: {0}\n", stream.CheckCertRevocationStatus);
+            _log.Info(
+                "[S{@remoteEndpoint}, L{@localEndpoint}]:\n"
+                +"Cipher: {@cipherAlgorithm} strength {@cipherStrength}\n"
+                +"Hash: {@hashAlgorithm} strength {@hashStrength}\n"
+                +"Key exchange: {@keyExchangeAlgorithm} strength {@keyExchangeStrength}\n"
+                +"Protocol: {@sslProtocol}\n"
+                +"Is authenticated: {@isAuthenticated} as server? {@isServer}\n"
+                +"IsSigned: {@isSigned}\n"
+                +"Is Encrypted: {@isEncrypted}\n"
+                +"Can read: {@canRead}, write {@canWrite}\n"
+                +"Can timeout: {@canTimeout}\n"
+                +"Certificate revocation list checked: {@checkCertRevocationStatus}\n"
+                ,RemoteEndPoint, LocalEndPoint
+                ,stream.CipherAlgorithm, stream.CipherStrength
+                ,stream.HashAlgorithm, stream.HashStrength
+                ,stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength
+                ,stream.SslProtocol
+                ,stream.IsAuthenticated, stream.IsServer
+                ,stream.IsSigned
+                ,stream.IsEncrypted
+                ,stream.CanRead, stream.CanWrite
+                ,stream.CanTimeout
+                ,stream.CheckCertRevocationStatus);
+            /*TODO: structured-log: test this*/
 
             X509Certificate localCert = stream.LocalCertificate;
             if (localCert != null)
-                sb.AppendFormat("Local certificate was issued to {0} and is valid from {1} until {2}.\n",
+                _log.Info("Local certificate was issued to {@subject} and is valid from {@effectiveDate} until {@expirationDate}.\n",
                                 localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString());
             else
-                sb.AppendFormat("Local certificate is null.\n");
+                _log.Info("Local certificate is null.\n");
 
             // Display the properties of the client's certificate.
             X509Certificate remoteCert = stream.RemoteCertificate;
             if (remoteCert != null)
-                sb.AppendFormat("Remote certificate was issued to {0} and is valid from {1} until {2}.\n",
+                _log.Info("Remote certificate was issued to {@subject} and is valid from {@effectiveDate} until {@expirationDate}.\n",
                                 remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString());
             else
-                sb.AppendFormat("Remote certificate is null.\n");
-
-            _log.Info(sb.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                _log.Info("Remote certificate is null.\n");
         }
 
         public void EnqueueSend(IEnumerable<ArraySegment<byte>> data)

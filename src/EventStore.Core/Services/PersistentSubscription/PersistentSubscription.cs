@@ -97,8 +97,8 @@ namespace EventStore.Core.Services.PersistentSubscription
                 else
                 {
                     _nextEventToPullFrom = checkpoint.Value + 1;
-                    Log.Debug(string.Format("Subscription {@subscriptionId}: read checksum {@fixthisvar}", _settings.SubscriptionId,
-                        checkpoint.Value)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                    Log.Debug("Subscription {@subscriptionId}: read checksum {@checkpoint}", _settings.SubscriptionId,
+                        checkpoint.Value);
                     _streamBuffer = new StreamBuffer(_settings.BufferSize, _settings.LiveBufferSize, -1, true);
                     TryReadingNewBatch();
                 }

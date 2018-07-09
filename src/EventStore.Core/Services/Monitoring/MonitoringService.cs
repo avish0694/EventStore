@@ -154,7 +154,7 @@ namespace EventStore.Core.Services.Monitoring
             {
                 _lastWrittenCsvHeader = header;
                 RegularLog.Info(Environment.NewLine);
-                RegularLog.Info(header); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                RegularLog.Info(header);
             }
 
             var line = StatsCsvEncoder.GetLine(rawStats);

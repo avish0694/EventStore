@@ -93,7 +93,7 @@ namespace EventStore.Core.Services
                 message.HttpEntityManager.ReplyStatus(
                     code,
                     deniedToHandle.Details,
-                    exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                    exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@e}.", message.Message, exc.Message));
                 HistogramService.SetValue(_httpSendHistogram,
                    (long)((((double)_watch.ElapsedTicks - start) / Stopwatch.Frequency) * 1000000000));
             }
@@ -142,11 +142,11 @@ namespace EventStore.Core.Services
             var response = message.Data;
             message.HttpEntityManager.ContinueReplyTextContent(
                 response,
-                exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message, exc.Message),
+                exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@e}.", message, exc.Message),
                 () =>
                 {
                     if (message.Envelope != null)
-                        message.Envelope.ReplyWith(new HttpMessage.HttpCompleted(message.CorrelationId, message.HttpEntityManager)); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+                        message.Envelope.ReplyWith(new HttpMessage.HttpCompleted(message.CorrelationId, message.HttpEntityManager));
                 });
         }
 

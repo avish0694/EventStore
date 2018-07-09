@@ -226,7 +226,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                     var files = Config.FileNamingStrategy.GetAllVersionsFor(i);
                     for (int j = (i == chunk.ChunkHeader.ChunkStartNumber ? 1 : 0); j < files.Length; ++j)
                     {
-                        RemoveFile("Removing excess chunk version: {0}...", files[j]);
+                        RemoveFile("Removing excess chunk version: {@file}...", files[j]);
                     }
                 }
                 chunkNum = chunk.ChunkHeader.ChunkEndNumber + 1;
@@ -240,7 +240,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 try
                 {
-                    RemoveFile("Deleting temporary file {0}...", tempFile);
+                    RemoveFile("Deleting temporary file {@file}...", tempFile);
                 }
                 catch (Exception exc)
                 {
@@ -251,7 +251,7 @@ namespace EventStore.Core.TransactionLog.Chunks
 
         private void RemoveFile(string reason, string file)
         {
-            Log.Trace(reason, file); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+            Log.Trace(reason, file);
             File.SetAttributes(file, FileAttributes.Normal);
             File.Delete(file);
         }

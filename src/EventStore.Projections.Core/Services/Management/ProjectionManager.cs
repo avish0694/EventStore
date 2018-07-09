@@ -802,10 +802,10 @@ namespace EventStore.Projections.Core.Services.Management
                     Guid.NewGuid());
                 return;
             }
-            _logger.Debug("PROJECTIONS: Found the following projections. {1}", ProjectionNamesBuilder.ProjectionsRegistrationStream, 
-                String.Join(", ", registeredProjections
+            List<string> projections = registeredProjections
                     .Where(x => x.Key != ProjectionEventTypes.ProjectionsInitialized)
-                    .Select(x => x.Key))); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {1}*/
+                    .Select(x => x.Key).ToList();
+            _logger.Debug("PROJECTIONS: Found the following projections in {@stream}: {@projections}", ProjectionNamesBuilder.ProjectionsRegistrationStream,projections); /*TODO: structured-log test this*/
             foreach (var projectionRegistration in registeredProjections.Where(x => x.Key != ProjectionEventTypes.ProjectionsInitialized))
             {
                 int queueIndex = GetNextWorkerIndex();

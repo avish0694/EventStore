@@ -55,7 +55,7 @@ namespace EventStore.Core.Services.Replication
         private readonly QueueStatsCollector _queueStats = new QueueStatsCollector("Master Replication Service");
 
         private readonly ConcurrentDictionary<Guid, ReplicaSubscription> _subscriptions = new ConcurrentDictionary<Guid, ReplicaSubscription>();
-        
+
         private volatile VNodeState _state = VNodeState.Initializing;
 
         private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
@@ -64,12 +64,12 @@ namespace EventStore.Core.Services.Replication
         private TimeSpan _noQuorumTimestamp = TimeSpan.Zero;
         private bool _noQuorumNotified;
         private ManualResetEventSlim _flushSignal = new ManualResetEventSlim();
-        
-        public MasterReplicationService(IPublisher publisher, 
-                                        Guid instanceId, 
-                                        TFChunkDb db, 
+
+        public MasterReplicationService(IPublisher publisher,
+                                        Guid instanceId,
+                                        TFChunkDb db,
                                         IPublisher tcpSendPublisher,
-                                        IEpochManager epochManager, 
+                                        IEpochManager epochManager,
                                         int clusterSize)
         {
             Ensure.NotNull(publisher, "publisher");
@@ -132,7 +132,7 @@ namespace EventStore.Core.Services.Replication
                 {
                     ReplicaSubscription existingSubscr;
                     _subscriptions.TryGetValue(subscription.SubscriptionId, out existingSubscr);
-                    Log.Error("There is already a subscription with SubscriptionID {0:B}: {@existingSubscr}.", subscription.SubscriptionId, existingSubscr); /*TODO: structured-log @shaan1337: the following parameters need attention: {0:B}*/
+                    Log.Error("There is already a subscription with SubscriptionID {@subscriptionId:B}: {@existingSubscr}.", subscription.SubscriptionId, existingSubscr);
                     Log.Error("Subscription we tried to add: {@existingSubscr}.", existingSubscr);
                     subscription.SendBadRequestAndClose(message.CorrelationId, string.Format("There is already a subscription with SubscriptionID {0:B}: {1}.\nSubscription we tried to add: {2}",
                                             subscription.SubscriptionId, existingSubscr, subscription));
@@ -179,7 +179,7 @@ namespace EventStore.Core.Services.Replication
                          string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x)))); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {4}*/
 
                 var epochCorrectedLogPos = GetValidLogPosition(logPosition, epochs, replica.ReplicaEndPoint, replica.SubscriptionId);
-                var subscriptionPos = SetSubscriptionPosition(replica, epochCorrectedLogPos, chunkId, 
+                var subscriptionPos = SetSubscriptionPosition(replica, epochCorrectedLogPos, chunkId,
                                                               replicationStart: true, verbose: true, trial: 0);
                 Interlocked.Exchange(ref replica.AckedLogPosition, subscriptionPos);
                 return true;
@@ -203,7 +203,10 @@ namespace EventStore.Core.Services.Replication
                     var msg = string.Format("Replica [{0},S:{1},{2}] has positive LogPosition {3} (0x{3:X}), but does not have epochs.",
                                             replicaEndPoint, subscriptionId,
                                             string.Join(", ", epochs.Select(x => x.AsString())), logPosition);
-                    Log.Info(msg); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
+                    Log.Info(
+                        "Replica [{@replicaEndpoint},S:{@subscriptionId},{@epochs}] has positive LogPosition {@logPosition} (0x{@logPosition:X}), but does not have epochs.",
+                        replicaEndPoint, subscriptionId,
+                        string.Join(", ", epochs.Select(x => x.AsString())), logPosition, logPosition);
                     throw new Exception(msg);
                 }
                 return 0;
@@ -231,7 +234,7 @@ namespace EventStore.Core.Services.Replication
                 return 0;
             }
 
-            // if afterCommonEpoch is present, logPosition > afterCommonEpoch.EpochPosition, 
+            // if afterCommonEpoch is present, logPosition > afterCommonEpoch.EpochPosition,
             // so safe position is definitely the start of afterCommonEpoch
             var replicaPosition = afterCommonEpoch == null ? logPosition : afterCommonEpoch.EpochPosition;
 
@@ -259,17 +262,17 @@ namespace EventStore.Core.Services.Replication
             return Math.Min(replicaPosition, nextEpoch.EpochPosition);
         }
 
-        private long SetSubscriptionPosition(ReplicaSubscription sub, 
-                                             long logPosition, 
+        private long SetSubscriptionPosition(ReplicaSubscription sub,
+                                             long logPosition,
                                              Guid chunkId,
-                                             bool replicationStart, 
-                                             bool verbose, 
+                                             bool replicationStart,
+                                             bool verbose,
                                              int trial)
         {
             if (trial >= 10)
                 throw new Exception("Too many retrials to acquire reader for subscriber.");
 
-            try 
+            try
             {
                 var chunk = _db.Manager.GetChunkFor(logPosition);
                 Debug.Assert(chunk != null, string.Format("Chunk for LogPosition {0} (0x{0:X}) is null in MasterReplicationService! Replica: [{1},C:{2},S:{3}]",
@@ -280,8 +283,8 @@ namespace EventStore.Core.Services.Replication
                     var chunkStartPos = chunk.ChunkHeader.ChunkStartPosition;
                     if (verbose)
                     {
-                        Log.Info("Subscribed replica [{@replicaEndPoint}, S:{@subscriptionId}] for raw send at {@chunkStartPos} (0x{2:X}) (requested {3} (0x{3:X})).", 
-                                 sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, logPosition); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
+                        Log.Info("Subscribed replica [{@replicaEndPoint}, S:{@subscriptionId}] for raw send at {@chunkStartPosition} (0x{@chunkStartPosition:X}) (requested {@logPosition} (0x{@logPosition:X})).",
+                                 sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos, logPosition, logPosition);
                         if (chunkStartPos != logPosition)
                         {
                             Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPos} (0x{2:X})...",
@@ -335,7 +338,7 @@ namespace EventStore.Core.Services.Replication
             {
                 try
                 {
-                    
+
                     _queueStats.EnterBusy();
 
                     _queueStats.ProcessingStarted(typeof(SendReplicationData), _subscriptions.Count);
@@ -371,7 +374,7 @@ namespace EventStore.Core.Services.Replication
             _db.Config.WriterCheckpoint.Flushed -= OnWriterFlushed;
 
             _publisher.Publish(new SystemMessage.ServiceShutdown(Name));
-            
+
             _queueStats.Stop();
             QueueMonitor.Default.Unregister(this);
         }
@@ -439,7 +442,7 @@ namespace EventStore.Core.Services.Replication
 
             var bulkReader = subscription.BulkReader;
             var chunkHeader = bulkReader.Chunk.ChunkHeader;
-            
+
             BulkReadResult bulkResult;
             if (subscription.RawSend)
             {
