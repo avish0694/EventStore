@@ -362,7 +362,7 @@ namespace EventStore.Projections.Core.Services.Http
                                 fromPosition.Tag,
                                 bodyParsed.MaxEvents ?? 10));
                     },
-                x => Log.DebugException(x, "Read Request Body Failed.")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                x => Log.DebugException(x, "Read Request Body Failed."));
         }
 
         private void ProjectionsGet(HttpEntityManager http, UriTemplateMatch match, ProjectionMode? mode)

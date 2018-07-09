@@ -183,8 +183,8 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionClosed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, {3:B}] closed: {@socketError}.", 
-                     ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, connection.RemoteEndPoint, ConnectionId, socketError); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{3:B}*/
+            Log.Info("Connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, {@connectionId:B}] closed: {@socketError}.", 
+                     ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, connection.RemoteEndPoint, ConnectionId, socketError);
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
         }
@@ -357,8 +357,8 @@ namespace EventStore.Core.Services.Transport.Tcp
             Ensure.NotNull(message, "message");
 
             SendPackage(new TcpPackage(TcpCommand.BadRequest, correlationId, Helper.UTF8NoBom.GetBytes(message)), checkQueueSize: false);
-            Log.Error("Closing connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, L{@localEndPoint}, {4:B}] due to error. Reason: {@message}",
-                      ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId, message); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{4:B}*/
+            Log.Error("Closing connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] due to error. Reason: {@message}",
+                      ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId, message);
             _connection.Close(message);
         }
 

@@ -359,7 +359,7 @@ namespace EventStore.Core.Services.Replication
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "Error during master replication iteration."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.InfoException(exc, "Error during master replication iteration.");
                 }
             }
 

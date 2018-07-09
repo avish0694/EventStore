@@ -147,7 +147,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             var tmpChunkPath = Path.Combine(_db.Config.Path, Guid.NewGuid() + ".scavenge.tmp");
             var oldChunksList = string.Join("\n", oldChunks);
             Log.Trace("SCAVENGING: started to scavenge & merge chunks: {@oldChunksList}", oldChunksList);
-            Log.Trace("Resulting temp chunk file: {@fixthisvar}.", Path.GetFileName(tmpChunkPath)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+            Log.Trace("Resulting temp chunk file: {@chunk}.", Path.GetFileName(tmpChunkPath));
 
             TFChunk.TFChunk newChunk;
             try
@@ -254,7 +254,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 newChunk.CompleteScavenge(positionMapping);
 
                 if(_unsafeIgnoreHardDeletes) {
-                    Log.Trace("Forcing scavenge chunk to be kept even if bigger."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.Trace("Forcing scavenge chunk to be kept even if bigger.");
                 }
 
                 if(oldVersion) {
@@ -287,8 +287,8 @@ namespace EventStore.Core.TransactionLog.Chunks
             }
             catch (FileBeingDeletedException exc)
             {
-                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated.");
-                Log.Info("Scavenging of following chunks will be skipped:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Scavenging of following chunks will be skipped:");
                 Log.Info("{@oldChunksList}", oldChunksList);
                 Log.Info("Stopping scavenging and removing temp chunk '{@tmpChunkPath}'...", tmpChunkPath);
                 Log.Info("Exception message: {@message}.", exc.Message);

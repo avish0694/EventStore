@@ -280,8 +280,8 @@ namespace EventStore.Transport.Tcp
 
             X509Certificate localCert = stream.LocalCertificate;
             if (localCert != null)
-                Log.Info("Local certificate was issued to {@subject} and is valid from {@fixthisvar} until {@fixthisvar}.",
-                                localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString()); /*TODO: structured-log @shaan1337: the following parameters need attention: {1},{2}*/
+                Log.Info("Local certificate was issued to {@subject} and is valid from {@effectiveDate} until {@expirationDate}.",
+                                localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString());
             else
                 Log.Info("Local certificate is null."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
 
@@ -291,7 +291,7 @@ namespace EventStore.Transport.Tcp
                 Log.Info("Remote certificate was issued to {@subject} and is valid from {@remoteCertEffectiveDate} until {@remoteCertExpirationDate}.",
                                 remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString());
             else
-                Log.Info("Remote certificate is null."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Info("Remote certificate is null.");
         }
 
         public void EnqueueSend(IEnumerable<ArraySegment<byte>> data)
@@ -388,7 +388,7 @@ namespace EventStore.Transport.Tcp
 
             if (Interlocked.Exchange(ref _receiveCallback, callback) != null)
             {
-                Log.Fatal("ReceiveAsync called again while previous call wasn't fulfilled"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/ 
+                Log.Fatal("ReceiveAsync called again while previous call wasn't fulfilled");
                 throw new InvalidOperationException("ReceiveAsync called again while previous call wasn't fulfilled");
             }
             TryDequeueReceivedData();
@@ -475,7 +475,7 @@ namespace EventStore.Transport.Tcp
                     var callback = Interlocked.Exchange(ref _receiveCallback, null);
                     if (callback == null)
                     {
-                        Log.Fatal("Some threading issue in TryDequeueReceivedData! Callback is null!"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        Log.Fatal("Some threading issue in TryDequeueReceivedData! Callback is null!");
                         throw new Exception("Some threading issue in TryDequeueReceivedData! Callback is null!");
                     }
 
@@ -527,10 +527,10 @@ namespace EventStore.Transport.Tcp
                         TotalBytesReceived, TotalBytesSent); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        SendCalls, SendCallbacks);
-                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
+                        SendCalls, SendCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        ReceiveCalls, ReceiveCallbacks);
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Close reason: [{@socketError}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         socketError, reason); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/

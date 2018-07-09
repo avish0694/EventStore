@@ -110,8 +110,8 @@ namespace EventStore.Core.Bus
                                 Log.Trace("SLOW QUEUE MSG [{@queueStats}]: {@inProgressMessage} - {@elapsedTime}ms. Q: {@queueCnt}/{@queue}.",
                                           _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
                                 if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(msg is SystemMessage.SystemInit))
-                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{@queueStats}]: {@inProgressMessage} - {@fixthisvar}ms. Q: {@queueCnt}/{@queue}.",
-                                              _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count); /*TODO: structured-log @shaan1337: the following parameters need attention: {2}*/
+                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{@queue}]: {@inProgressMessage} - {@elapsed}ms. Q: {@prevQueueCount}/{@curQueueCount}.",
+                                              _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
                             }
                         }
                         else

@@ -138,7 +138,7 @@ namespace EventStore.Core.Services.Monitoring
                 _perfCounter = new PerfCounterHelper(_log);
                 _giveup = count > 10;
                 if (_giveup)
-                    _log.Error("Maximum rebuild attempts reached. Giving up on rebuilds."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    _log.Error("Maximum rebuild attempts reached. Giving up on rebuilds.");
                 else
                     GetPerfCounterInformation(stats, count + 1);
             }

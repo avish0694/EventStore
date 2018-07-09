@@ -147,7 +147,7 @@ namespace EventStore.Projections.Core.Services.Processing
                     var result = InternalTransformCatalogEvent(message);
                     return result;
                 case PhaseState.Stopped:
-                    _logger.Error("Ignoring committed catalog event in stopped state"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    _logger.Error("Ignoring committed catalog event in stopped state");
                     return null;
                 default:
                     throw new NotSupportedException();
@@ -437,7 +437,7 @@ namespace EventStore.Projections.Core.Services.Processing
         {
             if (!(_state == PhaseState.Running || _state == PhaseState.Starting))
             {
-                _logger.Debug("Starting a checkpoint in non-runnable state"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                _logger.Debug("Starting a checkpoint in non-runnable state");
                 return;
             }
             var checkpointHandler = _projectionStateHandler as IProjectionCheckpointHandler;

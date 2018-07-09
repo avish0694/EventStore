@@ -113,7 +113,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var data = http.RequestCodec.From<PutUserData>(s);
                     var message = new UserManagementMessage.Update(envelope, http.User, login, data.FullName, data.Groups);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private void DeleteUser(HttpEntityManager http, UriTemplateMatch match)

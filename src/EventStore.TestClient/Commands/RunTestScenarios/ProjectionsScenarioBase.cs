@@ -161,7 +161,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                     if (!isRunning)
                     {
-                        Log.Debug(string.Format("Enable *{@fixthisvar}* projection", byCategoryProjection)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                        Log.Debug(string.Format("Enable *{@projection}* projection", byCategoryProjection));
                         GetProjectionsManager().EnableAsync(byCategoryProjection, AdminCredentials).Wait();
                     }
                     else

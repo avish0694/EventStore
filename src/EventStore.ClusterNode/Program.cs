@@ -101,7 +101,7 @@ namespace EventStore.ClusterNode
                 {
                     Log.Info("DNS discovery is disabled, but no gossip seed endpoints have been specified. Since "
                             + "the cluster size is set to 1, this may be intentional. Gossip seeds can be specified "
-                            + "using the `GossipSeed` option."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                            + "using the `GossipSeed` option.");
                 }
             }
 
@@ -356,7 +356,7 @@ namespace EventStore.ClusterNode
                 }
                 catch (CompositionException ex)
                 {
-                    Log.ErrorException(ex, "Error loading authentication plugin."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.ErrorException(ex, "Error loading authentication plugin.");
                 }
             }
 

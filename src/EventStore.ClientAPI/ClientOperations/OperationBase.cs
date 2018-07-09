@@ -138,6 +138,8 @@ namespace EventStore.ClientAPI.ClientOperations
             Log.Error("Operation ({@operationName}): {@operation}", GetType().Name, this); 
             Log.Error("TcpPackage Data Dump:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             Log.Error(Helper.FormatBinaryDump(package.Data)); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            Log.Error("Operation ({@fixthisvar}): {@fixthisvar}", GetType().Name, this); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1}*/
+            Log.Error("TcpPackage Data Dump:\n{@data}", Helper.FormatBinaryDump(package.Data));
 
             Fail(new CommandNotExpectedException(expectedCommand.ToString(), package.Command.ToString()));
             return new InspectionResult(InspectionDecision.EndOperation, string.Format("Unexpected command - {0}", package.Command.ToString()));

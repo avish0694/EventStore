@@ -132,7 +132,7 @@ namespace EventStore.Core.Index
             }
             catch (CorruptIndexException exc)
             {
-                Log.ErrorException(exc, "ReadIndex is corrupted..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "ReadIndex is corrupted...");
                 LogIndexMapContent(indexmapFile);
                 DumpAndCopyIndex();
                 File.Delete(indexmapFile);
@@ -159,11 +159,7 @@ namespace EventStore.Core.Index
         {
             try
             {
-                var sb = new StringBuilder();
-                sb.AppendFormat("IndexMap '{0}' content:\n", indexmapFile);
-                sb.AppendLine(Helper.FormatBinaryDump(File.ReadAllBytes(indexmapFile)));
-
-                Log.Error(sb.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Error("IndexMap '{@indexmapFile}' content:\n {@content}", indexmapFile, Helper.FormatBinaryDump(File.ReadAllBytes(indexmapFile)));
             }
             catch (Exception exc)
             {
@@ -309,7 +305,7 @@ namespace EventStore.Core.Index
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error in TableIndex.ReadOffQueue"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Error in TableIndex.ReadOffQueue");
                 throw;
             }
         }
@@ -459,7 +455,7 @@ namespace EventStore.Core.Index
                 }
                 catch (FileBeingDeletedException)
                 {
-                    Log.Trace("File being deleted."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.Trace("File being deleted.");
                 }
                 catch (MaybeCorruptIndexException e){
                     ForceIndexVerifyOnNextStartup();
@@ -639,7 +635,7 @@ namespace EventStore.Core.Index
                 };
             }
             catch{
-                Log.Error("Could not create force index verification file at: "+path); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Error("Could not create force index verification file at: {@path}", path);
             }
 
             return;

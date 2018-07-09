@@ -66,7 +66,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 tcpConnection =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {2:B}].", tcpConnection.RemoteEndPoint, tcpConnection.LocalEndPoint, connectionId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B}*/
+                    log.Debug("TcpPackageConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}].", tcpConnection.RemoteEndPoint, tcpConnection.LocalEndPoint, connectionId);
                     if (connectionEstablished != null)
                         connectionEstablished(this);
                 },
@@ -99,7 +99,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (PackageFramingException exc)
             {
-                _log.Error(exc, "TcpPackageConnection: [{@remoteEndPoint}, L{@localEndPoint}, {2:B}]. Invalid TCP frame received.", RemoteEndPoint, LocalEndPoint, ConnectionId); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:B}*/
+                _log.Error(exc, "TcpPackageConnection: [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]. Invalid TCP frame received.", RemoteEndPoint, LocalEndPoint, ConnectionId);
                 Close("Invalid TCP frame received.");
                 return;
             }

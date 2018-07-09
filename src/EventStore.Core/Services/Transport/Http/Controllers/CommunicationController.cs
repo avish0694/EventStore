@@ -49,7 +49,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.RequestEntityTooLarge,
                                           "Too large events received. Limit is 4mb",
-                                          e => Log.Debug("Too large events received over HTTP")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                          e => Log.Debug("Too large events received over HTTP"));
             return new RequestParams(done: true);
         }
 

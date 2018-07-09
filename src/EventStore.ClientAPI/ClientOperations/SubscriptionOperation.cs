@@ -247,9 +247,9 @@ namespace EventStore.ClientAPI.ClientOperations
             if (_subscription == null) throw new Exception("Subscription not confirmed, but event appeared!");
 
             if (_verboseLogging)
-                _log.Debug("Subscription {0:B} to {@fixthisvar}: event appeared ({@originalStreamId}, {@originalEventNumber}, {@eventType} @ {@originalPosition}).",
+                _log.Debug("Subscription {@correlationId:B} to {@streamId}: event appeared ({@originalStreamId}, {@originalEventNumber}, {@eventType} @ {@originalPosition}).",
                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId,
-                          e.OriginalStreamId, e.OriginalEventNumber, e.OriginalEvent.EventType, e.OriginalPosition); /*TODO: structured-log @shaan1337: the following parameters need attention: {0:B},{1}*/
+                          e.OriginalStreamId, e.OriginalEventNumber, e.OriginalEvent.EventType, e.OriginalPosition);
 
             ExecuteActionAsync(() => _eventAppeared(_subscription, e));
         }

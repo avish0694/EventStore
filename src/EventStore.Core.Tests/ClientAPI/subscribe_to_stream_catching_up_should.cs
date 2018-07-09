@@ -125,7 +125,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                            return Task.CompletedTask;
                                                        },
                                                         _ => Log.Info("Live processing started."),
-                                                       (x, y, z) => dropped1.Set()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                                       (x, y, z) => dropped1.Set());
                 var sub2 = store.SubscribeToStreamFrom(stream,
                                                        null,
                                                        CatchUpSubscriptionSettings.Default,
@@ -191,7 +191,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                CatchUpSubscriptionSettings.Default,
                                                (x, y) => { throw new Exception("Error"); },
                                                _ => Log.Info("Live processing started."),
-                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                               (x, y, z) => dropped.Signal());
                 Assert.IsTrue(dropped.Wait(Timeout));
             }
         }
@@ -329,7 +329,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                                               (x, y, z) => dropped.Signal());
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");

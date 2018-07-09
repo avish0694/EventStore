@@ -51,7 +51,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
             if (args.Length != 0 && args.Length != 5)
             {
-                context.Log.Error("Invalid number of arguments. Should be 0 or 5"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                context.Log.Error("Invalid number of arguments. Should be 0 or 5");
                 return false;
             }
 
@@ -74,7 +74,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (!int.TryParse(args[2], out eventsArg))
                 {
-                    context.Log.Error("Invalid argument value for <events>"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <events>");
                     return false;
                 }
                 if (!int.TryParse(args[3], out streamsArg))
@@ -91,8 +91,8 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (producersArg.Any(p => !AvailableProducers.Contains(p)))
                 {
-                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{@fixthisvar}]",
-                                      string.Join(",", AvailableProducers)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                    context.Log.Error("Invalid producers argument. Pass comma-separated subset of [{@producers}]",
+                                      string.Join(",", AvailableProducers));
                     return false;
                 }
                 writers = writersArg;

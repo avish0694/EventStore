@@ -66,7 +66,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             var lastTime = DateTime.UtcNow;
             var reportPeriod = TimeSpan.FromSeconds(5);
 
-            Log.Info("ReadIndex building..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Info("ReadIndex building...");
 
             _indexRebuild = true;
             using (var reader = _backend.BorrowReader())
@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             }
             catch (TimeoutException exc)
             {
-                Log.ErrorException(exc, "Timeout exception when trying to close TableIndex."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Timeout exception when trying to close TableIndex.");
                 throw;
             }
         }

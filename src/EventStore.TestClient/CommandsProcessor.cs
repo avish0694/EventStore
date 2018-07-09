@@ -90,7 +90,7 @@ namespace EventStore.TestClient
 
                 var details = new StringBuilder();
                 BuildFullException(context.Error, details);
-                _log.Error("Details: {@fixthisvar}", details.ToString()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                _log.Error("Details: {@details}", details.ToString());
             }
             
             exitCode = exitC == 0 ? context.ExitCode : exitC;

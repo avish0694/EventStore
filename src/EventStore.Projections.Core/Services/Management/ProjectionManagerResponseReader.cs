@@ -46,7 +46,7 @@ namespace EventStore.Projections.Core.Services.Management
         {
             if (_cancellationScope != null)
             {
-                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Debug("PROJECTIONS: There was an active cancellation scope, cancelling now");
                 _cancellationScope.Cancel();
             }
             _cancellationScope = new IODispatcherAsync.CancellationScope();
@@ -119,7 +119,7 @@ namespace EventStore.Projections.Core.Services.Management
                     SystemAccount.Principal,
                     ReadForwardCompleted,
                     () => {
-                        Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                        Log.Warn("Read forward of stream {@stream} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream);
                         ReadForward();
                     },
                     _correlationId)

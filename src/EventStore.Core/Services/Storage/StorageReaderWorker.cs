@@ -185,7 +185,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadEvent request."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error during processing ReadEvent request.");
                     return NoData(msg, ReadEventResult.Error, exc.Message);
                 }
             }
@@ -311,7 +311,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadAllEventsForward request."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error during processing ReadAllEventsForward request.");
                     return NoData(msg, ReadAllResult.Error, pos, lastCommitPosition, exc.Message);
                 }
             }

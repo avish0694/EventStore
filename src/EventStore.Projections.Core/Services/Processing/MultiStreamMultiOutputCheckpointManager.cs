@@ -146,7 +146,7 @@ namespace EventStore.Projections.Core.Services.Processing
                     }
                 }, () =>
                 {
-                    _logger.Warn("Read backward of stream {@fixthisvar} timed out. Retrying", _namingBuilder.GetOrderStreamName()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                    _logger.Warn("Read backward of stream {@stream} timed out. Retrying", _namingBuilder.GetOrderStreamName());
                     BeginLoadPrerecordedEventsChunk(checkpointTag, fromEventNumber);
                 }, Guid.NewGuid());
         }

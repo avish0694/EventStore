@@ -127,10 +127,10 @@ namespace EventStore.TestClient.Commands
                         {
                             var elapsed = sw2.Elapsed;
                             sw2.Restart();
-                            context.Log.Trace("\nDONE TOTAL {@localAll} WRITES IN {@elapsed} ({2:0.0}/s) [S:{@succ}, F:{@fail} (WEV:{@wrongExpVersion}, P:{@prepTimeout}, C:{@commitTimeout}, F:{@forwardTimeout}, D:{@streamDeleted})].",
+                            context.Log.Trace("\nDONE TOTAL {@localAll} WRITES IN {@elapsed} ({@rate:0.0}/s) [S:{@success}, F:{@failures} (WEV:{@wrongExpectedVersion}, P:{@prepareTimeout}, C:{@commitTimeout}, F:{@forwardTimeout}, D:{@streamDeleted})].",
                                               localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds,
                                               succ, fail,
-                                              wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted); /*TODO: structured-log @shaan1337: the following parameters need attention: {2:0.0}*/
+                                              wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted);
                         }
                         if (localAll >= requestsCnt)
                         {

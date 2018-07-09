@@ -286,7 +286,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         "",
                         "");
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private void PostSubscription(HttpEntityManager http, UriTemplateMatch match)

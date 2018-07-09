@@ -277,8 +277,8 @@ namespace EventStore.Core.Services.Gossip
 
         private static void LogClusterChange(ClusterInfo oldCluster, ClusterInfo newCluster, string source)
         {
-            Log.Trace("CLUSTER HAS CHANGED{@source}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty);
-            Log.Trace("Old:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Trace("CLUSTER HAS CHANGED{@fixthisvar}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Trace("Old:");
             var ipEndPointComparer = new IPEndPointComparer();
             foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {

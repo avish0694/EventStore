@@ -171,7 +171,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                       responseStatusCode, responseMessage,
                                       manager.ResponseCodec.ContentType,
                                       null,
-                                      e => Log.ErrorException(e, "Error while writing HTTP response")); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                      e => Log.ErrorException(e, "Error while writing HTTP response"));
                         return String.Empty;
                     },
                     (args, message) => new ResponseConfiguration(HttpStatusCode.OK, manager.ResponseCodec.ContentType, manager.ResponseCodec.Encoding));

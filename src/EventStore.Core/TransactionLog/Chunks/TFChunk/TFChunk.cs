@@ -211,7 +211,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             try
             {
                 _chunkHeader = ReadHeader(reader.Stream);
-                Log.Debug("Opened completed " + _filename + " as version " + _chunkHeader.Version); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Debug("Opened completed {@filename} as version {@version}", _filename, _chunkHeader.Version);
                 if (_chunkHeader.Version != (byte) ChunkVersions.Unaligned && _chunkHeader.Version != (byte) ChunkVersions.Aligned)
                     throw new CorruptDatabaseException(new WrongFileVersionException(_filename, _chunkHeader.Version, CurrentChunkVersion));
 
@@ -1004,7 +1004,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
                 if (_deleteFile)
                 {
-                    Log.Info("File {@fixthisvar} has been marked for delete and will be deleted in TryDestructFileStreams.", Path.GetFileName(_filename)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                    Log.Info("File {@file} has been marked for delete and will be deleted in TryDestructFileStreams.", Path.GetFileName(_filename));
                     Helper.EatException(() => File.Delete(_filename));
                 }
             }

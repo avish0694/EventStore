@@ -120,7 +120,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                                                                        Log.Info("Data written for iteration {@iteration}.", GetIterationCode();})*/);
             
 //            return task;
-            return task.ContinueWith(x => Log.Info("Data written for iteration {@fixthisvar}.", GetIterationCode())); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+            return task.ContinueWith(x => Log.Info("Data written for iteration {@iteration}.", GetIterationCode()));
         }
     }
 }

@@ -123,8 +123,8 @@ namespace EventStore.Core.Services.Transport.Http
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Unhandled exception while processing HTTP request at [{@fixthisvar}].",
-                                   string.Join(", ", httpService.ListenPrefixes)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                Log.ErrorException(exc, "Unhandled exception while processing HTTP request at [{@listenPrefixes}].",
+                                   string.Join(", ", httpService.ListenPrefixes));
                 InternalServerError(httpEntity);
             }
 
@@ -161,7 +161,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager();
             entity.ReplyStatus(HttpStatusCode.NotFound, "Not Found",
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@e}.", e.Message));
         }
 
         private void InternalServerError(HttpEntity httpEntity)
@@ -182,7 +182,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager();
             entity.ReplyStatus(HttpStatusCode.UnsupportedMediaType, reason,
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@e}.", e.Message));
         }
 
         private ICodec SelectRequestCodec(string method, string contentType, ICodec[] supportedCodecs)

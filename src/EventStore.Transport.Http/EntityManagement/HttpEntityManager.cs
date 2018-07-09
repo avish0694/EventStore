@@ -88,7 +88,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (ProtocolViolationException e)
             {
-                Log.ErrorException(e, "Attempt to set invalid HTTP status code occurred."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(e, "Attempt to set invalid HTTP status code occurred.");
             }
         }
 
@@ -387,7 +387,7 @@ namespace EventStore.Transport.Http.EntityManagement
             if (copier.Error != null)
             {
                 state.Dispose();
-                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@fixthisvar}", exc.Message)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@e}", exc.Message));
 
                 state.OnError(copier.Error);
                 return;

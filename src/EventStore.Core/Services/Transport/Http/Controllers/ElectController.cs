@@ -73,7 +73,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ViewChangeProofDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchangeproof)")*/}); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchangeproof)")*/});
         }
 
         public void Send(ElectionMessage.Prepare message, IPEndPoint endPoint)
@@ -109,7 +109,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ProposalDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/proposal)")*/}); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/proposal)")*/});
         }
 
         public void Send(ElectionMessage.Accept message, IPEndPoint endPoint)

@@ -84,7 +84,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception ex)
             {
-                log.InfoException(ex, "Error while reading disk IO on Windows."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                log.InfoException(ex, "Error while reading disk IO on Windows.");
                 return null;
             }
             finally

@@ -165,7 +165,7 @@ namespace EventStore.Core.Services.Storage
             catch (Exception exc)
             {
                 BlockWriter = true;
-                Log.FatalException(exc, "Unexpected error in StorageWriterService. Terminating the process..."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.FatalException(exc, "Unexpected error in StorageWriterService. Terminating the process...");
                 Application.Exit(ExitCode.Error,
                     string.Format("Unexpected error in StorageWriterService: {0}", exc.Message));
             }
@@ -438,7 +438,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally
@@ -527,12 +527,12 @@ namespace EventStore.Core.Services.Storage
         {
             if (transactionInfo.TransactionOffset < -1 || transactionInfo.EventStreamId.IsEmptyString())
             {
-                Log.Error(string.Format("Invalid transaction info found for transaction ID {@fixthisvar}. "
+                Log.Error(string.Format("Invalid transaction info found for transaction ID {@transactionId}. "
                                         +
-                                        "Possibly wrong transactionId provided. TransactionOffset: {1}, EventStreamId: {2}",
+                                        "Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@eventStreamId}",
                     transactionId,
                     transactionInfo.TransactionOffset,
-                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId));
                 return false;
             }
             return true;

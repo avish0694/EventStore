@@ -87,7 +87,7 @@ namespace EventStore.Core.Index
             _id = id;
             _filename = filename;
 
-            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{0}' started...", Path.GetFileName(Filename)); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{@ptable}' started...", Path.GetFileName(Filename));
             var sw = Stopwatch.StartNew();
             _size = new FileInfo(_filename).Length;
 
@@ -216,7 +216,7 @@ namespace EventStore.Core.Index
                 return null;
 
             if(skipIndexVerify){
-                Log.Debug("Disabling Verification of PTable"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                Log.Debug("Disabling Verification of PTable");
             }
 #if  MONO
             var workItem = GetWorkItem();

@@ -108,7 +108,7 @@ namespace EventStore.Core.Services.Transport.Http.Authentication
             }
             catch (JsonException ex)
             {
-                _log.Error("Failed to de-serialize event #{@fixthisvar}. Error: '{@message}'", @event.OriginalEventNumber, ex.Message); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                _log.Error("Failed to de-serialize event #{@originalEventNumber}. Error: '{@e}'", @event.OriginalEventNumber, ex.Message);
             }
         }
 

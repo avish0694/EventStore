@@ -38,16 +38,16 @@ namespace EventStore.TestClient.Commands
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.StreamEventAppeared>();
                                 context.Log.Info("NEW EVENT:\n\n"
-                                                 + "\tEventStreamId: {0}\n"
-                                                 + "\tEventNumber:   {1}\n"
-                                                 + "\tEventType:     {2}\n"
-                                                 + "\tData:          {3}\n"
-                                                 + "\tMetadata:      {4}\n",
+                                                 + "\tEventStreamId: {@eventStreamId}\n"
+                                                 + "\tEventNumber:   {@eventNumber}\n"
+                                                 + "\tEventType:     {@eventType}\n"
+                                                 + "\tData:          {@data}\n"
+                                                 + "\tMetadata:      {@metadata}\n",
                                                  dto.Event.Event.EventStreamId,
                                                  dto.Event.Event.EventNumber,
                                                  dto.Event.Event.EventType,
                                                  Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Data ?? new byte[0]),
-                                                 Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Metadata ?? new byte[0])); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+                                                 Common.Utils.Helper.UTF8NoBom.GetString(dto.Event.Event.Metadata ?? new byte[0]));
                                 break;
                             }
                             case TcpCommand.SubscriptionDropped:

@@ -96,9 +96,9 @@ namespace EventStore.Core.TransactionLog.Chunks
                     Manager.AddChunk(lastChunk);
                     if (!readOnly)
                     {
-                        Log.Info("Moving WriterCheckpoint from {@fixthisvar} to {@checkpoint}, as it points to the scavenged chunk. "
+                        Log.Info("Moving WriterCheckpoint from {@checkpoint} to {@chunkEndPosition}, as it points to the scavenged chunk. "
                                  + "If that was not caused by replication of scavenged chunks, that could be a bug.",
-                                 checkpoint, lastChunk.ChunkHeader.ChunkEndPosition); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/
+                                 checkpoint, lastChunk.ChunkHeader.ChunkEndPosition);
                         Config.WriterCheckpoint.Write(lastChunk.ChunkHeader.ChunkEndPosition);
                         Config.WriterCheckpoint.Flush();
                         Manager.AddNewChunk();

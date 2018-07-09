@@ -106,7 +106,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             var rd2 = Read(exceptDeleted, @from: EventsPerStream - readCnt, count: readCnt);
             var rd3 = Read(exceptDeleted, @from: EventsPerStream / 2, count: Math.Min(readCnt, EventsPerStream - EventsPerStream/2));
 
-            Log.Info("== READ from picked ALL =="); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
+            Log.Info("== READ from picked ALL ==");
 
             var allExistingStreamsSlice = (from run in Enumerable.Range(0, runIndex + 1)
                                            from streamNum in Enumerable.Range(0, Streams)
