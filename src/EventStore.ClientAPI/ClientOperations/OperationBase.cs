@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EventStore.ClientAPI.Common.Utils;
@@ -123,7 +123,7 @@ namespace EventStore.ClientAPI.ClientOperations
                                                 masterInfo.ExternalTcpEndPoint, masterInfo.ExternalSecureTcpEndPoint);
 
                 default:
-                    Log.Error("Unknown NotHandledReason: {@reason}.", message.Reason);
+                    Log.Error("Unknown NotHandledReason: {0}.", message.Reason);
                     return new InspectionResult(InspectionDecision.Retry, "NotHandled - <unknown>");
             }
         }
@@ -133,10 +133,11 @@ namespace EventStore.ClientAPI.ClientOperations
             if (package.Command == expectedCommand)
                 throw new ArgumentException(string.Format("Command should not be {0}.", package.Command));
 
-            Log.Error("Unexpected TcpCommand received."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
-            Log.Error("Expected: {@expectedCommand}, Actual: {@command}, Flags: {@flags}, CorrelationId: {@correlationId}", expectedCommand, package.Command, package.Flags, package.CorrelationId);
-            Log.Error("Operation ({@operationName}): {@operation}", GetType().Name, this);
-            Log.Error("TcpPackage Data Dump:\n{@data}", Helper.FormatBinaryDump(package.Data));
+            Log.Error("Unexpected TcpCommand received.");
+            Log.Error("Expected: {0}, Actual: {1}, Flags: {2}, CorrelationId: {3}", expectedCommand, package.Command, package.Flags, package.CorrelationId);
+            Log.Error("Operation ({0}): {1}", GetType().Name, this);
+            Log.Error("TcpPackage Data Dump:");
+            Log.Error(Helper.FormatBinaryDump(package.Data));
 
             Fail(new CommandNotExpectedException(expectedCommand.ToString(), package.Command.ToString()));
             return new InspectionResult(InspectionDecision.EndOperation, string.Format("Unexpected command - {0}", package.Command.ToString()));

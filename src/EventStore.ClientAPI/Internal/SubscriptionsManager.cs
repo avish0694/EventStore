@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using EventStore.ClientAPI.ClientOperations;
@@ -107,15 +107,13 @@ namespace EventStore.ClientAPI.Internal
                 }
                 else if (subscription.Timeout > TimeSpan.Zero && DateTime.UtcNow - subscription.LastUpdated > _settings.OperationTimeout)
                 {
-                    _settings.Log.Error("EventStoreConnection '{@connectionName}': subscription never got confirmation from server.\n" +
-                                            "UTC now: {@dateTime:HH:mm:ss.fff}, operation: {@operation}.",
+                    var err = String.Format("EventStoreConnection '{0}': subscription never got confirmation from server.\n" +
+                                            "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
                                             _connectionName, DateTime.UtcNow, subscription);
+                    _settings.Log.Error(err);
 
                     if (_settings.FailOnNoServerResponse)
                     {
-                        var err = String.Format("EventStoreConnection '{0}': subscription never got confirmation from server.\n" +
-                                            "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
-                                            _connectionName, DateTime.UtcNow, subscription);
                         subscription.Operation.DropSubscription(SubscriptionDropReason.SubscribingError, new OperationTimedOutException(err));
                         removeSubscriptions.Add(subscription);
                     }
@@ -213,7 +211,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@message}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{0}': {1}.", _connectionName, parameters.Length == 0 ? message : string.Format(message, parameters));
         }
     }
 }

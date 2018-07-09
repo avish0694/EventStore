@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using EventStore.ClientAPI.Common.Log;
 using ProtoBuf;
@@ -26,7 +26,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.Debug("Deserialization to {@type} failed : {@e}", typeof(T).FullName, e);
+                Log.Debug("Deserialization to {0} failed : {1}", typeof(T).FullName, e);
                 return default(T);
             }
         }

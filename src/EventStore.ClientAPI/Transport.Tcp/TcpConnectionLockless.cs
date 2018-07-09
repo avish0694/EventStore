@@ -263,7 +263,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                     var callback = Interlocked.Exchange(ref _receiveCallback, null);
                     if (callback == null)
                     {
-                        _log.Error("Threading issue in TryDequeueReceivedData. Callback is null."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                        _log.Error("Threading issue in TryDequeueReceivedData. Callback is null.");
                         throw new Exception("Threading issue in TryDequeueReceivedData. Callback is null.");
                     }
 
@@ -297,11 +297,11 @@ namespace EventStore.ClientAPI.Transport.Tcp
             if (Interlocked.CompareExchange(ref _closed, 1, 0) != 0)
                 return;
             NotifyClosed();
-            _log.Info("ClientAPI {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
-            _log.Info("Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}", TotalBytesReceived, TotalBytesSent);
-            _log.Info("Send calls: {@sendCalls}, callbacks: {@sendCallbacks}", SendCalls, SendCallbacks);
-            _log.Info("Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}", ReceiveCalls, ReceiveCallbacks);
-            _log.Info("Close reason: [{@socketError}] {@reason}", socketError, reason);
+            _log.Info("ClientAPI {0} closed [{1:HH:mm:ss.fff}: N{2}, L{3}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
+            _log.Info("Received bytes: {0}, Sent bytes: {1}", TotalBytesReceived, TotalBytesSent);
+            _log.Info("Send calls: {0}, callbacks: {1}", SendCalls, SendCallbacks);
+            _log.Info("Receive calls: {0}, callbacks: {1}", ReceiveCalls, ReceiveCallbacks);
+            _log.Info("Close reason: [{0}] {1}", socketError, reason);
             CloseSocket();
             if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
                 ReturnSendingSocketArgs();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
@@ -57,21 +57,21 @@ namespace EventStore.ClientAPI.Internal
 
                 for (int attempt = 1; attempt <= _maxDiscoverAttempts; ++attempt)
                 {
-                    //_log.Info("Discovering cluster. Attempt {@attempt}/{@maxDiscoverAttempts}...", attempt, _maxDiscoverAttempts);
+                    //_log.Info("Discovering cluster. Attempt {0}/{1}...", attempt, _maxDiscoverAttempts);
                     try
                     {                            
                         var endPoints = DiscoverEndPoint(failedTcpEndPoint);
                         if (endPoints != null)
                         {
-                            _log.Info("Discovering attempt {@attempt}{@maxDiscoverAttemptsStr} successful: best candidate is {@endPoints}.", attempt, maxDiscoverAttemptsStr, endPoints);
+                            _log.Info("Discovering attempt {0}{1} successful: best candidate is {2}.", attempt, maxDiscoverAttemptsStr, endPoints);
                             return endPoints.Value;
                         }
 
-                        _log.Info("Discovering attempt {@attempt}{@maxDiscoverAttemptsStr} failed: no candidate found.", attempt, maxDiscoverAttemptsStr);
+                        _log.Info("Discovering attempt {0}{1} failed: no candidate found.", attempt, maxDiscoverAttemptsStr);
                     }
                     catch (Exception exc)
                     {
-                        _log.Info("Discovering attempt {@attempt}{@maxDiscoverAttemptsStr} failed with error: {@exc}.", attempt, maxDiscoverAttemptsStr, exc);
+                        _log.Info("Discovering attempt {0}{1} failed with error: {2}.", attempt, maxDiscoverAttemptsStr, exc);
                     }
 
                     Thread.Sleep(500);
@@ -105,7 +105,7 @@ namespace EventStore.ClientAPI.Internal
 
         private GossipSeed[] GetGossipCandidatesFromDns()
         {
-            //_log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromDns"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            //_log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromDns");
             GossipSeed[] endpoints;
             if(_gossipSeeds != null && _gossipSeeds.Length > 0)
             {
@@ -138,7 +138,7 @@ namespace EventStore.ClientAPI.Internal
 
         private GossipSeed[] GetGossipCandidatesFromOldGossip(IEnumerable<ClusterMessages.MemberInfoDto> oldGossip, IPEndPoint failedTcpEndPoint)
         {
-            //_log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromOldGossip, failedTcpEndPoint: {@failedTcpEndPoint}.", failedTcpEndPoint);
+            //_log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromOldGossip, failedTcpEndPoint: {0}.", failedTcpEndPoint);
             var gossipCandidates = failedTcpEndPoint == null 
                     ? oldGossip.ToArray() 
                     : oldGossip.Where(x => !(x.ExternalTcpPort == failedTcpEndPoint.Port 
@@ -181,7 +181,7 @@ namespace EventStore.ClientAPI.Internal
 
         private ClusterMessages.ClusterInfoDto TryGetGossipFrom(GossipSeed endPoint)
         {
-            //_log.Debug("ClusterDnsEndPointDiscoverer: Trying to get gossip from [{@endPoint}].", endPoint);
+            //_log.Debug("ClusterDnsEndPointDiscoverer: Trying to get gossip from [{0}].", endPoint);
 
             ClusterMessages.ClusterInfoDto result = null;
             var completed = new ManualResetEventSlim(false);
@@ -194,24 +194,24 @@ namespace EventStore.ClientAPI.Internal
                 {
                     if (response.HttpStatusCode != HttpStatusCode.OK)
                     {
-                        //_log.Info("[{@endPoint}] responded with {@httpStatusCode} ({@statusDescription})", endPoint, response.HttpStatusCode, response.StatusDescription);
+                        //_log.Info("[{0}] responded with {1} ({2})", endPoint, response.HttpStatusCode, response.StatusDescription);
                         completed.Set();
                         return;
                     }
                     try
                     {
                         result = response.Body.ParseJson<ClusterMessages.ClusterInfoDto>();
-                        //_log.Debug("ClusterDnsEndPointDiscoverer: Got gossip from [{@endPoint}]:\n{@result}.", endPoint, string.Join("\n", result.Members.Select(x => x.ToString()))); 
+                        //_log.Debug("ClusterDnsEndPointDiscoverer: Got gossip from [{0}]:\n{1}.", endPoint, string.Join("\n", result.Members.Select(x => x.ToString())));
                     }
                     catch (Exception)
                     {
-                        //_log.Info("Failed to get cluster info from [{@endPoint}]: deserialization error: {@message}.", endPoint, e.Message);
+                        //_log.Info("Failed to get cluster info from [{0}]: deserialization error: {1}.", endPoint, e.Message);
                     }
                     completed.Set();
                 },
                 e =>
                 {
-                    //_log.Info("Failed to get cluster info from [{@endPoint}]: request failed, error: {@message}.", endPoint, e.Message);
+                    //_log.Info("Failed to get cluster info from [{0}]: request failed, error: {1}.", endPoint, e.Message);
                     completed.Set();
                 }, endPoint.HostHeader);
 
@@ -248,7 +248,7 @@ namespace EventStore.ClientAPI.Internal
                            
             if (node == default(ClusterMessages.MemberInfoDto))
             {
-                //_log.Info("Unable to locate suitable node. Gossip info:\n{@members}.", string.Join("\n", members.Select(x => x.ToString())));
+                //_log.Info("Unable to locate suitable node. Gossip info:\n{0}.", string.Join("\n", members.Select(x => x.ToString())));
                 return null;
             }
 
@@ -256,7 +256,7 @@ namespace EventStore.ClientAPI.Internal
             var secTcp = node.ExternalSecureTcpPort > 0
                                  ? new IPEndPoint(IPAddress.Parse(node.ExternalTcpIp), node.ExternalSecureTcpPort)
                                  : null;
-            _log.Info("Discovering: found best choice [{@normTcp},{@fixthisvar}] ({@state}).", normTcp, secTcp == null ? "n/a" : secTcp.ToString(), node.State); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+            _log.Info("Discovering: found best choice [{0},{1}] ({2}).", normTcp, secTcp == null ? "n/a" : secTcp.ToString(), node.State);
             return new NodeEndPoints(normTcp, secTcp);
         }
     }

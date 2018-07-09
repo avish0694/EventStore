@@ -120,7 +120,7 @@ namespace EventStore.ClientAPI.ClientOperations
                                                      new ArgumentException(string.Format("Subscription to '{0}' failed due to not found.", _streamId == string.Empty ? "<all>" : _streamId)));
                                     break;
                                 default:
-                                    if (_verboseLogging) _log.Debug("Subscription dropped by server. Reason: {@reason}.", dto.Reason);
+                                    if (_verboseLogging) _log.Debug("Subscription dropped by server. Reason: {0}.", dto.Reason);
                                     DropSubscription(SubscriptionDropReason.Unknown,
                                                      new CommandNotExpectedException(string.Format("Unsubscribe reason: '{0}'.", dto.Reason)));
                                     break;
@@ -164,7 +164,7 @@ namespace EventStore.ClientAPI.ClientOperations
                                                                 masterInfo.ExternalTcpEndPoint, masterInfo.ExternalSecureTcpEndPoint);
 
                                 default:
-                                    _log.Error("Unknown NotHandledReason: {@reason}.", message.Reason);
+                                    _log.Error("Unknown NotHandledReason: {0}.", message.Reason);
                                     return new InspectionResult(InspectionDecision.Retry, "NotHandled - <unknown>");
                             }
                         }
@@ -202,8 +202,8 @@ namespace EventStore.ClientAPI.ClientOperations
             if (Interlocked.CompareExchange(ref _unsubscribed, 1, 0) == 0)
             {
                 if (_verboseLogging)
-                    _log.Debug("Subscription {0:B} to {@fixthisvar}: closing subscription, reason: {@reason}, exception: {@exc}...",
-                               _correlationId, _streamId == string.Empty ? "<all>" : _streamId, reason, exc); /*TODO: structured-log @avish0694: the following parameters need attention: {0:B},{1}*/
+                    _log.Debug("Subscription {0:B} to {1}: closing subscription, reason: {2}, exception: {3}...",
+                               _correlationId, _streamId == string.Empty ? "<all>" : _streamId, reason, exc);
 
                 if (reason != SubscriptionDropReason.UserInitiated)
                 {
@@ -231,8 +231,8 @@ namespace EventStore.ClientAPI.ClientOperations
                 throw new Exception("Double confirmation of subscription.");
 
             if (_verboseLogging)
-                _log.Debug("Subscription {@correlationId:B} to {@streamId}: subscribed at CommitPosition: {@lastCommitPosition}, EventNumber: {@lastEventNumber}.",
-                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId, lastCommitPosition, lastEventNumber); 
+                _log.Debug("Subscription {0:B} to {1}: subscribed at CommitPosition: {2}, EventNumber: {3}.",
+                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId, lastCommitPosition, lastEventNumber);
             _subscription = CreateSubscriptionObject(lastCommitPosition, lastEventNumber);
             _source.SetResult(_subscription);
         }
@@ -247,7 +247,7 @@ namespace EventStore.ClientAPI.ClientOperations
             if (_subscription == null) throw new Exception("Subscription not confirmed, but event appeared!");
 
             if (_verboseLogging)
-                _log.Debug("Subscription {@correlationId:B} to {@streamId}: event appeared ({@originalStreamId}, {@originalEventNumber}, {@eventType} @ {@originalPosition}).",
+                _log.Debug("Subscription {0:B} to {1}: event appeared ({2}, {3}, {4} @ {5}).",
                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId,
                           e.OriginalStreamId, e.OriginalEventNumber, e.OriginalEvent.EventType, e.OriginalPosition);
 
@@ -275,7 +275,7 @@ namespace EventStore.ClientAPI.ClientOperations
                     }
                     catch (Exception exc)
                     {
-                        _log.Error(exc, "Exception during executing user callback: {@message}.", exc.Message);
+                        _log.Error(exc, "Exception during executing user callback: {0}.", exc.Message);
                     }
                 }
 

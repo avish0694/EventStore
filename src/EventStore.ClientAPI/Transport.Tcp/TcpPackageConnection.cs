@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -66,21 +66,21 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 tcpConnection =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connected to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}].", tcpConnection.RemoteEndPoint, tcpConnection.LocalEndPoint, connectionId);
+                    log.Debug("TcpPackageConnection: connected to [{0}, L{1}, {2:B}].", tcpConnection.RemoteEndPoint, tcpConnection.LocalEndPoint, connectionId);
                     if (connectionEstablished != null)
                         connectionEstablished(this);
                 },
                 (conn, error) =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {2:B}] failed. Error: {@error}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error); /*TODO: structured-log @avish0694: the following parameters need attention: {2:B}*/
+                    log.Debug("TcpPackageConnection: connection to [{0}, L{1}, {2:B}] failed. Error: {3}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error);
                     if (connectionClosed != null)
                         connectionClosed(this, error);
                 },
                 (conn, error) =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connection [{@remoteEndPoint}, L{@localEndPoint}, {2:@connectionId}] was closed {@status}", conn.RemoteEndPoint, conn.LocalEndPoint,
+                    log.Debug("TcpPackageConnection: connection [{0}, L{1}, {2:B}] was closed {3}", conn.RemoteEndPoint, conn.LocalEndPoint,
                               ConnectionId, error == SocketError.Success ? "cleanly." : "with error: " + error + ".");
 
                     if (connectionClosed != null)
@@ -99,7 +99,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (PackageFramingException exc)
             {
-                _log.Error(exc, "TcpPackageConnection: [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]. Invalid TCP frame received.", RemoteEndPoint, LocalEndPoint, ConnectionId);
+                _log.Error(exc, "TcpPackageConnection: [{0}, L{1}, {2:B}]. Invalid TCP frame received.", RemoteEndPoint, LocalEndPoint, ConnectionId);
                 Close("Invalid TCP frame received.");
                 return;
             }
@@ -128,7 +128,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                                             valid ? package.Command.ToString() : "<invalid package>");
                 if (_onError != null)
                     _onError(this, e);
-                _log.Debug(e, message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Debug(e, message);
             }
         }
 
