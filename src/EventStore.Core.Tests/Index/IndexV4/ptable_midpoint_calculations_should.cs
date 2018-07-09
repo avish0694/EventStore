@@ -32,13 +32,13 @@ namespace EventStore.Core.Tests.Index.IndexV4
                     }
 
                     if(requiredMidpoints.Count!=calculatedMidpoints.Count){
-                        Log.Error("Midpoint count mismatch for numIndexEntries: {@numIndexEntries}, depth:{@depth} - Expected {@requiredMidpoints}, Found {@calculatedMidpoints}",numIndexEntries,depth,requiredMidpoints.Count,calculatedMidpoints.Count);
+                        Log.Error("Midpoint count mismatch for numIndexEntries: {0}, depth:{1} - Expected {2}, Found {3}",numIndexEntries,depth,requiredMidpoints.Count,calculatedMidpoints.Count);
                     }
                     Assert.AreEqual(requiredMidpoints.Count,calculatedMidpoints.Count);
 
                     for(var i=0;i<requiredMidpoints.Count;i++){
                         if(requiredMidpoints[i]!=calculatedMidpoints[i]){
-                            Log.Error("Midpoint mismatch at index {@i} for numIndexEntries: {@numIndexEntries}, depth:{@depth} - Expected {@requiredMidpoints}, Found {@calculatedMidpoints}",i,numIndexEntries,depth,requiredMidpoints[i],calculatedMidpoints[i]);
+                            Log.Error("Midpoint mismatch at index {0} for numIndexEntries: {1}, depth:{2} - Expected {3}, Found {4}",i,numIndexEntries,depth,requiredMidpoints[i],calculatedMidpoints[i]);
                         }
                         Assert.AreEqual(requiredMidpoints[i],calculatedMidpoints[i]);
                     }

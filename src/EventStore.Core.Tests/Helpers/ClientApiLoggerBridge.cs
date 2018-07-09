@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
 
@@ -27,7 +27,7 @@ namespace EventStore.Core.Tests.Helpers
         public void Error(Exception ex, string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.ErrorException(ex, format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.ErrorException(ex, format);
             else
                 _log.ErrorException(ex, format, args);
         }
@@ -37,7 +37,7 @@ namespace EventStore.Core.Tests.Helpers
             if (args.Length == 0)
                 _log.Info(format);
             else
-                _log.Info(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Info(format, args);
         }
 
         public void Info(Exception ex, string format, params object[] args)
@@ -51,7 +51,7 @@ namespace EventStore.Core.Tests.Helpers
         public void Debug(string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.Debug(format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Debug(format);
             else
                 _log.Debug(format, args);
         }
@@ -61,7 +61,7 @@ namespace EventStore.Core.Tests.Helpers
             if (args.Length == 0)
                 _log.DebugException(ex, format);
             else
-                _log.DebugException(ex, format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.DebugException(ex, format, args);
         }
     }
 }

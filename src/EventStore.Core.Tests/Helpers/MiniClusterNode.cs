@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -105,7 +105,7 @@ namespace EventStore.Core.Tests.Helpers
                 connectionPendingSendBytesThreshold: Opts.ConnectionPendingSendBytesThresholdDefault, chunkInitialReaderCount: Opts.ChunkInitialReaderCountDefault);
 
             Log.Info(
-                "\n{0,-25} {@fixthisvar} ({@fixthisvar}/{@fixthisvar}, {@fixthisvar})\n" + "{5,-25} {6} ({7})\n" + "{8,-25} {9} ({10}-bit)\n"
+                "\n{0,-25} {1} ({2}/{3}, {4})\n" + "{5,-25} {6} ({7})\n" + "{8,-25} {9} ({10}-bit)\n"
                 + "{11,-25} {12}\n" + "{13,-25} {14}\n" + "{15,-25} {16}\n" + "{17,-25} {18}\n" + "{19,-25} {20}\n\n",
                 "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp,
                 "OS:", OS.OsFlavor, Environment.OSVersion, "RUNTIME:", OS.GetRuntimeVersion(),
@@ -114,7 +114,7 @@ namespace EventStore.Core.Tests.Helpers
                     ? "NON-GENERATION (PROBABLY BOEHM)"
                     : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1), "DBPATH:", _dbPath, "ExTCP ENDPOINT:",
                 ExternalTcpEndPoint, "ExTCP SECURE ENDPOINT:", ExternalTcpSecEndPoint, "ExHTTP ENDPOINT:",
-                ExternalHttpEndPoint); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25},{1},{2},{3},{4}*/
+                ExternalHttpEndPoint);
 
             Node = new ClusterVNode(Db, singleVNodeSettings, infoController: new InfoController(null, ProjectionType.None), subsystems: subsystems, gossipSeedSource: new KnownEndpointGossipSeedSource(gossipSeeds));
             Node.ExternalHttpService.SetupController(new TestController(Node.MainQueue));

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -46,7 +46,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                     foreach (var arraySegment in y)
                     {
                         received.Write(arraySegment.Array, arraySegment.Offset, arraySegment.Count);
-                        Log.Info("Received: {@arraySegment} bytes, total: {@received}.", arraySegment.Count, received.Length);
+                        Log.Info("Received: {0} bytes, total: {1}.", arraySegment.Count, received.Length);
                     }
 
                     if (received.Length >= sent.Length)
@@ -60,7 +60,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                         ssl.ReceiveAsync(callback);
                     }
                 };
-                Log.Info("Receiving..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.Info("Receiving...");
                 ssl.ReceiveAsync(callback);
             }, "Secure");
 
@@ -78,7 +78,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                 },
                 (conn, err) =>
                 {
-                    Log.Error("Connecting failed: {@err}.", err);
+                    Log.Error("Connecting failed: {0}.", err);
                     done.Set();
                 },
                 verbose: true);
@@ -87,7 +87,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
 
             Log.Info("Stopping listener...");
             listener.Stop();
-            Log.Info("Closing client ssl connection..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Info("Closing client ssl connection...");
             clientSsl.Close("Normal close.");
             Log.Info("Checking received data...");
             Assert.AreEqual(sent, received.ToArray());

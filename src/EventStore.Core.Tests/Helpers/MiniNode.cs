@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -136,14 +136,14 @@ namespace EventStore.Core.Tests.Helpers
                 }
             }
 
-            Log.Info("\n{@desc,-25} {@version} ({@branch}/{@hashTag}, {@timeStamp})\n"
-                     + "{@desc,-25} {@osFlavor} ({@osVersion})\n"
-                     + "{@desc,-25} {@osRuntimeVersion} ({@value}-bit)\n"
-                     + "{@desc,-25} {@GC}\n"
-                     + "{@desc,-25} {@dbPath}\n"
-                     + "{@desc,-25} {@tcpEndPoint}\n"
-                     + "{@desc,-25} {@tcpSecureEndPoint}\n"
-                     + "{@desc,-25} {@httpEndPoint}\n\n",
+            Log.Info("\n{0,-25} {1} ({2}/{3}, {4})\n"
+                     + "{5,-25} {6} ({7})\n"
+                     + "{8,-25} {9} ({10}-bit)\n"
+                     + "{11,-25} {12}\n"
+                     + "{13,-25} {14}\n"
+                     + "{15,-25} {16}\n"
+                     + "{17,-25} {18}\n"
+                     + "{19,-25} {20}\n\n",
                      "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp,
                      "OS:", OS.OsFlavor, Environment.OSVersion,
                      "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8,

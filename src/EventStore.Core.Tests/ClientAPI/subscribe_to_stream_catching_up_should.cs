@@ -58,7 +58,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (_, __, ___) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                               (_, __, ___) => dropped.Signal());
 
                 Thread.Sleep(100); // give time for first pull phase
                 store.SubscribeToStreamAsync(stream, false, (s, x) => Task.CompletedTask, (s, r, e) => { }).Wait();
@@ -135,7 +135,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                            return Task.CompletedTask;
                                                        },
                                                         _ => Log.Info("Live processing started."),
-                                                       (x, y, z) => dropped2.Set()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                       (x, y, z) => dropped2.Set());
 
                 store.AppendToStreamAsync(stream, ExpectedVersion.EmptyStream, TestEvent.NewTestEvent()).Wait();
 
@@ -223,7 +223,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                    return Task.CompletedTask;
                                                                },
                                                                _ => Log.Info("Live processing started."),
-                                                               (x, y, z) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                               (x, y, z) => dropped.Signal());
                 for (int i = 10; i < 20; ++i)
                 {
                     store.AppendToStreamAsync(stream, i-1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
