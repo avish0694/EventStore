@@ -88,7 +88,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 {
                     Log.Debug(string.Format("Subscription {@fixthisvar}: read no checksum.", _settings.SubscriptionId)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
 
-                    Log.Debug("strtfrom = " + _settings.StartFrom); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Debug("strtfrom = " + _settings.StartFrom);
                     _nextEventToPullFrom = _settings.StartFrom >= 0 ? _settings.StartFrom : 0;
                     _streamBuffer = new StreamBuffer(_settings.BufferSize, _settings.LiveBufferSize, -1,
                         _settings.StartFrom >= 0);
@@ -531,7 +531,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         private void RetryMessage(ResolvedEvent @event, int count)
         {
-            Log.Debug("Retrying message {@subscriptionId} {@fixthisvar}/{@fixthisvar}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
+            Log.Debug("Retrying message {@subscriptionId} {@originalStreamId}/{@originalPosition}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition);
             _outstandingMessages.Remove(@event.OriginalEvent.EventId);
             _pushClients.RemoveProcessingMessage(@event.OriginalEvent.EventId);
             _streamBuffer.AddRetry(new OutstandingMessage(@event.OriginalEvent.EventId, null, @event, count + 1));

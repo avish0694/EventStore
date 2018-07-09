@@ -135,7 +135,7 @@ namespace EventStore.TestClient
 
         private int Execute(string[] args)
         {
-            Log.Info("Processing command: {@fixthisvar}.", string.Join(" ", args)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Info("Processing command: {@command}.", string.Join(" ", args));
 
             var context = new CommandProcessorContext(this, Log, new ManualResetEventSlim(true));
 
@@ -222,9 +222,9 @@ namespace EventStore.TestClient
                 {
                     if (!InteractiveMode || error != SocketError.Success)
                     {
-                        Log.Info("TcpTypedConnection: connection [{@remoteEndPoint}, L{@localEndPoint}] was closed {@fixthisvar}",
+                        Log.Info("TcpTypedConnection: connection [{@remoteEndPoint}, L{@localEndPoint}] was closed {@closed}",
                                  conn.RemoteEndPoint, conn.LocalEndPoint,
-                                 error == SocketError.Success ? "cleanly." : "with error: " + error + "."); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
+                                 error == SocketError.Success ? "cleanly." : "with error: " + error + ".");
                     }
 
                     if (connectionClosed != null)

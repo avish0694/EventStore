@@ -330,7 +330,7 @@ namespace EventStore.ClusterNode
                 }
                 catch (CompositionException ex)
                 {
-                    Log.ErrorException(ex, "Error loading consumer strategy plugin."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.ErrorException(ex, "Error loading consumer strategy plugin.");
                 }
             }
 

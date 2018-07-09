@@ -59,7 +59,7 @@ namespace EventStore.Common.Utils
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Couldn't determine the flavor of Unix-like OS."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Couldn't determine the flavor of Unix-like OS.");
             }
             uname = uname.Trim().ToLower();
             switch (uname)

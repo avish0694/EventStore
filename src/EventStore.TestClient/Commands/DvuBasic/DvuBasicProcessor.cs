@@ -69,7 +69,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (!int.TryParse(args[1], out readersArg))
                 {
-                    context.Log.Error("Invalid argument value for <readers>"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <readers>");
                     return false;
                 }
                 if (!int.TryParse(args[2], out eventsArg))
@@ -86,7 +86,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                     .Select(p => p.Trim().ToLower()).Distinct().ToArray();
                 if (producersArg.Length <= 0)
                 {
-                    context.Log.Error("Invalid argument value for <plugins>"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <plugins>");
                     return false;
                 }
                 if (producersArg.Any(p => !AvailableProducers.Contains(p)))
@@ -182,7 +182,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 readersTable.AppendRow(rs.ThreadId.ToString(), rs.Success ? "Success" : "Fail");
             }
 
-            context.Log.Info(writersTable.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            context.Log.Info(writersTable.CreateIndentedTable());
             context.Log.Info(readersTable.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
 
             var success = writeStatuses.All(s => s.Success) && readStatuses.All(s => s.Success);

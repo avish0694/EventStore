@@ -195,7 +195,7 @@ namespace EventStore.Core.Services
 
             if (message.AttemptedView <= _lastInstalledView) return;
 
-            Log.Debug("ELECTIONS: (V={@attemptedView}) VIEWCHANGE FROM [{@serverInternalHttp}, {2:B}].", message.AttemptedView, message.ServerInternalHttp, message.ServerId); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:B}*/
+            Log.Debug("ELECTIONS: (V={@attemptedView}) VIEWCHANGE FROM [{@serverInternalHttp}, {@serverId:B}].", message.AttemptedView, message.ServerInternalHttp, message.ServerId);
 
             if (message.AttemptedView > _lastAttemptedView)
                 ShiftToLeaderElection(message.AttemptedView);
@@ -272,7 +272,7 @@ namespace EventStore.Core.Services
             if (message.View != _lastAttemptedView) return;
             if (_servers.All(x => x.InstanceId != message.ServerId)) return; // unknown instance
 
-            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PREPARE FROM [{@serverInternalHttp}, {2:B}].", _lastAttemptedView, message.ServerInternalHttp, message.ServerId); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:B}*/
+            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PREPARE FROM [{@serverInternalHttp}, {@serverId:B}].", _lastAttemptedView, message.ServerInternalHttp, message.ServerId);
 
             if (_state == ElectionsState.ElectingLeader) // install the view
                 ShiftToRegNonLeader();
@@ -400,10 +400,10 @@ namespace EventStore.Core.Services
                     || (candidate.EpochNumber == master.EpochNumber && candidate.EpochId != master.EpochId))
                     return true;
 
-                Log.Debug("ELECTIONS: (V={@fixthisvar}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@view},{2:B}] M={@proposingServerId}. "
-                          + "PREVIOUS MASTER IS ALIVE: [{4},{5:B}].",
+                Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{@proposingServerId:B}] M={@candidate}. "
+                          + "PREVIOUS MASTER IS ALIVE: [{@masterInternalHttpEndPoint},{@masterInstanceId:B}].",
                           view, proposingServerEndPoint, proposingServerId, FormatNodeInfo(candidate),
-                          master.InternalHttpEndPoint, master.InstanceId); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{2:B}*/
+                          master.InternalHttpEndPoint, master.InstanceId);
                 return false;
             }
 
@@ -476,8 +476,8 @@ namespace EventStore.Core.Services
             if (_masterProposal == null) return;
             if (_masterProposal.InstanceId != message.MasterId) return;
 
-            Log.Debug("ELECTIONS: (V={@view}) ACCEPT FROM [{@serverInternalHttp},{2:B}] M=[{@masterInternalHttp},{4:B}]).", message.View,
-                      message.ServerInternalHttp, message.ServerId, message.MasterInternalHttp, message.MasterId); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:B},{4:B}*/
+            Log.Debug("ELECTIONS: (V={@view}) ACCEPT FROM [{@serverInternalHttp},{@serverId:B}] M=[{@masterInternalHttp},{@masterId:B}]).", message.View,
+                      message.ServerInternalHttp, message.ServerId, message.MasterInternalHttp, message.MasterId);
 
             if (_acceptsReceived.Add(message.ServerId) && _acceptsReceived.Count == _clusterSize/2 + 1)
             {

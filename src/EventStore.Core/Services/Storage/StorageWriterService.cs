@@ -151,9 +151,9 @@ namespace EventStore.Core.Services.Storage
 
             if (_vnodeState != VNodeState.Master && message is StorageMessage.IMasterWriteMessage)
             {
-                var msg = string.Format("{0} appeared in StorageWriter during state {1}.", message.GetType().Name,
+              
+                Log.Fatal("{@message} appeared in StorageWriter during state {@vnodeStrate}.", message.GetType().Name,
                     _vnodeState);
-                Log.Fatal(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                 Application.Exit(ExitCode.Error, msg);
                 return;
             }
@@ -409,7 +409,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally
@@ -514,7 +514,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally

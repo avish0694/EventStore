@@ -1424,10 +1424,10 @@ namespace EventStore.Core
 
             _log.Info("{0,-25} {@instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25}*/
             _log.Info("{0,-25} {@path}", "DATABASE:", _db.Config.Path); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
-            _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{1:X}*/
+            _log.Info("{@desc,-25} {@writerCheckpoint} (0x{@writerCheckpoint:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read(),_db.Config.WriterCheckpoint.Read());
             _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "CHASER CHECKPOINT:", _db.Config.ChaserCheckpoint.Read()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25},{1},{1:X}*/
             _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "EPOCH CHECKPOINT:", _db.Config.EpochCheckpoint.Read()); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25},{1},{1:X}*/
-            _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "TRUNCATE CHECKPOINT:", _db.Config.TruncateCheckpoint.Read()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{1:X}*/
+            _log.Info("{@desc,-25} {@truncateCheckpoint} (0x{@truncateCheckpoint:X})", "TRUNCATE CHECKPOINT:", _db.Config.TruncateCheckpoint.Read(), _db.Config.TruncateCheckpoint.Read());
 
             return new ClusterVNode(_db, _vNodeSettings, GetGossipSource(), infoController, _subsystems.ToArray());
         }

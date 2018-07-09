@@ -49,7 +49,7 @@ namespace EventStore.Common.Log
 
         public void Error(string format, params object[] args)
         {
-            _logger.Error(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Error(format, args);
         }
 
         public void Info(string format, params object[] args)
@@ -64,7 +64,7 @@ namespace EventStore.Common.Log
 
         public void Warn(string format, params object[] args)
         {
-            _logger.Warn(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Warn(format, args);
         }
 
         public void Trace(string format, params object[] args)
@@ -80,7 +80,7 @@ namespace EventStore.Common.Log
 
         public void ErrorException(Exception exc, string format, params object[] args)
         {   
-            _logger.Error(format,args,exc); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Error(format,args,exc);
         }
 
         public void InfoException(Exception exc, string format, params object[] args)
@@ -95,7 +95,7 @@ namespace EventStore.Common.Log
 
         public void TraceException(Exception exc, string format, params object[] args)
         {
-            _logger.Trace(format,args,exc); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Trace(format,args,exc);
         }
 
         public static void FlushLog(TimeSpan? maxTimeToWait = null)

@@ -166,7 +166,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                 WaitAndCheckIfIsFaulted(projectionName);
 
-                Log.Debug(string.Format("Done iteration {@fixthisvar}", runIndex)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Log.Debug(string.Format("Done iteration {@runIndex}", runIndex));
             }
             finally
             {

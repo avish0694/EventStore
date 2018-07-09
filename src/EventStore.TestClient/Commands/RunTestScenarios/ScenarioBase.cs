@@ -224,7 +224,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         protected void DeleteStreams(IEnumerable<string> streams)
         {
-            Log.Info("Deleting streams..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("Deleting streams...");
             var store = GetConnection();
 
             var tasks = new List<Task>();
@@ -244,7 +244,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         protected Task CheckStreamsDeleted(IEnumerable<string> streams)
         {
-            Log.Info("Verifying streams are deleted..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("Verifying streams are deleted...");
 
             var store = GetConnection();
             var tasks = new List<Task>();
@@ -288,7 +288,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             return Task.Factory.ContinueWhenAll(tasks.ToArray(), tsks =>
             {
                 Task.WaitAll(tsks);
-                Log.Info("Done reading [{@fixthisvar}]", string.Join(",", streams)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Log.Info("Done reading [{@streams}]", string.Join(",", streams));
             });
         }
 
@@ -457,7 +457,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         protected void Scavenge()
         {
-            Log.Info("Send scavenge command..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("Send scavenge command...");
             var package = new TcpPackage(TcpCommand.ScavengeDatabase, Guid.NewGuid(), null).AsByteArray();
             DirectSendOverTcp(new IPEndPoint(_nodeConnection.IpAddress, _nodeConnection.TcpPort), package);
             Log.Info("Scavenge command was sent."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
@@ -641,7 +641,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                         TestEvent.VerifyIfMatched(evnt);
                     }
-                    Log.Info("Done reading [{@stream}] from {1,-10} count {2,-10}", stream, from, count); /*TODO: structured-log @Lougarou: the following parameters need attention: {1,-10},{2,-10}*/
+                    Log.Info("Done reading [{@stream}] from {@from,-10} count {@count,-10}", stream, from, count);
                     resSource.SetResult(null);
                 }
                 catch (Exception exc)

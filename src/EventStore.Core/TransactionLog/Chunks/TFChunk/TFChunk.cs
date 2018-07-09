@@ -461,7 +461,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             {
                 chunkHeader = ReadHeader(stream);
                 if(chunkHeader.Version == (byte) ChunkVersions.Unaligned) {
-                    Log.Trace("Upgrading ongoing file " + _filename + " to version 3"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("Upgrading ongoing file {@filename} to version 3",_filename);
                     var newHeader = new ChunkHeader((byte) ChunkVersions.Aligned,
                                                     chunkHeader.ChunkSize,
                                                     chunkHeader.ChunkStartNumber,
@@ -621,7 +621,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             {
                 if (Interlocked.Add(ref _memStreamCount, -_maxReaderCount) == 0)
                     FreeCachedData();
-                Log.Trace("CACHING ABORTED for TFChunk {@fixthisvar} as TFChunk was probably marked for deletion.", this); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Log.Trace("CACHING ABORTED for TFChunk {@tfchunk} as TFChunk was probably marked for deletion.", this);
                 return;
             }
 
@@ -900,7 +900,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             if(_chunkHeader.Version >= (byte) ChunkVersions.Aligned){
                 var alignedSize = GetAlignedSize(ChunkHeader.Size + _physicalDataSize + mapSize + ChunkFooter.Size);
                 var bufferSize = alignedSize - workItem.StreamPosition - ChunkFooter.Size;
-                Log.Debug("Buffer size is " + bufferSize); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Debug("Buffer size is {@bufferSize}", bufferSize);
                 if(bufferSize > 0) {
                     byte[] buffer = new byte[bufferSize];
                     WriteRawData(workItem, buffer, buffer.Length);

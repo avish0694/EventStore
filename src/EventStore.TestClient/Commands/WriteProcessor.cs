@@ -83,7 +83,7 @@ namespace EventStore.TestClient.Commands
                     var dto = pkg.Data.Deserialize<TcpClientMessageDto.WriteEventsCompleted>();
                     if (dto.Result == TcpClientMessageDto.OperationResult.Success)
                     {
-                        context.Log.Info("Successfully written."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        context.Log.Info("Successfully written.");
                         PerfUtils.LogTeamCityGraphData(string.Format("{0}-latency-ms", Keyword), (int)Math.Round(sw.Elapsed.TotalMilliseconds));
                         context.Success();
                     }

@@ -153,7 +153,7 @@ namespace EventStore.Core.Services.Monitoring
             if (header != _lastWrittenCsvHeader)
             {
                 _lastWrittenCsvHeader = header;
-                RegularLog.Info(Environment.NewLine); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                RegularLog.Info(Environment.NewLine);
                 RegularLog.Info(header); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
             }
 
@@ -288,7 +288,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error on getting fresh stats"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error on getting fresh stats");
             }
         }
 

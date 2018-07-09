@@ -83,7 +83,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (PackageFramingException exc)
             {
-                Log.InfoException(exc, "Invalid TCP frame received."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.InfoException(exc, "Invalid TCP frame received.");
                 Close("Invalid TCP frame received.");
                 return;
             }

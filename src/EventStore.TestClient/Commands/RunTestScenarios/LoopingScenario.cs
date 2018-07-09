@@ -47,12 +47,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             var runIndex = 0;
             while (stopWatch.Elapsed < _executionPeriod)
             {
-                var msg = string.Format("=================== Start run #{0}, elapsed {1} of {2} minutes, {3} =================== ",
+                var msg = string.Format();
+                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {executionElapsed} minutes, {@name} =================== ",
                                         runIndex,
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                 Log.Info("##teamcity[message '{@msg}']", msg);
 
                 SetStartupWaitInterval(TimeSpan.FromSeconds(10 + (2 * (runIndex % 200))));

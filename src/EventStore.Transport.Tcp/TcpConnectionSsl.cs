@@ -288,8 +288,8 @@ namespace EventStore.Transport.Tcp
             // Display the properties of the client's certificate.
             X509Certificate remoteCert = stream.RemoteCertificate;
             if (remoteCert != null)
-                Log.Info("Remote certificate was issued to {@subject} and is valid from {@fixthisvar} until {@fixthisvar}.",
-                                remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
+                Log.Info("Remote certificate was issued to {@subject} and is valid from {@remoteCertEffectiveDate} until {@remoteCertExpirationDate}.",
+                                remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString());
             else
                 Log.Info("Remote certificate is null."); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
         }
@@ -376,7 +376,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (Exception exc)
             {
-                Log.DebugException(exc, "Exception during EndWrite."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.DebugException(exc, "Exception during EndWrite.");
                 NotifySendCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndWrite.");
             }
@@ -439,7 +439,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (Exception exc)
             {
-                Log.DebugException(exc, "Exception during EndRead."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.DebugException(exc, "Exception during EndRead.");
                 NotifyReceiveCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndRead.");
                 return;
@@ -525,9 +525,9 @@ namespace EventStore.Transport.Tcp
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         TotalBytesReceived, TotalBytesSent); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
-                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        SendCalls, SendCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        SendCalls, SendCallbacks);
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/

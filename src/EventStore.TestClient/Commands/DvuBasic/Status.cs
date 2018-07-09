@@ -39,7 +39,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                             wrongExpctdVersions.ToString(), streamsDeleted.ToString());
 
             if (failsP > 50d)
-                _log.Fatal(table.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                _log.Fatal(table.CreateIndentedTable());
             else
                 _log.Info(table.CreateIndentedTable()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
         }
@@ -54,7 +54,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
             if (fails != 0)
                 _log.Fatal(table.CreateIndentedTable()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             else
-                _log.Info(table.CreateIndentedTable()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                _log.Info(table.CreateIndentedTable());
         }
 
         public void ReportReadError(int threadId, string stream, int indx)

@@ -178,7 +178,7 @@ namespace EventStore.Projections.Core.Services.Processing
                     var result = InternalProcessPartitionDeleted(partition, deletedPosition);
                     return result;
                 case PhaseState.Stopped:
-                    _logger.Error("Ignoring committed event in stopped state"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    _logger.Error("Ignoring committed event in stopped state");
                     return null;
                 default:
                     throw new NotSupportedException();

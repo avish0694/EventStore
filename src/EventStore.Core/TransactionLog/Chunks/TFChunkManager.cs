@@ -196,7 +196,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                             string.Format("The chunk that is being switched {0} is used by someone else.", chunk), exc);
                 }
                 var newFileName = _config.FileNamingStrategy.DetermineBestVersionFilenameFor(chunkHeader.ChunkStartNumber);
-                Log.Info("File {@fixthisvar} will be moved to file {@fixthisvar}", Path.GetFileName(oldFileName), Path.GetFileName(newFileName)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1}*/
+                Log.Info("File {@oldFileName} will be moved to file {@newFileName}", Path.GetFileName(oldFileName), Path.GetFileName(newFileName));
                 File.Move(oldFileName, newFileName);
                 newChunk = TFChunk.TFChunk.FromCompletedFile(newFileName, verifyHash, _config.Unbuffered, _config.InitialReaderCount, _config.OptimizeReadSideCache);
             }

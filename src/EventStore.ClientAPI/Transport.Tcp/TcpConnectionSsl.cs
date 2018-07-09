@@ -161,7 +161,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
-            _log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {1}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
+            _log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {@sslPolicyErrors}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
             // Do not allow this client to communicate with unauthenticated servers. 
             return false;
         }
@@ -281,7 +281,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during EndWrite."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                _log.Debug(exc, "Exception during EndWrite.");
                 NotifySendCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndWrite.");
             }
@@ -344,7 +344,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during EndRead."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                _log.Debug(exc, "Exception during EndRead.");
                 NotifyReceiveCompleted(0);
                 CloseInternal(SocketError.SocketError, "Exception during EndRead.");
                 return;

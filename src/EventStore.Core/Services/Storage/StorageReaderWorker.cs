@@ -266,7 +266,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadStreamEventsBackward request."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error during processing ReadStreamEventsBackward request.");
                     return NoData(msg, ReadStreamResult.Error, lastCommitPosition, error: exc.Message);
                 }
             }
@@ -498,7 +498,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {@fixthisvar}", eventRecord.ToString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@eventRecord}", eventRecord.ToString());
                 }
                 // return unresolved link
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);

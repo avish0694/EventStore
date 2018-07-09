@@ -41,7 +41,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.BadRequest,
                                           reason,
-                                          e => Log.Debug("Error while closing HTTP connection (bad request): {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                                          e => Log.Debug("Error while closing HTTP connection (bad request): {@exception}.", e.Message));
             return new RequestParams(done: true);
         }
 

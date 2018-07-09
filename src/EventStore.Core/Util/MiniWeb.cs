@@ -78,7 +78,7 @@ namespace EventStore.Core.Util
                     Logger.Info("Replying 404 for {@contentLocalPath} ==> {@fullPath}", contentLocalPath, fullPath);
                     http.ReplyTextContent(
                         "Not Found", 404, "Not Found", "text/plain", null,
-                        ex => Logger.InfoException(ex, "Error while replying from MiniWeb")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        ex => Logger.InfoException(ex, "Error while replying from MiniWeb"));
                 }
                 else
                 {

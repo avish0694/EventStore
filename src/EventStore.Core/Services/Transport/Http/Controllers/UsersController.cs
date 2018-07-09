@@ -98,7 +98,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var message = new UserManagementMessage.Create(
                         envelope, http.User, data.LoginName, data.FullName, data.Groups, data.Password);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private void PutUser(HttpEntityManager http, UriTemplateMatch match)
@@ -176,7 +176,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Publish(message);
 
                     },
-                x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private SendToHttpEnvelope<T> CreateReplyEnvelope<T>(

@@ -96,7 +96,7 @@ namespace EventStore.Core.Services.Gossip
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while retrieving cluster members through DNS."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error while retrieving cluster members through DNS.");
                 _bus.Publish(TimerMessage.Schedule.Create(DnsRetryTimeout, _publishEnvelope, new GossipMessage.RetrieveGossipSeedSources()));
             }
         }
@@ -277,14 +277,14 @@ namespace EventStore.Core.Services.Gossip
 
         private static void LogClusterChange(ClusterInfo oldCluster, ClusterInfo newCluster, string source)
         {
-            Log.Trace("CLUSTER HAS CHANGED{@fixthisvar}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Trace("CLUSTER HAS CHANGED{@source}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty);
             Log.Trace("Old:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
             var ipEndPointComparer = new IPEndPointComparer();
             foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {
                 Log.Trace(oldMember.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             }
-            Log.Trace("New:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Trace("New:");
             foreach (var newMember in newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {
                 Log.Trace(newMember.ToString()); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/

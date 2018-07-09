@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionFailed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{@connectionName}' ({1:B}) to [{@remoteEndPoint}] failed: {@socketError}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError); /*TODO: structured-log @Lougarou: the following parameters need attention: {1:B}*/
+            Log.Info("Connection '{@connectionName}' ({@connectionId:B}) to [{@remoteEndPoint}] failed: {@socketError}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError);
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
         }
@@ -274,11 +274,9 @@ namespace EventStore.Core.Services.Transport.Tcp
                 {
                     var reason = string.Empty;
                     Helper.EatException(() => reason = Helper.UTF8NoBom.GetString(package.Data.Array, package.Data.Offset, package.Data.Count));
-                    var exitMessage = 
-                        string.Format("Bad request received from '{0}{1}' [{2}, L{3}, {4:B}], will stop server. CorrelationId: {5:B}, Error: {6}.",
+                    Log.Error("Bad request received from '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}], will stop server. CorrelationId: {@correlationId:B}, Error: {@error}.",
                                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, 
                                       LocalEndPoint, ConnectionId, package.CorrelationId, reason.IsEmptyString() ? "<reason missing>" : reason);
-                    Log.Error(exitMessage); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
                     break;
                 }
                 case TcpCommand.Authenticate:

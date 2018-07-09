@@ -123,8 +123,8 @@ namespace EventStore.TestClient.Commands
 
             var reqPerSec = (all + 0.0)/sw.ElapsedMilliseconds*1000;
             context.Log.Info("Completed. Successes: {@succ}, failures: {@fail}", succ, fail);
-            context.Log.Info("{@all} requests completed in {@elapsedMilliseconds}ms ({2:0.00} reqs per sec, latency: {3:0.00} ms).",
-                             all, sw.ElapsedMilliseconds, reqPerSec, (sw.Elapsed.TotalMilliseconds + 0.0) / requestsCnt); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:0.00},{3:0.00}*/
+            context.Log.Info("{@all} requests completed in {@elapsedMilliseconds}ms ({requestsPerSecond:0.00} reqs per sec, latency: {@latency:0.00} ms).",
+                             all, sw.ElapsedMilliseconds, reqPerSec, (sw.Elapsed.TotalMilliseconds + 0.0) / requestsCnt);
             PerfUtils.LogData(Keyword,
                               PerfUtils.Row(PerfUtils.Col("clientsCnt", clientsCnt),
                                             PerfUtils.Col("requestsCnt", requestsCnt),

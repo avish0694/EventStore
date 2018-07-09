@@ -107,10 +107,9 @@ namespace EventStore.ClientAPI.Internal
                 }
                 else if (subscription.Timeout > TimeSpan.Zero && DateTime.UtcNow - subscription.LastUpdated > _settings.OperationTimeout)
                 {
-                    var err = String.Format("EventStoreConnection '{0}': subscription never got confirmation from server.\n" +
-                                            "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
+                    _settings.Log.Error("EventStoreConnection '{@connectionName}': subscription never got confirmation from server.\n" +
+                                            "UTC now: {@dateTime:HH:mm:ss.fff}, operation: {@operation}.",
                                             _connectionName, DateTime.UtcNow, subscription);
-                    _settings.Log.Error(err); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
 
                     if (_settings.FailOnNoServerResponse)
                     {

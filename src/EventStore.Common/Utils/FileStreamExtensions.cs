@@ -59,7 +59,7 @@ namespace EventStore.Common.Utils
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while compiling sneaky SafeFileHandle getter."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error while compiling sneaky SafeFileHandle getter.");
                     FlushSafe = f => f.Flush(flushToDisk: true);
                 }
             }

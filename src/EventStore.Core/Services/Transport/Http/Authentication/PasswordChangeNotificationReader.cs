@@ -65,7 +65,7 @@ namespace EventStore.Core.Services.Transport.Http.Authentication
                             case ReadStreamResult.AccessDenied:
                             case ReadStreamResult.Error:
                             case ReadStreamResult.NotModified:
-                                _log.Error("Failed to read: " + UserManagementService.UserPasswordNotificationsStreamId + " completed.Result=" + completed.Result.ToString()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                                _log.Error("Failed to read: {streamId} completed.Result={completedResult}" ,UserManagementService.UserPasswordNotificationsStreamId,completed.Result.ToString());
                                 _ioDispatcher.Delay(
                                     TimeSpan.FromSeconds(10), () => ReadNotificationsFrom(fromEventNumber));
                                 break;

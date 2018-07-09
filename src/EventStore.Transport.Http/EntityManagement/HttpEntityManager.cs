@@ -248,7 +248,7 @@ namespace EventStore.Transport.Http.EntityManagement
         {
             IOStreams.SafelyDispose(_currentOutputStream);
             _currentOutputStream = null;
-            CloseConnection(e => Log.Debug(message + "\nException: " + e.Message)); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            CloseConnection(e => Log.Debug(message + "\nException: {@e}",e.Message));
         }
 
         public void EndReply()

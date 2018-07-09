@@ -48,7 +48,7 @@ namespace EventStore.Core.Services.Transport.Http
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error purging timed out requests in HTTP request processor."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Error purging timed out requests in HTTP request processor.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager(Codec.NoCodec, Codec.NoCodec, allowed, _ => { });
             entity.ReplyStatus(HttpStatusCode.MethodNotAllowed, "Method Not Allowed",
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@exception}.", e.Message));
         }
 
         private void NotFound(HttpEntity httpEntity)
@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager();
             entity.ReplyStatus(HttpStatusCode.NotAcceptable, reason,
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@exception}.", e.Message));
         }
 
         private void BadContentType(HttpEntity httpEntity, string reason)

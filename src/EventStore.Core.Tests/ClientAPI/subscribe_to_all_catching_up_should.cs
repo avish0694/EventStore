@@ -106,7 +106,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                 return Task.CompletedTask;
                                                             },
                                                             _ => Log.Info("Live processing started."),
-                                                            (_, __, ___) => dropped.Signal()); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                                                            (_, __, ___) => dropped.Signal());
 
                 Thread.Sleep(100); // give time for first pull phase
                 store.SubscribeToAllAsync(false, (s, x) => Task.CompletedTask, (s, r, e) => { }).Wait();
@@ -209,7 +209,7 @@ namespace EventStore.Core.Tests.ClientAPI
                 {
                     store.AppendToStreamAsync("stream-" + i.ToString(), -1, new EventData(Guid.NewGuid(), "et-" + i.ToString(), false, new byte[3], null)).Wait();
                 }
-                Log.Info("Waiting for events..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Waiting for events...");
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");
@@ -264,7 +264,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                                 dropped.Signal();
                                                             });
 
-                Log.Info("Waiting for events..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Waiting for events...");
                 if (!appeared.Wait(Timeout))
                 {
                     Assert.IsFalse(dropped.Wait(0), "Subscription was dropped prematurely.");

@@ -117,11 +117,11 @@ namespace EventStore.TestClient.Commands
             context.IsAsync();
 
             Log.Info("\n---" +
-                     "\nRunning scenario {0} using {1} connections with {2} max concurrent requests," +
-                     "\nfor {3} streams {4} events each deleting every {5}th stream. " +
-                     "\nExecution period {6} minutes. " +
-                     "\nDatabase path {7};" +
-                     "\nCustom Node {8};" +
+                     "\nRunning scenario {@scenarioName} using {@connections} connections with {@maxConcurrentRequests} max concurrent requests," +
+                     "\nfor {@streams} streams {@eventsPerStream} events each deleting every {@streamDeleteStep}th stream. " +
+                     "\nExecution period {@executionPeriodMinutes} minutes. " +
+                     "\nDatabase path {@dbParentPath};" +
+                     "\nCustom Node {@customNode};" +
                      "\n---",
                      scenarioName,
                      connections,
@@ -131,7 +131,7 @@ namespace EventStore.TestClient.Commands
                      streamDeleteStep,
                      executionPeriodMinutes,
                      dbParentPath,
-                     customNode); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                     customNode);
 
             var directTcpSender = CreateDirectTcpSender(context);
             var allScenarios = new IScenario[]
@@ -225,7 +225,7 @@ namespace EventStore.TestClient.Commands
                         Log.Info("Run scenario {@fixthisvar}", scenario.GetType().Name); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
                         scenario.Run();
                         scenario.Clean();
-                        Log.Info("Scenario run successfully"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        Log.Info("Scenario run successfully");
                     }
                     catch (Exception e)
                     {

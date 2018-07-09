@@ -64,7 +64,7 @@ namespace EventStore.Transport.Http.Server
 
                 _listener.BeginGetContext(ContextAcquired, null);
 
-                Logger.Info("HTTP server is up and listening on [{@fixthisvar}]", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Logger.Info("HTTP server is up and listening on [{@listeners}]", string.Join(",", _listener.Prefixes));
 
                 return true;
             }
@@ -116,7 +116,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.ErrorException(e, "Error while shutting down http server"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Logger.ErrorException(e, "Error while shutting down http server");
             }
         }
 
@@ -185,7 +185,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.ErrorException(e, "BeginGetContext error. Status : {@fixthisvar}.", IsListening ? "listening" : "stopped"); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Logger.ErrorException(e, "BeginGetContext error. Status : {@isListening}.", IsListening ? "listening" : "stopped");
             }
         }
 

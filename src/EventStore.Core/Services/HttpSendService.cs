@@ -71,7 +71,7 @@ namespace EventStore.Core.Services
             if(message.LiveUntil > DateTime.Now) {
                 _httpPipe.Push(message.Message, message.EndPoint);
             } else {
-                Log.Debug("Dropping HTTP send message due to TTL being over. {1} To : {0}", message.EndPoint, message.Message.GetType().Name.ToString()); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
+                Log.Debug("Dropping HTTP send message due to TTL being over. {@messageType} To : {@endPoint}", message.Message.GetType().Name.ToString(),message.EndPoint);
             }
         }
 
@@ -120,7 +120,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@exception}.", message.Message, exc.Message));
                 }
                 HistogramService.SetValue(_httpSendHistogram,
                    (long)((((double)_watch.ElapsedTicks - start) / Stopwatch.Frequency) * 1000000000));

@@ -202,8 +202,8 @@ namespace EventStore.Core.Index
                 Log.Error("Unable to create midpoints for PTable '{@fixthisvar}' ({@count} entries, depth {@depth} requested). "
                           + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
             }
-            Log.Trace("Loading PTable (Version: {@version}) '{@fixthisvar}' ({@count} entries, cache depth {@calcdepth}) done in {@elapsed}.",
-                      _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+            Log.Trace("Loading PTable (Version: {@version}) '{@path}' ({@count} entries, cache depth {@calcdepth}) done in {@elapsed}.",
+                      _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed);
         }
 
         internal Midpoint[] CacheMidpointsAndVerifyHash(int depth, bool skipIndexVerify)

@@ -72,7 +72,7 @@ namespace EventStore.Core
                 var msg = String.Format("Application initialization error: {0}", FormatExceptionMessage(ex));
                 if(LogManager.Initialized)
                 {
-                    Log.FatalException(ex, msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                    Log.FatalException(ex, msg);
                 }
                 else 
                 {
@@ -115,7 +115,7 @@ namespace EventStore.Core
                 }
                 if(OS.IsUnix && !(OS.GetRuntimeVersion().StartsWith("4.6.2")))
                 {
-                    Log.Warn("You appear to be running a version of Mono which is untested and not supported. Only Mono 4.6.2 is supported at this time."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Warn("You appear to be running a version of Mono which is untested and not supported. Only Mono 4.6.2 is supported at this time.");
                 }
             }
         }
@@ -148,10 +148,10 @@ namespace EventStore.Core
 
             Log.Info("\n{0,-25} {@version} ({@branch}/{@hashtag}, {@timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25}*/
             Log.Info("{0,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
-            Log.Info("{0,-25} {@fixthisvar} ({@fixthisvar}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{2}*/
+            Log.Info("{@desc,-25} {@osRuntimeVersion} ({@value}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
             Log.Info("{0,-25} {@fixthisvar}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25},{1}*/
             Log.Info("{0,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
-            Log.Info("{@fixthisvar}", EventStoreOptions.DumpOptions()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Info("{@esOptions}", EventStoreOptions.DumpOptions());
 
             if (options.WhatIf)
                 Application.Exit(ExitCode.Success, "WhatIf option specified");

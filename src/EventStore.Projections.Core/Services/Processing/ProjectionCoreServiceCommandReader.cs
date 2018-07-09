@@ -54,7 +54,7 @@ namespace EventStore.Projections.Core.Services.Processing
         {
             long fromEventNumber = 0;
 
-            Log.Debug($"PROJECTIONS: Starting read {ProjectionNamesBuilder.BuildControlStreamName(epochId)}"); /*TODO: structured-log @Lougarou: the following parameters need attention: {ProjectionNamesBuilder.BuildControlStreamName(epochId)}*/
+            Log.Debug($"PROJECTIONS: Starting read {@stream}",ProjectionNamesBuilder.BuildControlStreamName(epochId));
 
             long subscribeFrom = 0;
             while (!_stopped)
@@ -193,7 +193,7 @@ namespace EventStore.Projections.Core.Services.Processing
                                 foreach (var e in completed.Events)
                                     PublishCommand(e);
                             },
-                            () => Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", coreControlStreamID)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                            () => Log.Warn("Read forward of stream {@coreControlStreamID} timed out. Retrying", coreControlStreamID));
                 } while (!eof);
                 yield return
                     _ioDispatcher.BeginSubscribeAwake(_cancellationScope, coreControlStreamID, subscribeFrom, message => { });

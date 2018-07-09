@@ -60,7 +60,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.InfoException(e, "Deserialization to {@fixthisvar} failed", typeof (T).FullName); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                Log.InfoException(e, "Deserialization to {@type} failed", typeof (T).FullName);
                 return default(T);
             }
         }

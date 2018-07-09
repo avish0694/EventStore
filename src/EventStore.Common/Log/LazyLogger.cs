@@ -30,7 +30,7 @@ namespace EventStore.Common.Log
 
         public void Info(string format, params object[] args)
         {
-            _logger.Value.Info(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Value.Info(format, args);
         }
 
         public void Warn(string format, params object[] args)
@@ -45,7 +45,7 @@ namespace EventStore.Common.Log
 
         public void Trace(string format, params object[] args)
         {
-            _logger.Value.Trace(format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Value.Trace(format, args);
         }
 
         public void FatalException(Exception exc, string format, params object[] args)
@@ -60,7 +60,7 @@ namespace EventStore.Common.Log
 
         public void InfoException(Exception exc, string format, params object[] args)
         {
-            _logger.Value.InfoException(exc, format, args); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+            _logger.Value.InfoException(exc, format, args);
         }
 
         public void DebugException(Exception exc, string format, params object[] args)

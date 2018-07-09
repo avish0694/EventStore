@@ -88,7 +88,7 @@ namespace EventStore.Common.Log
             {
                 var exc = e.ExceptionObject as Exception;
                 if (exc != null)
-                    GlobalLogger.FatalException(exc, "Global Unhandled Exception occurred."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    GlobalLogger.FatalException(exc, "Global Unhandled Exception occurred.");
                 else
                     GlobalLogger.Fatal("Global Unhandled Exception object: {@exceptionObject}.", e.ExceptionObject);
                 GlobalLogger.Flush(TimeSpan.FromMilliseconds(500));

@@ -65,7 +65,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception e)
             {
-                Log.ErrorException(e, "'{@text}' is not a valid serialized {@fixthisvar}", text, typeof(T).FullName); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+                Log.ErrorException(e, "'{@text}' is not a valid serialized {@type}", text, typeof(T).FullName);
                 return default(T);
             }
         }

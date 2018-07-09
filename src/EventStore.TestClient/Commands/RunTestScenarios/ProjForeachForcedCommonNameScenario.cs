@@ -176,7 +176,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             var w3 = Write(WriteMode.Transactional, slices[2], EventsPerStream, CreateBankEvent);
 
             var task = Task.Factory.ContinueWhenAll(new[] { w1, w2, w3 }, Task.WaitAll);
-            return task.ContinueWith(x => Log.Info("Data written for iteration {@fixthisvar}.", GetIterationCode())); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            return task.ContinueWith(x => Log.Info("Data written for iteration {@iteration}.", GetIterationCode()));
         }
 
         protected string CreateSumCheckForBankAccounts(string projectionName, string suffix = "")

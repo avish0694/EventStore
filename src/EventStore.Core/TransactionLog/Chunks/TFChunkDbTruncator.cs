@@ -95,7 +95,7 @@ namespace EventStore.Core.TransactionLog.Chunks
 
             if (_config.EpochCheckpoint.Read() >= truncateChk)
             {
-                Log.Info("Truncating epoch from {@fixthisvar} (0x{0:X}) to {1} (0x{1:X}).", _config.EpochCheckpoint.Read(), -1); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
+                Log.Info("Truncating epoch from {@epochFrom} (0x{@epochFrom:X}) to {@epochTo} (0x{@epochTo:X}).", _config.EpochCheckpoint.Read(),_config.EpochCheckpoint.Read(), -1,-1);
                 _config.EpochCheckpoint.Write(-1);
                 _config.EpochCheckpoint.Flush();
             }
@@ -114,7 +114,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 _config.WriterCheckpoint.Flush();
             }
 
-            Log.Info("Resetting TruncateCheckpoint to {@fixthisvar} (0x{0:X}).", -1); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{0:X}*/
+            Log.Info("Resetting TruncateCheckpoint to {@epoch} (0x{@epoch:X}).", -1,-1);
             _config.TruncateCheckpoint.Write(-1);
             _config.TruncateCheckpoint.Flush();
         }

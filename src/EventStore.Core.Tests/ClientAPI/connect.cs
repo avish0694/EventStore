@@ -41,7 +41,7 @@ namespace EventStore.Core.Tests.ClientAPI
         [Test, Category("Network"), Platform("WIN")]
         public void should_throw_exception_when_trying_to_reopen_closed_connection()
         {
-            ClientApiLoggerBridge.Default.Info("Starting '{@fixthisvar}' test...", "should_throw_exception_when_trying_to_reopen_closed_connection"); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            ClientApiLoggerBridge.Default.Info("Starting '{@test}' test...", "should_throw_exception_when_trying_to_reopen_closed_connection");
 
             var closed = new ManualResetEventSlim();
             var settings = ConnectionSettings.Create()

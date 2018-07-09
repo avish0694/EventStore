@@ -109,7 +109,7 @@ namespace EventStore.Core.Index
             }
 
             if(ShouldForceIndexVerify()){
-                Log.Debug("Forcing verification of index files..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Debug("Forcing verification of index files...");
             }
 
             CreateIfDoesNotExist(_directory);
@@ -305,7 +305,7 @@ namespace EventStore.Core.Index
             }
             catch (FileBeingDeletedException exc)
             {
-                Log.ErrorException(exc, "Could not acquire chunk in TableIndex.ReadOffQueue. It is OK if node is shutting down."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Could not acquire chunk in TableIndex.ReadOffQueue. It is OK if node is shutting down.");
             }
             catch (Exception exc)
             {
@@ -416,7 +416,7 @@ namespace EventStore.Core.Index
                 }
                 catch (FileBeingDeletedException)
                 {
-                    Log.Trace("File being deleted."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("File being deleted.");
                 }
                 catch (MaybeCorruptIndexException e){
                     ForceIndexVerifyOnNextStartup();
@@ -632,7 +632,7 @@ namespace EventStore.Core.Index
         }
 
         private void ForceIndexVerifyOnNextStartup(){
-            Log.Debug("Forcing index verification on next startup"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Debug("Forcing index verification on next startup");
             string path = Path.Combine(_directory,ForceIndexVerifyFilename);
             try{
                 using(FileStream fs = new FileStream(path, FileMode.OpenOrCreate)){

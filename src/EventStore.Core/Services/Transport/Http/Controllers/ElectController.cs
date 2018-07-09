@@ -61,7 +61,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ViewChangeDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/}); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/})
         }
 
         public void Send(ElectionMessage.ViewChangeProof message, IPEndPoint endPoint)
@@ -97,7 +97,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.PrepareOkDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepareok)")*/}); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepareok)")*/});
         }
 
         public void Send(ElectionMessage.Proposal message, IPEndPoint endPoint)
@@ -133,7 +133,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                                    var dto = manager.RequestCodec.From<TDto>(body);
                                                    return dto != null ? unwrapper(dto) : null;
                                                });
-            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {@fixthisvar}.", e.Message)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {@exception}.", e.Message));
         }
 
         private void OnPostRequestRead(HttpEntityManager manager, string body)

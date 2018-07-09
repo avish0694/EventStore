@@ -44,7 +44,7 @@ namespace EventStore.TestClient.Commands
                         if (c%1000 == 0) Console.Write('\'');
                         if (c%100000 == 0)
                         {
-                            context.Log.Trace("Received total {@c} events ({@fixthisvar} per sec)...", c, 100000.0/sw.Elapsed.TotalSeconds); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+                            context.Log.Trace("Received total {@c} events ({@rate} per sec)...", c, 100000.0/sw.Elapsed.TotalSeconds);
                             sw.Restart();
                         }
                         return Task.CompletedTask;

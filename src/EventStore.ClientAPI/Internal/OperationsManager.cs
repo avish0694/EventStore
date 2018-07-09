@@ -205,11 +205,9 @@ namespace EventStore.ClientAPI.Internal
         {
             if (operation.CreatedTime > cutoffDate)
                 return false;
-
-            var err = string.Format("EventStoreConnection '{0}': request expired.\n"
-                                                    + "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
+            _settings.Log.Debug("EventStoreConnection '{@connectionName}': request expired.\n"
+                                                    + "UTC now: {@dateTime:HH:mm:ss.fff}, operation: {@operation}.",
                                                     _connectionName, DateTime.UtcNow, operation);
-            _settings.Log.Debug(err); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
             operation.Operation.Fail(new OperationExpiredException(err));
             return true;
         }

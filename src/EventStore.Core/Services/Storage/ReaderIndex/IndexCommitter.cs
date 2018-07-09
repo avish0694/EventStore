@@ -52,7 +52,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
 
         public void Init(long buildToPosition)
         {
-            Log.Info("TableIndex initialization..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("TableIndex initialization...");
 
             _tableIndex.Initialize(buildToPosition);
             _persistedPreparePos = _tableIndex.PrepareCheckpoint;
@@ -121,7 +121,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
                         lastTime = DateTime.UtcNow;
                     }
                 }
-                Log.Debug("ReadIndex rebuilding done: total processed {@processed} records, time elapsed: {@fixthisvar}.", processed, DateTime.UtcNow - startTime); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+                Log.Debug("ReadIndex rebuilding done: total processed {@processed} records, time elapsed: {@timeElapsed}.", processed, DateTime.UtcNow - startTime);
                 _bus.Publish(new StorageMessage.TfEofAtNonCommitRecord());
                 _backend.SetSystemSettings(GetSystemSettings());
             }

@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             _state = message.State;
 
             if (message.State == VNodeState.Master) return;
-            Log.Debug(string.Format("Subscriptions received state change to {@fixthisvar} stopping listening.", _state)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Debug(string.Format("Subscriptions received state change to {@state} stopping listening.", _state));
             ShutdownSubscriptions();
             Stop();
         }
@@ -216,7 +216,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("update subscription " + key); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Debug("update subscription {@key}" , key);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -503,7 +503,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {@fixthisvar}", eventRecord.ToString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@eventRecord}", eventRecord.ToString());
                 }
 
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);
@@ -689,7 +689,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         private void SaveConfiguration(Action continueWith)
         {
-            Log.Debug("Saving Configuration."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Debug("Saving Configuration.");
             var data = _config.GetSerializedForm();
             var ev = new Event(Guid.NewGuid(), "PersistentConfig1", true, data, new byte[0]);
             _ioDispatcher.WriteEvent(SystemStreams.PersistentSubscriptionConfig, ExpectedVersion.Any, ev, SystemAccount.Principal, x => HandleSaveConfigurationCompleted(continueWith, x));

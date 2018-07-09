@@ -121,7 +121,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
             });
 
-            return Task.Factory.ContinueWhenAll(new[] { writeTask, successTask }, tasks => { Log.Info("Iteration {@fixthisvar} tasks completed", GetIterationCode()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/ Task.WaitAll(tasks); Log.Info("Iteration {@fixthisvar} successfull", GetIterationCode()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/ });
+            return Task.Factory.ContinueWhenAll(new[] { writeTask, successTask }, tasks => { Log.Info("Iteration {@iteration} tasks completed", GetIterationCode());Task.WaitAll(tasks); Log.Info("Iteration {@fixthisvar} successfull", GetIterationCode()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0}*/ });
         }
     }
 }

@@ -102,7 +102,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "SCAVENGING: error while scavenging DB."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "SCAVENGING: error while scavenging DB.");
                 result = ClientMessage.ScavengeDatabase.ScavengeResult.Failed;
                 error = string.Format("Error while scavenging DB: {0}.", exc.Message);
             }

@@ -201,7 +201,7 @@ namespace EventStore.ClientAPI.Internal
                     try
                     {
                         result = response.Body.ParseJson<ClusterMessages.ClusterInfoDto>();
-                        //_log.Debug("ClusterDnsEndPointDiscoverer: Got gossip from [{@endPoint}]:\n{@fixthisvar}.", endPoint, string.Join("\n", result.Members.Select(x => x.ToString()))); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+                        //_log.Debug("ClusterDnsEndPointDiscoverer: Got gossip from [{@endPoint}]:\n{@result}.", endPoint, string.Join("\n", result.Members.Select(x => x.ToString()))); 
                     }
                     catch (Exception)
                     {

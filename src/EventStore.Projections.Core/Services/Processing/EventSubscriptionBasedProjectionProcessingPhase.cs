@@ -395,7 +395,7 @@ namespace EventStore.Projections.Core.Services.Processing
                 if (ex != null)
                     _logger.ErrorException(ex, faultedReason); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
                 else
-                    _logger.Error(faultedReason); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                    _logger.Error(faultedReason);
             }
             _coreProjection.SetFaulting(faultedReason);
         }

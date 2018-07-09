@@ -186,7 +186,7 @@ namespace EventStore.Core.Services.Replication
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception while subscribing replica. Connection will be dropped."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception while subscribing replica. Connection will be dropped.");
                 replica.SendBadRequestAndClose(correlationId, string.Format("Exception while subscribing replica. Connection will be dropped. Error: {0}", exc.Message));
                 return false;
             }
@@ -244,15 +244,15 @@ namespace EventStore.Core.Services.Replication
             }
             if (nextEpoch == null)
             {
-                var msg = string.Format("Replica [{0},S:{1},{2}(0x{2:X}),epochs:\n{3}]\n provided epochs which are not in "
-                                        + "EpochManager (possibly too old, known epochs:\n{4}).\nMaster LogPosition: {5} (0x{5:X}). "
+                var msg = string.Format("Replica [{@replicaEndPoint},S:{@subscriptionId},{@logPosition}(0x{@logPosition:X}),epochs:\n{@epochs}]\n provided epochs which are not in "
+                                        + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterLogPosition} (0x{@masterLogPosition:X}). "
                                         + "We do not support this case as of now.\n"
-                                        + "CommonEpoch: {6}, AfterCommonEpoch: {7}",
-                                        replicaEndPoint, subscriptionId, logPosition,
+                                        + "CommonEpoch: {@commonEpoch}, AfterCommonEpoch: {@afterCommonEpoch}",
+                                        replicaEndPoint, subscriptionId, logPosition,logPosition,
                                         string.Join("\n", epochs.Select(x => x.AsString())),
-                                        string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())), masterCheckpoint,
+                                        string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())), masterCheckpoint,masterCheckpoint,
                                         commonEpoch.AsString(), afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString());
-                Log.Error(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                Log.Error(msg);
                 throw new Exception(msg);
             }
 
@@ -303,7 +303,7 @@ namespace EventStore.Core.Services.Replication
                 else
                 {
                     if (verbose)
-                        Log.Info("Subscribed replica [{@replicaEndPoint},S:{@subscriptionId}] for data send at {@logPosition} (0x{2:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:X}*/
+                        Log.Info("Subscribed replica [{@replicaEndPoint},S:{@subscriptionId}] for data send at {@logPosition} (0x{@logPosition:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition, logPosition);
 
                     sub.LogPosition = logPosition;
                     sub.RawSend = false;

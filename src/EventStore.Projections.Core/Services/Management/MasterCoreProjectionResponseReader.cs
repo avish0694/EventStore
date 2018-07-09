@@ -101,7 +101,7 @@ namespace EventStore.Projections.Core.Services.Management
                                     }
                                 }
                             },
-                            () => Log.Warn("Read forward of stream {@fixthisvar} timed out. Retrying", _streamId)); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                            () => Log.Warn("Read forward of stream {@streamId} timed out. Retrying", _streamId));
                 } while (!eof);
                 _lastAwakeCorrelationId = Guid.NewGuid();
                 yield return

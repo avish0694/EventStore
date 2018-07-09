@@ -1140,10 +1140,10 @@ namespace EventStore.Projections.Core.Services.Management
                 return;
             }
             _logger.Info(
-                "Projection '{@name}' registration has not been written to {@eventStreamId}. Error: {@fixthisvar}",
+                "Projection '{@name}' registration has not been written to {@eventStreamId}. Error: {@e}",
                 name,
                 eventStreamId,
-                Enum.GetName(typeof (OperationResult), message.Result)); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
+                Enum.GetName(typeof (OperationResult), message.Result));
             if (message.Result == OperationResult.CommitTimeout || message.Result == OperationResult.ForwardTimeout
                 || message.Result == OperationResult.PrepareTimeout
                 || message.Result == OperationResult.WrongExpectedVersion)

@@ -141,7 +141,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             catch (Exception ex)
             {
                 rawState = null;
-                Log.InfoException(ex, "Failed to get projection state"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.InfoException(ex, "Failed to get projection state");
             }
             return rawState;
         }

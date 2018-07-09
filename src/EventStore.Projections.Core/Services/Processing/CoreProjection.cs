@@ -398,7 +398,7 @@ namespace EventStore.Projections.Core.Services.Processing
 
         private void GoToState(State state)
         {
-//            _logger.Trace("CP: {@name} {@state} => {2}", _name, _state, state); /*TODO: structured-log @Lougarou: duplicate variable name detected: {@state}*/
+//            _logger.Trace("CP: {@name} {@stateFrom} => {@stateTo}", _name, _state, state);
             var wasStopped = _state == State.Stopped || _state == State.Faulted || _state == State.PhaseCompleted;
             var wasStopping = _state == State.Stopping || _state == State.FaultedStopping
                               || _state == State.CompletingPhase;

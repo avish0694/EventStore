@@ -297,7 +297,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             if (Interlocked.CompareExchange(ref _closed, 1, 0) != 0)
                 return;
             NotifyClosed();
-            _log.Info("ClientAPI {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+            _log.Info("ClientAPI {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
             _log.Info("Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}", TotalBytesReceived, TotalBytesSent);
             _log.Info("Send calls: {@sendCalls}, callbacks: {@sendCallbacks}", SendCalls, SendCallbacks);
             _log.Info("Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}", ReceiveCalls, ReceiveCallbacks);

@@ -90,7 +90,7 @@ namespace EventStore.Projections.Core.v8
             if (_logger != null)
                 _logger(message, new object[] {});
             else
-                Log.Debug(message); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                Log.Debug(message);
         }
 
         private IntPtr GetModule(IntPtr prelude, string moduleName)

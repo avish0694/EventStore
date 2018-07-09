@@ -81,11 +81,10 @@ namespace EventStore.Projections.Core.Services.Management
                     }
                     else
                     {
-                        var message = String.Format("PROJECTIONS: Failed writing events to {0} because of {1}: {2}", 
+                        var message = String.Format();
+                        Log.Debug("PROJECTIONS: Failed writing events to {@streamId} because of {@completedResult}: {@events}", 
                             streamId, 
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}", x.EventType))));
-                        Log.Debug(message); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/ //Can't do anything about it, log and move on
-                        //throw new Exception(message);
                     }
 
                     if (queue.Items.Count > 0)

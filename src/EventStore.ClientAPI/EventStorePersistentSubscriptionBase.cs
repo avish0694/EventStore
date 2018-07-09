@@ -243,8 +243,8 @@ namespace EventStore.ClientAPI
             if (Interlocked.CompareExchange(ref _isDropped, 1, 0) == 0)
             {
                 if (_verbose)
-                    _log.Debug("Persistent Subscription to {@streamId}: dropping subscription, reason: {@reason} {@fixthisvar}.",
-                              _streamId, reason, error == null ? string.Empty : error.ToString()); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
+                    _log.Debug("Persistent Subscription to {@streamId}: dropping subscription, reason: {@reason} {@error}.",
+                              _streamId, reason, error == null ? string.Empty : error.ToString());
 
                 if (_subscription != null)
                     _subscription.Unsubscribe();

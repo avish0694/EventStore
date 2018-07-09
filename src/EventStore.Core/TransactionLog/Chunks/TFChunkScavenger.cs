@@ -123,8 +123,8 @@ namespace EventStore.Core.TransactionLog.Chunks
                             mergedSomething = true;
                         }
                     }
-                    Log.Trace("SCAVENGING: merge pass #{@passNum} completed in {@elapsed}. {@fixthisvar} merged.",
-                              passNum, sw.Elapsed, mergedSomething ? "Some chunks" : "Nothing"); /*TODO: structured-log @Lougarou: the following parameters need attention: {2}*/
+                    Log.Trace("SCAVENGING: merge pass #{@passNum} completed in {@elapsed}. {@merged} merged.",
+                              passNum, sw.Elapsed, mergedSomething ? "Some chunks" : "Nothing");
                 } while (mergedSomething);
             }
             Log.Trace("SCAVENGING: total time taken: {@elapsed}, total space saved: {@spaceSaved}.", totalSw.Elapsed, spaceSaved);
@@ -222,12 +222,12 @@ namespace EventStore.Core.TransactionLog.Chunks
 
                 if (oldSize <= newSize && !alwaysKeepScavenged && !_unsafeIgnoreHardDeletes && !oldVersion)
                 {
-                    Log.Trace("Scavenging of chunks:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("Scavenging of chunks:");
                     Log.Trace(oldChunksList); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                     Log.Trace("completed in {@elapsed}.", sw.Elapsed);
                     Log.Trace("Old chunks' versions are kept as they are smaller."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                     Log.Trace("Old chunk total size: {@oldSize}, scavenged chunk size: {@newSize}.", oldSize, newSize);
-                    Log.Trace("Scavenged chunk removed."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("Scavenged chunk removed.");
 
                     newChunk.MarkForDeletion();
                     PublishChunksCompletedEvent(chunkStartNumber, chunkEndNumber, sw.Elapsed, false, spaceSaved);
@@ -264,7 +264,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 var chunk = _db.Manager.SwitchChunk(newChunk, verifyHash: false, removeChunksWithGreaterNumbers: false);
                 if (chunk != null)
                 {
-                    Log.Trace("Scavenging of chunks:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("Scavenging of chunks:");
                     Log.Trace(oldChunksList); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                     Log.Trace("completed in {@elapsed}.", sw.Elapsed);
                     Log.Trace("New chunk: {@fixthisvar} --> #{@chunkStartNumber}-{@chunkEndNumber} ({@fixthisvar}).", Path.GetFileName(tmpChunkPath), chunkStartNumber,
@@ -276,7 +276,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 }
                 else
                 {
-                    Log.Trace("Scavenging of chunks:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Trace("Scavenging of chunks:");
                     Log.Trace("{@oldChunksList}", oldChunksList);
                     Log.Trace("completed in {1}.", sw.Elapsed); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {1}*/
                     Log.Trace("But switching was prevented for new chunk: #{@chunkStartNumber}-{@chunkEndNumber} ({@fixthisvar}).", chunkStartNumber, chunkEndNumber, Path.GetFileName(tmpChunkPath)); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
@@ -287,7 +287,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             }
             catch (FileBeingDeletedException exc)
             {
-                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated.");
                 Log.Info("Scavenging of following chunks will be skipped:"); /*TODO: structured-log @shaan1337: seems like no changes are required here, just review.*/
                 Log.Info("{@oldChunksList}", oldChunksList);
                 Log.Info("Stopping scavenging and removing temp chunk '{@tmpChunkPath}'...", tmpChunkPath);

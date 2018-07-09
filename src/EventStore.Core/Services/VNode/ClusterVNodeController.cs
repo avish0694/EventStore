@@ -310,8 +310,8 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{1},{2:B}]",
-                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId); /*TODO: structured-log @Lougarou: duplicate variable name detected: {@internalHttp}*/
+            Log.Info("========== [{@nodeInfoInternalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.PreReplica;
             _outputBus.Publish(message);
             _mainQueue.Publish(new SystemMessage.WaitForChaserToCatchUp(_stateCorrelationId, TimeSpan.Zero));
@@ -347,8 +347,8 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS SLAVE... MASTER IS [{1},{2:B}]",
-                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId); /*TODO: structured-log @Lougarou: duplicate variable name detected: {@internalHttp}*/
+            Log.Info("========== [{@nodeInfoInternalHttp}] IS SLAVE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+                     _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.Slave;
             _outputBus.Publish(message);
         }
@@ -707,7 +707,7 @@ namespace EventStore.Core.Services.VNode
 
         private void Handle(SystemMessage.NoQuorumMessage message)
         {
-            Log.Info("=== NO QUORUM EMERGED WITHIN TIMEOUT... RETIRING..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("=== NO QUORUM EMERGED WITHIN TIMEOUT... RETIRING...");
             _fsm.Handle(new SystemMessage.BecomeUnknown(Guid.NewGuid()));
         }
 
@@ -812,8 +812,8 @@ namespace EventStore.Core.Services.VNode
             if (message.SubscriptionId == Guid.Empty) throw new Exception("IReplicationMessage with empty SubscriptionId provided.");
             if (message.SubscriptionId != _subscriptionId)
             {
-                Log.Trace("Ignoring {@fixthisvar} because SubscriptionId {1:B} is wrong. Current SubscriptionId is {2:B}.",
-                          message.GetType().Name, message.SubscriptionId, _subscriptionId); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:B},{2:B}*/
+                Log.Trace("Ignoring {@messageName} because SubscriptionId {@messageSubscriptionId:B} is wrong. Current SubscriptionId is {@subscriptionId:B}.",
+                          message.GetType().Name, message.SubscriptionId, _subscriptionId);
                 return false;
             }
             if (_master == null || _master.InstanceId != message.MasterId)

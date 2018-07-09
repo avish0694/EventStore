@@ -588,7 +588,7 @@ namespace EventStore.ClientAPI.Internal
 
         private void LogDebug(string message, params object[] parameters)
         {
-            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@fixthisvar}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+            if (_settings.VerboseLogging) _settings.Log.Debug("EventStoreConnection '{@connectionName}': {@message}.", _esConnection.ConnectionName, parameters.Length == 0 ? message : string.Format(message, parameters)); 
         }
 
         private void LogInfo(string message, params object[] parameters)

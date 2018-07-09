@@ -51,7 +51,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
 
                     if (received.Length >= sent.Length)
                     {
-                        Log.Info("Done receiving..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                        Log.Info("Done receiving...");
                         done.Set();
                     }
                     else
@@ -73,7 +73,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                 TcpConnectionManager.ConnectionTimeout,
                 conn =>
                 {
-                    Log.Info("Sending bytes..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.Info("Sending bytes...");
                     conn.EnqueueSend(new[] {new ArraySegment<byte>(sent)});
                 },
                 (conn, err) =>
@@ -89,7 +89,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
             listener.Stop();
             Log.Info("Closing client ssl connection..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             clientSsl.Close("Normal close.");
-            Log.Info("Checking received data..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Info("Checking received data...");
             Assert.AreEqual(sent, received.ToArray());
         }
 

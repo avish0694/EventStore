@@ -47,7 +47,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
             writeTasks.Add(WriteData());
 
-            var writeTask = Task.Factory.ContinueWhenAll(writeTasks.ToArray(), tsks => Log.Info("All Data written")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            var writeTask = Task.Factory.ContinueWhenAll(writeTasks.ToArray(), tsks => Log.Info("All Data written"));
 
             KillNode(nodeProcessId);
             nodeProcessId = StartNode();

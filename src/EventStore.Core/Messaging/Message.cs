@@ -141,7 +141,7 @@ namespace EventStore.Core.Messaging
                         string.Join(",", ex.LoaderExceptions.Select(x => x.Message))); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 else
                 {
-                    Log.InfoException(ex, "Exception while scanning for message types"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                    Log.InfoException(ex, "Exception while scanning for message types");
                 }
                 return ex.Types;
             }

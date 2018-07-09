@@ -231,8 +231,8 @@ namespace EventStore.ClientAPI.ClientOperations
                 throw new Exception("Double confirmation of subscription.");
 
             if (_verboseLogging)
-                _log.Debug("Subscription {0:B} to {@fixthisvar}: subscribed at CommitPosition: {@lastCommitPosition}, EventNumber: {@lastEventNumber}.",
-                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId, lastCommitPosition, lastEventNumber); /*TODO: structured-log @Lougarou: the following parameters need attention: {0:B},{1}*/
+                _log.Debug("Subscription {@correlationId:B} to {@streamId}: subscribed at CommitPosition: {@lastCommitPosition}, EventNumber: {@lastEventNumber}.",
+                           _correlationId, _streamId == string.Empty ? "<all>" : _streamId, lastCommitPosition, lastEventNumber); 
             _subscription = CreateSubscriptionObject(lastCommitPosition, lastEventNumber);
             _source.SetResult(_subscription);
         }

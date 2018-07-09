@@ -104,8 +104,8 @@ namespace EventStore.TestClient.Commands
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.TransactionWriteCompleted>();
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
-                                    var msg = string.Format("Error while writing transactional event: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                                    
+                                    context.Log.Info("Error while writing transactional event: {@message} ({@result}).", dto.Message, dto.Result);
                                     context.Fail(reason: msg);
                                 }
                                 else

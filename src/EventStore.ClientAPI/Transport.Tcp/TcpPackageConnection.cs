@@ -80,8 +80,8 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 (conn, error) =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connection [{@remoteEndPoint}, L{@localEndPoint}, {2:B}] was closed {@fixthisvar}", conn.RemoteEndPoint, conn.LocalEndPoint,
-                              ConnectionId, error == SocketError.Success ? "cleanly." : "with error: " + error + "."); /*TODO: structured-log @Lougarou: the following parameters need attention: {2:B},{3}*/
+                    log.Debug("TcpPackageConnection: connection [{@remoteEndPoint}, L{@localEndPoint}, {2:@connectionId}] was closed {@status}", conn.RemoteEndPoint, conn.LocalEndPoint,
+                              ConnectionId, error == SocketError.Success ? "cleanly." : "with error: " + error + ".");
 
                     if (connectionClosed != null)
                         connectionClosed(this, error);

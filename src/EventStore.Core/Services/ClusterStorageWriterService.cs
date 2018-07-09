@@ -83,8 +83,8 @@ namespace EventStore.Core.Services
             _subscriptionId = message.SubscriptionId;
             _ackedSubscriptionPos = _subscriptionPos = message.SubscriptionPosition;
 
-            Log.Info("=== SUBSCRIBED to [{@masterEndPoint},{1:B}] at {@subscriptionPosition} (0x{2:X}). SubscriptionId: {3:B}.",
-                     message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1:B},{2:X},{3:B}*/
+            Log.Info("=== SUBSCRIBED to [{@masterEndPoint},{@masterId:B}] at {@subscriptionPosition} (0x{@subscriptionPosition:X}). SubscriptionId: {@subscriptionId:B}.",
+                     message.MasterEndPoint, message.MasterId, message.SubscriptionPosition,message.SubscriptionPosition, message.SubscriptionId);
 
             var writerCheck = Db.Config.WriterCheckpoint.ReadNonFlushed();
             if (message.SubscriptionPosition > writerCheck)
@@ -102,7 +102,7 @@ namespace EventStore.Core.Services
                 if (message.SubscriptionPosition > lastCommitPosition)
                     Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
                 else
-                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {@subscriptionPosition} (0x{0:X}) <= LastCommitPosition {1} (0x{1:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition, lastCommitPosition); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
+                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {@subscriptionPosition} (0x{@subscriptionPosition:X}) <= LastCommitPosition {@lastCommitPosition} (0x{@lastCommitPosition:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition,message.SubscriptionPosition,lastCommitPosition,lastCommitPosition);
 
                 EpochRecord lastEpoch = EpochManager.GetLastEpoch();
                 if (AreAnyCommittedRecordsTruncatedWithLastEpoch(message.SubscriptionPosition, lastEpoch, lastCommitPosition))
@@ -172,8 +172,8 @@ namespace EventStore.Core.Services
             }
             if (_activeChunk.RawWriterPosition != message.RawPosition)
             {
-                Log.Error("Received RawChunkBulk at raw pos {@rawPosition} (0x{0:X}) while current writer raw pos is {1} (0x{1:X}).",
-                          message.RawPosition, _activeChunk.RawWriterPosition); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
+                Log.Error("Received RawChunkBulk at raw pos {@rawPosition} (0x{@rawPosition:X}) while current writer raw pos is {@rawWriterPosition} (0x{@rawWriterPosition:X}).",
+                          message.RawPosition,message.RawPosition, _activeChunk.RawWriterPosition,_activeChunk.RawWriterPosition);
                 return;
             }
 
@@ -242,7 +242,7 @@ namespace EventStore.Core.Services
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally

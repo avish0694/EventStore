@@ -30,8 +30,8 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionConfirmation:
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionConfirmation>();
-                                context.Log.Info("Subscription to <{@fixthisvar}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
-                                                 streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+                                context.Log.Info("Subscription to <{@streambyCorrId}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
+                                                 streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber);
                                 break;
                             }
                             case TcpCommand.StreamEventAppeared:
@@ -71,7 +71,7 @@ namespace EventStore.TestClient.Commands
 
             if (args.Length == 0)
             {
-                context.Log.Info("SUBSCRIBING TO ALL STREAMS..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                context.Log.Info("SUBSCRIBING TO ALL STREAMS...");
                 var cmd = new TcpClientMessageDto.SubscribeToStream(string.Empty, resolveLinkTos: false);
                 Guid correlationId = Guid.NewGuid();
                 streamByCorrId[correlationId] = "$all";

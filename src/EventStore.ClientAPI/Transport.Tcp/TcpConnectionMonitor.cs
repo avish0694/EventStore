@@ -86,15 +86,15 @@ namespace EventStore.ClientAPI.Transport.Tcp
                                      measurePeriod);
 
 #if DUMP_STATISTICS
-            _log.Debug("\n# Total connections: {0,3}. Out: {1:0.00}b/s  In: {2:0.00}b/s  Pending Send: {@pendingSend}  " +
-                       "In Send: {4}  Pending Received: {5} Measure Time: {6}",
+            _log.Debug("\n# Total connections: {@totalConnections,3}. Out: {@sendingSpeed:0.00}b/s  In: {@receivingSpeed:0.00}b/s  Pending Send: {@pendingSend}  " +
+                       "In Send: {@inSend}  Pending Received: {@pendingReceived} Measure Time: {@measureTime}",
                        stats.Connections,
                        stats.SendingSpeed,
                        stats.ReceivingSpeed,
                        stats.PendingSend,
                        stats.InSend,
                        stats.PendingSend,
-                       stats.MeasureTime); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,3},{1:0.00},{2:0.00}*/
+                       stats.MeasureTime);
 #endif
             return stats;
         }

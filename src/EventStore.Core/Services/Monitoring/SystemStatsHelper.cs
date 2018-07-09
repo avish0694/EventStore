@@ -134,7 +134,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (InvalidOperationException)
             {
-                _log.Info("Received error reading counters. Attempting to rebuild."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                _log.Info("Received error reading counters. Attempting to rebuild.");
                 _perfCounter = new PerfCounterHelper(_log);
                 _giveup = count > 10;
                 if (_giveup)
@@ -222,7 +222,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                _log.DebugException(ex, "Could not get free memory on OSX."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                _log.DebugException(ex, "Could not get free memory on OSX.");
                 return -1;
             }
         }

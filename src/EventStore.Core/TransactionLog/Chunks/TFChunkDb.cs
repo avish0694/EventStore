@@ -141,8 +141,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         }
                         catch (Exception exc)
                         {
-                            var msg = string.Format("Verification of chunk {0} failed, terminating server...", chunk);
-                            Log.FatalException(exc, msg); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+                            Log.FatalException(exc, "Verification of chunk {@chunk} failed, terminating server...", chunk);
                             Application.Exit(ExitCode.Error, msg);
                             return;
                         }

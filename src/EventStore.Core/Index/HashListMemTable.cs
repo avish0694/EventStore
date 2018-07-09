@@ -174,7 +174,7 @@ namespace EventStore.Core.Index
                     yield return new IndexEntry(key, x.EvNum, x.LogPos);
                 }
             }
-            //Log.Trace("Sorting array in HashListMemTable.IterateAllInOrder... DONE!"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            //Log.Trace("Sorting array in HashListMemTable.IterateAllInOrder... DONE!");
         }
 
         public void Clear()

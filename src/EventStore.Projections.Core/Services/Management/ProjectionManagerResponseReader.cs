@@ -102,7 +102,7 @@ namespace EventStore.Projections.Core.Services.Management
             if (writeResult.Result != OperationResult.Success)
                 throw new Exception("Cannot start response reader. Write result: " + writeResult.Result);
 
-            Log.Debug("PROJECTIONS: Finished Starting Projection Manager Response Reader (reads from $projections-$master)"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Debug("PROJECTIONS: Finished Starting Projection Manager Response Reader (reads from $projections-$master)");
 
             ReadForward();
         }
@@ -165,7 +165,7 @@ namespace EventStore.Projections.Core.Services.Management
         public void Handle(ProjectionManagementMessage.Internal.ReadTimeout timeout)
         {
             if (timeout.CorrelationId != _correlationId) return;
-            Log.Debug("Read forward of stream {@fixthisvar} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream); /*TODO: structured-log @Lougarou: the following parameters need attention: {0}*/
+            Log.Debug("Read forward of stream {@stream} timed out. Retrying", ProjectionNamesBuilder._projectionsMasterStream);
             ReadForward();
         }
 

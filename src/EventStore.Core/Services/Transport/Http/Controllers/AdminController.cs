@@ -43,7 +43,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             if (entity.User != null && (entity.User.IsInRole(SystemRoles.Admins) || entity.User.IsInRole(SystemRoles.Operations)))
             {
-                Log.Info("Request scavenging because /admin/scavenge request has been received."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Request scavenging because /admin/scavenge request has been received.");
                 Publish(new ClientMessage.ScavengeDatabase(new NoopEnvelope(), Guid.Empty, entity.User));
                 entity.ReplyStatus(HttpStatusCode.OK, "OK", LogReplyError);
             }

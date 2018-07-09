@@ -103,7 +103,7 @@ namespace EventStore.Core.Index
             if (tables.Count == 2)
                 return MergeTo2(tables, numIndexEntries, indexEntrySize, outputFile, upgradeHash, existsAt, readRecord, version, cacheDepth, skipIndexVerify); // special case
 
-            Log.Trace("PTables merge started."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+            Log.Trace("PTables merge started.");
             var watch = Stopwatch.StartNew();
 
             var enumerators = tables.Select(table => new EnumerableTable(version, table, upgradeHash, existsAt, readRecord)).ToList();
@@ -286,8 +286,8 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@fixthisvar}] entries merged into {@fixthisvar}).",
-                      watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount); /*TODO: structured-log @Lougarou: the following parameters need attention: {1},{2}*/
+            Log.Trace("PTables merge finished in {@elapsed} ([{@tables}] entries merged into {@dumpedEntryCount}).",
+                      watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
 

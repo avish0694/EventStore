@@ -86,7 +86,7 @@ namespace EventStore.TestClient
                 _log.Error("Error during execution of command: {@reason}.", context.Reason);
             if (context.Error != null)
             {
-                _log.ErrorException(context.Error, "Error during execution of command"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                _log.ErrorException(context.Error, "Error during execution of command");
 
                 var details = new StringBuilder();
                 BuildFullException(context.Error, details);

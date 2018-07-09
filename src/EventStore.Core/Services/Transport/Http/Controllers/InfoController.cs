@@ -67,7 +67,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                         "OK",
                                         entity.ResponseCodec.ContentType,
                                         null,
-                                        e => Log.ErrorException(e, "error while writing HTTP response (options)")); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                                        e => Log.ErrorException(e, "error while writing HTTP response (options)"));
             }
             else
             {
