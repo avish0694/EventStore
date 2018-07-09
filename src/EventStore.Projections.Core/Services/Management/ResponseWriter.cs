@@ -35,7 +35,7 @@ namespace EventStore.Projections.Core.Services.Management
 
         public void Reset()
         {
-            _logger.Debug("PROJECTIONS: Resetting Master Writer"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            _logger.Debug("PROJECTIONS: Resetting Master Writer");
             _cancellationScope.Cancel();
             _cancellationScope = new IODispatcherAsync.CancellationScope();
             Items.Clear();
@@ -86,7 +86,9 @@ namespace EventStore.Projections.Core.Services.Management
                         var message = String.Format("PROJECTIONS: Failed writing events to {0} because of {1}: {2}",
                             ProjectionNamesBuilder._projectionsMasterStream,
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data)))));
-                        _logger.Debug(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/ //Can't do anything about it, log and move on
+                        _logger.Debug("PROJECTIONS: Failed writing events to {@projectionsMasterStream} because of {@result}: {@events}",
+                            ProjectionNamesBuilder._projectionsMasterStream,
+                            completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data))))); //Can't do anything about it, log and move on
                         //throw new Exception(message);
                     }
 

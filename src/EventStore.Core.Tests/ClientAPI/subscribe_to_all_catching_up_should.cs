@@ -83,7 +83,7 @@ namespace EventStore.Core.Tests.ClientAPI
                 store.SubscribeToAllFrom(null, CatchUpSubscriptionSettings.Default,
                                            (x, y) => { throw new Exception("Error"); },
                                            _ => Log.Info("Live processing started."),
-                                           (x, y, z) => dropped.Signal()); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                           (x, y, z) => dropped.Signal());
                 Assert.IsTrue(dropped.Wait(Timeout));
             }
         }
@@ -201,7 +201,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             _ => Log.Info("Live processing started."),
                                                             (x, y, z) =>
                                                             {
-                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                                Log.Info("Subscription dropped: {@y}, {@z}.", y, z);
                                                                 dropped.Signal();
                                                             });
 
@@ -260,7 +260,7 @@ namespace EventStore.Core.Tests.ClientAPI
                                                             _ => Log.Info("Live processing started."),
                                                             (x, y, z) =>
                                                             {
-                                                                Log.Info("Subscription dropped: {0}, {1}.", y, z); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                                Log.Info("Subscription dropped: {@y}, {@z}.", y, z);
                                                                 dropped.Signal();
                                                             });
 

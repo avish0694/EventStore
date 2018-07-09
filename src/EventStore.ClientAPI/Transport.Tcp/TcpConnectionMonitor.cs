@@ -194,7 +194,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             int pendingReceivedBytes = connection.PendingReceivedBytes;
             if (pendingReceivedBytes > 128 * 1024)
             {
-                _log.Info("# {@connection} {@fixthisvar}kb are not dispatched", connection, pendingReceivedBytes / 1024); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                _log.Info("# {@connection} {@pendingReceivedBytes}kb are not dispatched", connection, pendingReceivedBytes / 1024);
             }
         }
 

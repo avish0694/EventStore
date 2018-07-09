@@ -69,7 +69,7 @@ namespace EventStore.TestClient.Commands
                                 else
                                 {
                                     context.Log.Info("Successfully started transaction. TransactionId: {@transactionId}.", dto.TransactionId);
-                                    context.Log.Info("Now sending transactional events...", dto.TransactionId); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                    context.Log.Info("Now sending transactional events...", dto.TransactionId);
 
                                     transactionId = dto.TransactionId;
                                     stage = Stage.Writing;
@@ -137,7 +137,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while committing transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                                    context.Log.Info("Error while committing transaction: {@message} ({@result}).", dto.Message, dto.Result);
                                     context.Log.Info("Transaction took: {@elapsed}.", sw.Elapsed);
                                     context.Fail(reason: msg);
                                 }

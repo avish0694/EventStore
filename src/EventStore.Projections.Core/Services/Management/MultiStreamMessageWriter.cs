@@ -44,7 +44,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                Log.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@fixthisvar}. Current status of Writer: Busy: {@busy}", command, "$projections-$" + workerId, queue.Busy); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                Log.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@workerId}. Current status of Writer: Busy: {@busy}", command, "$projections-$" + workerId, queue.Busy);
             }
             queue.Items.Add(new Queue.Item { Command = command, Body = body });
             if (!queue.Busy)

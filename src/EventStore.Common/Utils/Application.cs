@@ -63,7 +63,7 @@ namespace EventStore.Common.Utils
                 if (exitCode != 0)
                     Log.Error(message); /*TODO: structured-log @shaan1337: unrecognized format, content string not found*/
                 else
-                    Log.Info(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                    Log.Info("Exiting with exit code: {@exitCode}.\nExit reason: {@reason}", exitCode, reason);
             }
 
             var exit = _exit;

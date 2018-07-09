@@ -73,9 +73,9 @@ namespace EventStore.ClientAPI.Transport.Tcp
                 (conn, error) =>
                 {
                     connectionCreated.Wait();
-                    log.Debug("TcpPackageConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {2:B}] failed. Error: {@error}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error); /*TODO: structured-log @avish0694: the following parameters need attention: {2:B}*/
                     if (connectionClosed != null)
                         connectionClosed(this, error);
+                    log.Debug("TcpPackageConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] failed. Error: {@error}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error);
                 },
                 (conn, error) =>
                 {
@@ -128,7 +128,9 @@ namespace EventStore.ClientAPI.Transport.Tcp
                                             valid ? package.Command.ToString() : "<invalid package>");
                 if (_onError != null)
                     _onError(this, e);
-                _log.Debug(e, message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Debug(e, "TcpPackageConnection: [{@remoteEndPoint}, L{@localEndPoint}, {@ConnectionId}] ERROR for {@package}. Connection will be closed.",
+                                            RemoteEndPoint, LocalEndPoint, ConnectionId,
+                                            valid ? package.Command.ToString() : "<invalid package>");
             }
         }
 

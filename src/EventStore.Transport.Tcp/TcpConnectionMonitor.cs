@@ -185,7 +185,7 @@ namespace EventStore.Transport.Tcp
             int pendingSendBytes = connection.PendingSendBytes;
             if (pendingSendBytes > 128 * 1024)
             {
-                Log.Info("# {@connection} {@fixthisvar}kb pending send", connection, pendingSendBytes / 1024); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                Log.Info("# {@connection} {@pendingSendBytes}kb pending send", connection, pendingSendBytes / 1024);
             }
         }
 

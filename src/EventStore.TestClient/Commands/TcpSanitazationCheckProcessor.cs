@@ -97,7 +97,7 @@ namespace EventStore.TestClient.Commands
                      packages.Count() - commandsToCkeck.Length,
                      packages.Count()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{2},{3}*/
 
-            Log.Info("Now sending raw bytes..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Info("Now sending raw bytes..."); 
             try
             {
                 SendRaw(context.Client.TcpEndpoint, BitConverter.GetBytes(int.MaxValue));

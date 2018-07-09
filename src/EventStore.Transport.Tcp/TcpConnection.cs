@@ -333,18 +333,18 @@ namespace EventStore.Transport.Tcp
 
             if (_verbose)
             {
-                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
+                Log.Info("ES {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        TotalBytesReceived, TotalBytesSent); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        TotalBytesReceived, TotalBytesSent);
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         SendCalls, SendCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
                 Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @shaan1337: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
-                Log.Info("ES {@fixthisvar} closed [{1:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:Close reason: [{@socketError}] {@reason}",
+                Log.Info("ES {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Close reason: [{@socketError}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        socketError, reason); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        socketError, reason);
             }
 
             if (_socket != null)

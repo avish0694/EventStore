@@ -578,7 +578,8 @@ namespace EventStore.ClientAPI.Internal
 
             var msg = string.Format("EventStoreConnection '{0}': going to reconnect to [{1}]. Current endpoint: [{2}, L{3}].",
                                     _esConnection.ConnectionName, endPoint, _connection.RemoteEndPoint, _connection.LocalEndPoint);
-            if (_settings.VerboseLogging) _settings.Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            if (_settings.VerboseLogging) _settings.Log.Info("EventStoreConnection '{@ConnectionName}': going to reconnect to [{@endPoint}]. Current endpoint: [{@remoteEndPoint}, L{@localEndPoint}].",
+                                    _esConnection.ConnectionName, endPoint, _connection.RemoteEndPoint, _connection.LocalEndPoint);
             CloseTcpConnection(msg);
 
             _state = ConnectionState.Connecting;

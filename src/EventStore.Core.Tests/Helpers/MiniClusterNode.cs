@@ -105,7 +105,7 @@ namespace EventStore.Core.Tests.Helpers
                 connectionPendingSendBytesThreshold: Opts.ConnectionPendingSendBytesThresholdDefault, chunkInitialReaderCount: Opts.ChunkInitialReaderCountDefault);
 
             Log.Info(
-                "\n{0,-25} {@fixthisvar} ({@fixthisvar}/{@fixthisvar}, {@fixthisvar})\n" + "{5,-25} {6} ({7})\n" + "{8,-25} {9} ({10}-bit)\n"
+                "\n{@version,-25} {@} ({@branch}/{@hashtag}, {@timestamp})\n" + "{@osFlavour,-25} {@osVersion} ({OsruntimeVersion})\n" + "{@marshal,-25} {@maxGeneration} ({10}-bit)\n"
                 + "{11,-25} {12}\n" + "{13,-25} {14}\n" + "{15,-25} {16}\n" + "{17,-25} {18}\n" + "{19,-25} {20}\n\n",
                 "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp,
                 "OS:", OS.OsFlavor, Environment.OSVersion, "RUNTIME:", OS.GetRuntimeVersion(),

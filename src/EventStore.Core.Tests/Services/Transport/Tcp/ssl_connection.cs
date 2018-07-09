@@ -60,7 +60,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
                         ssl.ReceiveAsync(callback);
                     }
                 };
-                Log.Info("Receiving..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.Info("Receiving...");
                 ssl.ReceiveAsync(callback);
             }, "Secure");
 
@@ -87,7 +87,7 @@ namespace EventStore.Core.Tests.Services.Transport.Tcp
 
             Log.Info("Stopping listener...");
             listener.Stop();
-            Log.Info("Closing client ssl connection..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Info("Closing client ssl connection...");
             clientSsl.Close("Normal close.");
             Log.Info("Checking received data..."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             Assert.AreEqual(sent, received.ToArray());

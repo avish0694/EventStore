@@ -37,8 +37,8 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 countProjections.Add(CreateCountItem());
                 bankProjections.Add(CreateSumCheckForBankAccount0());
 
-                Log.Info("Created {@fixthisvar} and {@fixthisvar}", bankProjections[bankProjections.Count - 1], 
-                                                countProjections[countProjections.Count - 1]); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1}*/
+                Log.Info("Created {@bankProjections} and {@countProjections}", bankProjections[bankProjections.Count - 1], 
+                                                countProjections[countProjections.Count - 1]);
 
             }
 

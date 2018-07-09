@@ -57,7 +57,7 @@ namespace EventStore.Transport.Http.Server
                         if (_listenPrefixes.Length > 0)
                             TryAddAcl(_listenPrefixes[0]);
                         CreateListener(_listenPrefixes);
-                        Logger.Info("Retrying HTTP server on [{@fixthisvar}]...", string.Join(",", _listener.Prefixes)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                        Logger.Info("Retrying HTTP server on [{@listenerPrefixes}]...", string.Join(",", _listener.Prefixes));
                         _listener.Start();
                     }
                 }
@@ -81,7 +81,7 @@ namespace EventStore.Transport.Http.Server
                 return;
 
             var args = string.Format("http add urlacl url={0} user=\"{1}\\{2}\"", address, Environment.UserDomainName, Environment.UserName);
-            Logger.Info("Attempting to add permissions for " + address + " using netsh " + args); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Logger.Info("Attempting to add permissions for {@address} using netsh http add urlacl url={@address} user=\"{@userDomainName}\\{@userName}\"" ,address, address, Environment.UserDomainName, Environment.UserName);
             var startInfo = new ProcessStartInfo("netsh", args)
                           {
                               Verb = "runas",
@@ -164,7 +164,7 @@ namespace EventStore.Transport.Http.Server
                 }
                 catch(Exception ex) 
                 {
-                    Logger.ErrorException(ex, "ProcessRequest error"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Logger.ErrorException(ex, "ProcessRequest error"); 
                 }
 
             try

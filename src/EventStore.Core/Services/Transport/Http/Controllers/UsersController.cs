@@ -158,7 +158,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     var data = http.RequestCodec.From<ResetPasswordData>(s);
                     var message = new UserManagementMessage.ResetPassword(envelope, http.User, login, data.NewPassword);
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private void PostCommandChangePassword(HttpEntityManager http, UriTemplateMatch match)

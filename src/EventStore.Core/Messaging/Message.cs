@@ -136,9 +136,9 @@ namespace EventStore.Core.Messaging
             }
             catch (ReflectionTypeLoadException ex)
             {
-                if(ex.LoaderExceptions.Length >0)
+                if(ex.LoaderExceptions.Length > 0)
                     Log.Info("The exception(s) occured when scanning for message types: ",
-                        string.Join(",", ex.LoaderExceptions.Select(x => x.Message))); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                        string.Join(",", ex.LoaderExceptions.Select(x => x.Message)));
                 else
                 {
                     Log.InfoException(ex, "Exception while scanning for message types"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/

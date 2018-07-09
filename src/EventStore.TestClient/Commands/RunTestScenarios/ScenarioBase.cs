@@ -215,10 +215,10 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             return Task.Factory.ContinueWhenAll(tasks.ToArray(), tsks =>
             {
                 Task.WaitAll(tsks);
-                Log.Info("Finished writing. Mode : {0,-15} Streams : {1,-10} Events per stream : {2,-10}",
+                Log.Info("Finished writing. Mode : {@mode,-15} Streams : {@streamsLength,-10} Events per stream : {@eventsPerStream,-10}",
                          mode,
                          streams.Length,
-                         eventsPerStream); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-15},{1,-10},{2,-10}*/
+                         eventsPerStream); 
             });
         }
 
@@ -239,7 +239,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             }
             Task.WaitAll(tasks.ToArray());
 
-            Log.Info("All streams successfully deleted"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Info("All streams successfully deleted");
         }
 
         protected Task CheckStreamsDeleted(IEnumerable<string> streams)
@@ -275,7 +275,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 Debugger.Break();
                 throw new Exception("Streams shouldn't be empty.");
             }
-            Log.Info("Reading [{@fixthisvar}]\nfrom {1,-10} count {2,-10}", string.Join(",", streams), @from, count); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1,-10},{2,-10}*/
+            Log.Info("Reading [{@streams}]\nfrom {@from,-10} count {@count,-10}", string.Join(",", streams),from , count);
 
             var tasks = new List<Task>();
 
@@ -444,7 +444,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         private void KillStartedNodes()
         {
-            Log.Info("Killing remaining nodes..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Info("Killing remaining nodes..."); 
             try
             {
                 _startedNodesProcIds.ToList().ForEach(KillNode);
@@ -597,7 +597,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         private Task ReadStream(string stream, int from, int count)
         {
-            Log.Info("Reading [{@stream}] from {1,-10} count {2,-10}", stream, from, count); /*TODO: structured-log @avish0694: the following parameters need attention: {1,-10},{2,-10}*/
+            Log.Info("Reading [{@stream}] from {@from,-10} count {@count,-10}", stream, from, count);
             var resSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             var store = GetConnection();
 

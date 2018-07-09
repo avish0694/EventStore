@@ -106,7 +106,9 @@ namespace EventStore.ClientAPI.Internal
                     var err = string.Format("EventStoreConnection '{0}': operation never got response from server.\n"
                                             + "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
                                             _connectionName, DateTime.UtcNow, operation);
-                    _settings.Log.Debug(err); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                    _settings.Log.Debug("EventStoreConnection '{@connectionName}': operation never got response from server.\n"
+                                            , "UTC now: {@dateTime:HH:mm:ss.fff}, operation: {@operation}.",
+                                            _connectionName, DateTime.UtcNow, operation);
 
                     if (_settings.FailOnNoServerResponse)
                     {

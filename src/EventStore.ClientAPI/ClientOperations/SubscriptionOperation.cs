@@ -202,8 +202,8 @@ namespace EventStore.ClientAPI.ClientOperations
             if (Interlocked.CompareExchange(ref _unsubscribed, 1, 0) == 0)
             {
                 if (_verboseLogging)
-                    _log.Debug("Subscription {0:B} to {@fixthisvar}: closing subscription, reason: {@reason}, exception: {@exc}...",
-                               _correlationId, _streamId == string.Empty ? "<all>" : _streamId, reason, exc); /*TODO: structured-log @avish0694: the following parameters need attention: {0:B},{1}*/
+                    _log.Debug("Subscription {@correlationId:B} to {@streamId}: closing subscription, reason: {@reason}, exception: {@exc}...",
+                               _correlationId, _streamId == string.Empty ? "<all>" : _streamId, reason, exc);
 
                 if (reason != SubscriptionDropReason.UserInitiated)
                 {

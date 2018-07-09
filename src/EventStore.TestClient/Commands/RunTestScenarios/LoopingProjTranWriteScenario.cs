@@ -76,7 +76,11 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info(msg); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
+                                        runIndex,
+                                        (int)stopWatch.Elapsed.TotalMinutes,
+                                        _executionPeriod.TotalMinutes,
+                                        GetType().Name);
                 Log.Info("##teamcity[message '{@msg}']", msg);
 
                 InnerRun(runIndex);

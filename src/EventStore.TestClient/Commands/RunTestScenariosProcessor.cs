@@ -222,7 +222,7 @@ namespace EventStore.TestClient.Commands
                 {
                     try
                     {
-                        Log.Info("Run scenario {@fixthisvar}", scenario.GetType().Name); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                        Log.Info("Run scenario {@name}", scenario.GetType().Name);
                         scenario.Run();
                         scenario.Clean();
                         Log.Info("Scenario run successfully"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/

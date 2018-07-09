@@ -133,7 +133,7 @@ namespace EventStore.ClientAPI.ClientOperations
             if (package.Command == expectedCommand)
                 throw new ArgumentException(string.Format("Command should not be {0}.", package.Command));
 
-            Log.Error("Unexpected TcpCommand received."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Error("Unexpected TcpCommand received.");
             Log.Error("Expected: {@expectedCommand}, Actual: {@command}, Flags: {@flags}, CorrelationId: {@correlationId}", expectedCommand, package.Command, package.Flags, package.CorrelationId);
             Log.Error("Operation ({@fixthisvar}): {@fixthisvar}", GetType().Name, this); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1}*/
             Log.Error("TcpPackage Data Dump:\n{@data}", Helper.FormatBinaryDump(package.Data));

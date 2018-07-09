@@ -111,7 +111,7 @@ namespace EventStore.Projections.Core.Services.Http
                     {
                         new KeyValuePair<string, string>(
                     "Location", new Uri(match.BaseUri, "/web/projections.htm").AbsoluteUri)
-                    }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private void OnProjectionsGetAny(HttpEntityManager http, UriTemplateMatch match)
@@ -413,7 +413,7 @@ namespace EventStore.Projections.Core.Services.Http
                                 envelope, mode, name, runAs, handlerType, s, enabled: enabled,
                                 checkpointsEnabled: checkpointsEnabled, emitEnabled: emitEnabled, trackEmittedStreams: trackEmittedStreams, enableRunAs: true);
                         Publish(postMessage);
-                    }, x => Log.DebugException(x, "Reply Text Body Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    }, x => Log.DebugException(x, "Reply Text Body Failed."));
         }
 
         private ResponseConfiguration StateConfigurator(ICodec codec, ProjectionManagementMessage.ProjectionState state)

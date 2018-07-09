@@ -85,7 +85,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.PrepareDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepare)")*/}); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/prepare)")*/});
         }
 
         public void Send(ElectionMessage.PrepareOk message, IPEndPoint endPoint)
@@ -121,7 +121,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.AcceptDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/accept)")*/}); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/accept)")*/}); 
         }
 
         private void OnPost<TDto, TMessage>(HttpEntityManager manager, Func<TDto, TMessage> unwrapper)

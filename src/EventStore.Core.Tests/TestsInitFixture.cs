@@ -28,7 +28,7 @@ namespace EventStore.Core.Tests
         {
             var log = LogManager.GetLoggerFor<TestsInitFixture>();
 
-            log.Info("\n{0,-25} {@fixthisvar} ({@fixthisvar}/{@fixthisvar}, {@version})\n"
+            log.Info("\n{@versionInfo,-25} {@branch} ({@hashtag}/{@timestamp}, {@version})\n"
                      + "{5,-25} {6} ({7})\n"
                      + "{8,-25} {9} ({10}-bit)\n"
                      + "{11,-25} {12}\n\n",

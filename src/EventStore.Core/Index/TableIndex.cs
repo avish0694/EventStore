@@ -366,7 +366,7 @@ namespace EventStore.Core.Index
                 }
                 catch (FileBeingDeletedException)
                 {
-                    Log.Trace("File being deleted."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.Trace("File being deleted.");
                 }
                 catch (MaybeCorruptIndexException e){
                     ForceIndexVerifyOnNextStartup();
@@ -498,7 +498,7 @@ namespace EventStore.Core.Index
                 }
                 catch (FileBeingDeletedException)
                 {
-                    Log.Trace("File being deleted."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.Trace("File being deleted."); 
                 }
                 catch (MaybeCorruptIndexException e){
                     ForceIndexVerifyOnNextStartup();
@@ -653,7 +653,7 @@ namespace EventStore.Core.Index
                     File.Delete(path);
             }
             catch{
-                Log.Error("Could not delete force index verification file at: "+path); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.Error("Could not delete force index verification file at: @path", path); 
             }
         }
     }

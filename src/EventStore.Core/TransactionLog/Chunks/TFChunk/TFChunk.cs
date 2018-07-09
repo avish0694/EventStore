@@ -287,7 +287,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
             SetAttributes(_filename, false);
             CreateWriterWorkItemForExistingChunk(writePosition, out _chunkHeader);
-            Log.Trace("Opened ongoing " + _filename + " as version " + _chunkHeader.Version); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Trace("Opened ongoing @filename" , _filename , " as version @version", _chunkHeader.Version);
             if (_chunkHeader.Version != (byte) ChunkVersions.Aligned && _chunkHeader.Version != (byte) ChunkVersions.Unaligned)
                 throw new CorruptDatabaseException(new WrongFileVersionException(_filename, _chunkHeader.Version, CurrentChunkVersion));
             CreateReaderStreams();

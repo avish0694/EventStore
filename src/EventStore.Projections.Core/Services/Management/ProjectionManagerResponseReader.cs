@@ -50,7 +50,7 @@ namespace EventStore.Projections.Core.Services.Management
                 _cancellationScope.Cancel();
             }
             _cancellationScope = new IODispatcherAsync.CancellationScope();
-            Log.Debug("PROJECTIONS: Starting Projection Manager Response Reader (reads from $projections-$master)"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Debug("PROJECTIONS: Starting Projection Manager Response Reader (reads from $projections-$master)");
             _numberOfStartedWorkers = 0;
             PerformStartReader(message.EpochId).Run();
         }
@@ -157,7 +157,7 @@ namespace EventStore.Projections.Core.Services.Management
             }
             else
             {
-                Log.Error("Failed reading stream {@fixthisvar}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Error("Failed reading stream {@projectionsMasterStream}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
                 ReadForward();
             }
         }

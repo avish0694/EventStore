@@ -36,7 +36,7 @@ namespace EventStore.Common.Utils
         {
             if (disableFlushToDisk)
             {
-                Log.Info("FlushToDisk: DISABLED"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.Info("FlushToDisk: DISABLED");
                 FlushSafe = f => f.Flush(flushToDisk: false);
                 return;
             }

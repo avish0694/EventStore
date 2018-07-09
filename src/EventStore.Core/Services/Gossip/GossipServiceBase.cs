@@ -82,7 +82,7 @@ namespace EventStore.Core.Services.Gossip
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while retrieving cluster members through DNS."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error while retrieving cluster members through DNS.");
                 _bus.Publish(TimerMessage.Schedule.Create(DnsRetryTimeout, _publishEnvelope, new GossipMessage.RetrieveGossipSeedSources()));
             }
         }
@@ -232,9 +232,9 @@ namespace EventStore.Core.Services.Gossip
                 {
                     if ((DateTime.UtcNow - member.TimeStamp).Duration() > AllowedTimeDifference)
                     {
-                        Log.Error("Time difference between us and [{@fixthisvar}] is too great! "
-                                  + "UTC now: {1:yyyy-MM-dd HH:mm:ss.fff}, peer's time stamp: {2:yyyy-MM-dd HH:mm:ss.fff}.",
-                                  peerEndPoint, DateTime.UtcNow, member.TimeStamp); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                        Log.Error("Time difference between us and [{@peerEndPoint}] is too great! "
+                                  , "UTC now: {@dateTime:yyyy-MM-dd HH:mm:ss.fff}, peer's time stamp: {@memberTimestamp:yyyy-MM-dd HH:mm:ss.fff}.",
+                                  peerEndPoint, DateTime.UtcNow, member.TimeStamp);
                     }
                     mems[member.InternalHttpEndPoint] = member;
                 }
@@ -282,7 +282,8 @@ namespace EventStore.Core.Services.Gossip
             var ipEndPointComparer = new IPEndPointComparer();
             foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
             {
-                Log.Trace(oldMember.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                var member = oldMember.ToString();
+                Log.Trace("@member", member); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
             }
             Log.Trace("New:"); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
             foreach (var newMember in newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))

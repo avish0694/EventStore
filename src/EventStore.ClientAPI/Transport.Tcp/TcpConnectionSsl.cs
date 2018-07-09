@@ -250,7 +250,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during BeginWrite."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                _log.Debug(exc, "Exception during BeginWrite.");
                 CloseInternal(SocketError.SocketError, "Exception during BeginWrite");
             }
         }
@@ -317,7 +317,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
             }
             catch (Exception exc)
             {
-                _log.Debug(exc, "Exception during BeginRead."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                _log.Debug(exc, "Exception during BeginRead.");
                 CloseInternal(SocketError.SocketError, "Exception during BeginRead.");
             }
         }
@@ -415,7 +415,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
 
             NotifyClosed();
 
-            _log.Info("ClientAPI {@fixthisvar} closed [{1:HH:mm:ss.fff}: S{@remoteEndPoint}, L{@localEndPoint}, {4:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+            _log.Info("ClientAPI {@name} closed [{@dateTime:HH:mm:ss.fff}: S{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:", GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId);
             _log.Info("Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}", TotalBytesReceived, TotalBytesSent);
             _log.Info("Send calls: {@sendCalls}, callbacks: {@sendCallbacks}", SendCalls, SendCallbacks);
             _log.Info("Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}", ReceiveCalls, ReceiveCallbacks);

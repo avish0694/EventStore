@@ -207,7 +207,7 @@ namespace EventStore.Core.Index
                                        Func<string, ulong, ulong> upgradeHash, Func<IndexEntry, bool> existsAt, Func<IndexEntry, Tuple<string, bool>> readRecord,
                                        byte version, int cacheDepth, bool skipIndexVerify)
         {
-            Log.Trace("PTables merge started (specialized for <= 2 tables)."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Trace("PTables merge started (specialized for <= 2 tables).");
             var watch = Stopwatch.StartNew();
 
             var fileSizeUpToIndexEntries = GetFileSizeUpToIndexEntries(numIndexEntries, version);

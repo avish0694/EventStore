@@ -78,7 +78,7 @@ namespace EventStore.Projections.Core.v8
             }
             catch (DllNotFoundException ex)
             {
-                Log.Info("{@fixthisvar}\n{@message}\n{@stackTrace}",ex.ToString(), ex.Message, ex.StackTrace); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Info("{@ex}\n{@message}\n{@stackTrace}",ex.ToString(), ex.Message, ex.StackTrace);
                 throw new ApplicationException(
                     "The projection subsystem failed to load a libjs1.so/js1.dll/... or one of its dependencies.  The original error message is: "
                     + ex.Message, ex);

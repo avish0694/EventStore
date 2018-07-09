@@ -100,7 +100,7 @@ namespace EventStore.Core.Services
 
                 var lastCommitPosition = _getLastCommitPosition();
                 if (message.SubscriptionPosition > lastCommitPosition)
-                    Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE.");
                 else
                     Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {@subscriptionPosition} (0x{0:X}) <= LastCommitPosition {1} (0x{1:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition, lastCommitPosition); /*TODO: structured-log @Lougarou: parameter indexes not in strict order, reached hole: {1}*/
 
@@ -109,7 +109,7 @@ namespace EventStore.Core.Services
                 {
                     Log.Error("Master [{@masterEndPoint},{1:B}] subscribed us at {@subscriptionPosition} (0x{2:X}), which is less than our last epoch and LastCommitPosition {3} (0x{3:X}) >= lastEpoch.EpochPosition {4} (0x{4:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
                                 message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, lastCommitPosition, lastEpoch.EpochPosition); /*TODO: structured-log @shaan1337: parameter indexes not in strict order, reached hole: {3}*/
-                    Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION.");
                 }
 
                 Db.Config.TruncateCheckpoint.Write(message.SubscriptionPosition);
@@ -220,8 +220,8 @@ namespace EventStore.Core.Services
 
                 if (_subscriptionPos != message.SubscriptionPosition)
                 {
-                    Log.Error("Received DataChunkBulk at SubscriptionPosition {@subscriptionPosition} (0x{0:X}) while current SubscriptionPosition is {1} (0x{1:X}).",
-                              message.SubscriptionPosition, _subscriptionPos); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {1}*/
+                    Log.Error("Received DataChunkBulk at SubscriptionPosition {@subscriptionPosition} (0x{@subscriptionPosition:X}) while current SubscriptionPosition is {@subscriptionPos} (0x{@subscriptionPos:X}).",
+                              message.SubscriptionPosition,message.SubscriptionPosition, _subscriptionPos, _subscriptionPos); 
                     return;
                 }
 

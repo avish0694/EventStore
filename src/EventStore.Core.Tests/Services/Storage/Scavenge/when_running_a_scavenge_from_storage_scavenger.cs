@@ -60,7 +60,7 @@ namespace EventStore.Core.Tests.Services.Storage.Scavenge
 					_ => Log.Info("Processing events started."),
 					(x, y, z) =>
 					{
-						Log.Info("Subscription dropped: {0}, {1}.", y, z); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+						Log.Info("Subscription dropped: {@y}, {@z}.", y, z);
 					}
 				);
 

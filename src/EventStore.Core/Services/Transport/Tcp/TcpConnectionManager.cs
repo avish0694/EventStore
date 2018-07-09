@@ -257,8 +257,8 @@ namespace EventStore.Core.Services.Transport.Tcp
                     try 
                     {
                         var message = (ClientMessage.IdentifyClient)_dispatcher.UnwrapPackage(package, _tcpEnvelope, null, null, null, this, _version);
-                        Log.Info("Connection '{@connectionName}' ({1:B}) identified by client. Client connection name: '{2}', Client version: {3}.",
-                            ConnectionName, ConnectionId, message.ConnectionName, (ClientVersion)message.Version); /*TODO: structured-log @avish0694: duplicate variable name detected: {@connectionName}*/
+                        Log.Info("Connection '{@connectionName}' ({@ConnectionId:B}) identified by client. Client connection name: '{@messageConnectionName}', Client version: {@version}.",
+                            ConnectionName, ConnectionId, message.ConnectionName, (ClientVersion)message.Version);
                         _version = (byte)message.Version;
                         _clientConnectionName = message.ConnectionName;
                         _connection.SetClientConnectionName(_clientConnectionName);

@@ -195,7 +195,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                _log.DebugException(ex, "Could not get free memory on BSD."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                _log.DebugException(ex, "Could not get free memory on BSD."); 
                 return -1;
             }
         }

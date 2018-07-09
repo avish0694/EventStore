@@ -140,7 +140,7 @@ namespace EventStore.Core.Services.Monitoring
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Error while collecting stats"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(ex, "Error while collecting stats");
                 statsContainer = null;
             }
 

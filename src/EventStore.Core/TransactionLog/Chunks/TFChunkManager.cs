@@ -178,7 +178,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             var chunkHeader = chunk.ChunkHeader;
             var oldFileName = chunk.FileName;
 
-            Log.Info("Switching chunk #{@chunkStartNumber}-{@chunkEndNumber} ({@fixthisvar})...", chunkHeader.ChunkStartNumber, chunkHeader.ChunkEndNumber, Path.GetFileName(oldFileName)); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
+            Log.Info("Switching chunk #{@chunkStartNumber}-{@chunkEndNumber} ({@OldFileName})...", chunkHeader.ChunkStartNumber, chunkHeader.ChunkEndNumber, Path.GetFileName(oldFileName));
             TFChunk.TFChunk newChunk;
 
             if (_config.InMemDb)

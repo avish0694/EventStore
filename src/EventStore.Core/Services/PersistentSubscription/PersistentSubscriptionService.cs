@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("create subscription " + key); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Debug("create subscription @key", key); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
             //TODO revisit for permissions. maybe make admin only?
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
@@ -412,7 +412,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(TcpMessage.ConnectionClosed message)
         {
             //TODO CC make a map for this
-            Log.Debug("Lost connection from " + message.Connection.RemoteEndPoint); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Debug("Lost connection from @remoteEndPoint", message.Connection.RemoteEndPoint);
             if (_subscriptionsById == null) return; //havn't built yet.
             foreach (var subscription in _subscriptionsById.Values)
             {
@@ -675,7 +675,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                     }
                     catch (Exception ex)
                     {
-                        Log.Error("There was an error loading configuration from storage.", ex); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                        Log.Error("There was an error loading configuration from storage.", ex); 
                     }
                     break;
                 case ReadStreamResult.NoStream:

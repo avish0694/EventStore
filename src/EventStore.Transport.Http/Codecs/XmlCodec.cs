@@ -80,7 +80,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error serializing object of type {@fixthisvar}", value.GetType().FullName); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.ErrorException(exc, "Error serializing object of type {@fullName}", value.GetType().FullName);
                 return null;
             }
         }

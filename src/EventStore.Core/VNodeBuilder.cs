@@ -1421,12 +1421,13 @@ namespace EventStore.Core
                     _gossipOnSingleNode,
                     _skipIndexScanOnReads);
             var infoController = new InfoController(options, _projectionType);
+            var epochCheckpoint = _db.Config.EpochCheckpoint.Read();
 
             _log.Info("{0,-25} {@instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25}*/
-            _log.Info("{0,-25} {@path}", "DATABASE:", _db.Config.Path); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
+            _log.Info("{@database,-25} {@path}", "DATABASE:", _db.Config.Path); 
             _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{1:X}*/
             _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "CHASER CHECKPOINT:", _db.Config.ChaserCheckpoint.Read()); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25},{1},{1:X}*/
-            _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "EPOCH CHECKPOINT:", _db.Config.EpochCheckpoint.Read()); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25},{1},{1:X}*/
+            _log.Info("{@epochCheckpoint,-25} {@epochCheckpoint} (0x{@epochCheckpoint:X})", "EPOCH CHECKPOINT:", epochCheckpoint, epochCheckpoint);
             _log.Info("{0,-25} {@fixthisvar} (0x{1:X})", "TRUNCATE CHECKPOINT:", _db.Config.TruncateCheckpoint.Read()); /*TODO: structured-log @Lougarou: the following parameters need attention: {0,-25},{1},{1:X}*/
 
             return new ClusterVNode(_db, _vNodeSettings, GetGossipSource(), infoController, _subsystems.ToArray());

@@ -53,7 +53,7 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionDropped:
                             {
                                 pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionDropped>();
-                                context.Log.Error("Subscription to <{@fixthisvar}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                                context.Log.Error("Subscription to <{@streamByCorrId}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]);
                                 break;
                             }
                             default:

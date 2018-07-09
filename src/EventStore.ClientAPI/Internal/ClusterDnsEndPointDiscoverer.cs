@@ -105,7 +105,7 @@ namespace EventStore.ClientAPI.Internal
 
         private GossipSeed[] GetGossipCandidatesFromDns()
         {
-            //_log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromDns"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            _log.Debug("ClusterDnsEndPointDiscoverer: GetGossipCandidatesFromDns");
             GossipSeed[] endpoints;
             if(_gossipSeeds != null && _gossipSeeds.Length > 0)
             {
@@ -256,7 +256,7 @@ namespace EventStore.ClientAPI.Internal
             var secTcp = node.ExternalSecureTcpPort > 0
                                  ? new IPEndPoint(IPAddress.Parse(node.ExternalTcpIp), node.ExternalSecureTcpPort)
                                  : null;
-            _log.Info("Discovering: found best choice [{@normTcp},{@fixthisvar}] ({@state}).", normTcp, secTcp == null ? "n/a" : secTcp.ToString(), node.State); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+            _log.Info("Discovering: found best choice [{@normTcp},{@secTcp}] ({@state}).", normTcp, secTcp == null ? "n/a" : secTcp.ToString(), node.State);
             return new NodeEndPoints(normTcp, secTcp);
         }
     }

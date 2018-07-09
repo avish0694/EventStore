@@ -854,7 +854,7 @@ namespace EventStore.Projections.Core.Services.Management
                     WriteProjectionsInitialized(action, registrationEventId);
                     break;
                 default:
-                    _logger.Fatal("Cannot initialize projections subsystem. Cannot write a fake projection"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    _logger.Fatal("Cannot initialize projections subsystem. Cannot write a fake projection");
                     break;
             }
         }
