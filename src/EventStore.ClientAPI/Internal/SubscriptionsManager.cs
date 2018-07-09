@@ -113,6 +113,9 @@ namespace EventStore.ClientAPI.Internal
 
                     if (_settings.FailOnNoServerResponse)
                     {
+                        var err = String.Format("EventStoreConnection '{0}': subscription never got confirmation from server.\n" +
+                                            "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
+                                            _connectionName, DateTime.UtcNow, subscription);
                         subscription.Operation.DropSubscription(SubscriptionDropReason.SubscribingError, new OperationTimedOutException(err));
                         removeSubscriptions.Add(subscription);
                     }

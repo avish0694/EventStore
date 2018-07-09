@@ -54,7 +54,7 @@ namespace EventStore.Projections.Core.Services.Processing
         {
             long fromEventNumber = 0;
 
-            Log.Debug($"PROJECTIONS: Starting read {@stream}",ProjectionNamesBuilder.BuildControlStreamName(epochId));
+            Log.Debug("PROJECTIONS: Starting read {@stream}",ProjectionNamesBuilder.BuildControlStreamName(epochId));
 
             long subscribeFrom = 0;
             while (!_stopped)

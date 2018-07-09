@@ -154,6 +154,8 @@ namespace EventStore.Core.Services.Storage
               
                 Log.Fatal("{@message} appeared in StorageWriter during state {@vnodeStrate}.", message.GetType().Name,
                     _vnodeState);
+                var msg = String.Format("{0} appeared in StorageWriter during state {1}.", message.GetType().Name,
+                    _vnodeState);
                 Application.Exit(ExitCode.Error, msg);
                 return;
             }

@@ -81,7 +81,6 @@ namespace EventStore.Projections.Core.Services.Management
                     }
                     else
                     {
-                        var message = String.Format();
                         Log.Debug("PROJECTIONS: Failed writing events to {@streamId} because of {@completedResult}: {@events}", 
                             streamId, 
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}", x.EventType))));

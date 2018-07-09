@@ -208,6 +208,9 @@ namespace EventStore.ClientAPI.Internal
             _settings.Log.Debug("EventStoreConnection '{@connectionName}': request expired.\n"
                                                     + "UTC now: {@dateTime:HH:mm:ss.fff}, operation: {@operation}.",
                                                     _connectionName, DateTime.UtcNow, operation);
+            var err = string.Format("EventStoreConnection '{0}': request expired.\n"
+                                                    + "UTC now: {1:HH:mm:ss.fff}, operation: {2}.",
+                                                    _connectionName, DateTime.UtcNow, operation);
             operation.Operation.Fail(new OperationExpiredException(err));
             return true;
         }

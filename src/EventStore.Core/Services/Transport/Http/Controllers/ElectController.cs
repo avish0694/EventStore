@@ -61,7 +61,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         Codec.Json.To(new ElectionMessageDto.ViewChangeDto(message)),
                         Codec.Json.ContentType,
                         r => {/*ignore*/},
-                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/})
+                        e => {/*Log.ErrorException(e, "Error occured while writing request (elections/viewchange)")*/});
         }
 
         public void Send(ElectionMessage.ViewChangeProof message, IPEndPoint endPoint)

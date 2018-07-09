@@ -106,6 +106,7 @@ namespace EventStore.TestClient.Commands
                                 {
                                     
                                     context.Log.Info("Error while writing transactional event: {@message} ({@result}).", dto.Message, dto.Result);
+                                    var msg = String.Format("Error while writing transactional event: {0} ({1}).", dto.Message, dto.Result);
                                     context.Fail(reason: msg);
                                 }
                                 else

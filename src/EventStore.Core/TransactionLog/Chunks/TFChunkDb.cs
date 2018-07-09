@@ -142,6 +142,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         catch (Exception exc)
                         {
                             Log.FatalException(exc, "Verification of chunk {@chunk} failed, terminating server...", chunk);
+                            var msg = String.Format("Verification of chunk {0} failed, terminating server...", chunk);
                             Application.Exit(ExitCode.Error, msg);
                             return;
                         }
