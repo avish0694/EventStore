@@ -73,7 +73,7 @@ namespace EventStore.Projections.Core.Services.Processing
             _pauseRequested = true;
             if (!AreEventsRequested())
                 _paused = true;
-//            _logger.Trace("Pausing event distribution {@eventReaderCorrelationId} at '{@fixthisvar}'", EventReaderCorrelationId, FromAsText()); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+//            _logger.Trace("Pausing event distribution {@eventReaderCorrelationId} at '{@at}'", EventReaderCorrelationId, FromAsText()); 
         }
 
         public virtual void Dispose()

@@ -287,7 +287,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             }
             catch (FileBeingDeletedException exc)
             {
-                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated."); /*TODO: structured-log @Lougarou: seems like no changes are required here, just review.*/
+                Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated.");
                 Log.Info("Scavenging of following chunks will be skipped:");
                 Log.Info("{@oldChunksList}", oldChunksList);
                 Log.Info("Stopping scavenging and removing temp chunk '{@tmpChunkPath}'...", tmpChunkPath);

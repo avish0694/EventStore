@@ -335,7 +335,7 @@ namespace EventStore.Transport.Tcp
                         SendCalls, SendCallbacks); /*TODO: structured-log @avish0694: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
-                        ReceiveCalls, ReceiveCallbacks); /*TODO: structured-log @Lougarou: the following parameters need attention: {0},{1:HH:mm:ss.fff},{4:B}*/
+                        ReceiveCalls, ReceiveCallbacks);
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] Close reason: [{@socketError}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         socketError, reason);
