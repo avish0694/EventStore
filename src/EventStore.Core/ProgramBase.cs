@@ -149,7 +149,7 @@ namespace EventStore.Core
             Log.Info("\n{@esVersionStr,-25} {@version} ({@branch}/{@hashtag}, {@timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
             Log.Info("{@osStr,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion);
             Log.Info("{@desc,-25} {@osRuntimeVersion} ({@value}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
-            Log.Info("{@gcStr,-25} {@fixthisvar}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
+            Log.Info("{@gcStr,-25} {@maxGeneration}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
             Log.Info("{@logsStr,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory);
             if(!structuredLog)
                 Log.Info("{@esOptions}", EventStoreOptions.DumpOptions());
