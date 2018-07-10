@@ -134,8 +134,8 @@ namespace EventStore.Core.TransactionLog.Chunks
                         }
                         catch (FileBeingDeletedException exc)
                         {
-                            Log.Trace("{@fixthisvar} exception was thrown while doing background validation of chunk {@chunk}.",
-                                      exc.GetType().Name, chunk); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                            Log.Trace("{@name} exception was thrown while doing background validation of chunk {@chunk}.",
+                                      exc.GetType().Name, chunk);
                             Log.Trace("That's probably OK, especially if truncation was request at the same time: {@message}.",
                                       exc.Message);
                         }

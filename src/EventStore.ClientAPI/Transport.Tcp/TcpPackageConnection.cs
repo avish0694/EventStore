@@ -76,6 +76,7 @@ namespace EventStore.ClientAPI.Transport.Tcp
                     log.Debug("TcpPackageConnection: connection to [{0}, L{1}, {2:B}] failed. Error: {3}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error);
                     if (connectionClosed != null)
                         connectionClosed(this, error);
+                    log.Debug("TcpPackageConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] failed. Error: {@error}.", conn.RemoteEndPoint, conn.LocalEndPoint, connectionId, error);
                 },
                 (conn, error) =>
                 {

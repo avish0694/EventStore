@@ -152,7 +152,7 @@ namespace EventStore.Core.Services.Transport.Http
             }
             catch (Exception e)
             {
-                Log.InfoException(e, "Failed to load xml. Invalid format"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.InfoException(e, "Failed to load xml. Invalid format");
                 return null;
             }
         }

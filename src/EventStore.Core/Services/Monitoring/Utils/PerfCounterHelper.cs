@@ -85,8 +85,8 @@ namespace EventStore.Core.Services.Monitoring.Utils
             }
             catch (Exception ex)
             {
-                _log.Trace("Could not create performance counter: category='{@category}', counter='{@counter}', instance='{@fixthisvar}'. Error: {@message}",
-                           category, counter, instance ?? string.Empty, ex.Message); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
+                _log.Trace("Could not create performance counter: category='{@category}', counter='{@counter}', instance='{@emptyString}'. Error: {@message}",
+                           category, counter, instance ?? string.Empty, ex.Message);
                 return null;
             }
         }

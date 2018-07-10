@@ -109,7 +109,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         default:
                             Log.Error("An error occured truncating the parked message stream {@parkedStreamId} due to {@result}.",
                                 _parkedStreamId, msg.Result);
-                            Log.Error("Messages were not removed on retry"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                            Log.Error("Messages were not removed on retry"); 
                             break;
                     }
                 });

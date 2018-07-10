@@ -350,7 +350,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                         "",
                         "");
                     Publish(message);
-                }, x => Log.DebugException(x, "Reply Text Content Failed.")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                }, x => Log.DebugException(x, "Reply Text Content Failed."));
         }
 
         private SubscriptionConfigData ParseConfig(SubscriptionConfigData config)

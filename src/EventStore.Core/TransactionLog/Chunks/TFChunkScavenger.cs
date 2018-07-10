@@ -164,7 +164,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             }
             catch (IOException exc)
             {
-                Log.ErrorException(exc, "IOException during creating new chunk for scavenging purposes. Stopping scavenging process..."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "IOException during creating new chunk for scavenging purposes. Stopping scavenging process..."); 
                 return false;
             }
 
@@ -259,7 +259,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 }
 
                 if(oldVersion) {
-                    Log.Trace("Forcing scavenged chunk to be kept as old chunk is a previous version."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.Trace("Forcing scavenged chunk to be kept as old chunk is a previous version.");
                 }
 
                 var chunk = _db.Manager.SwitchChunk(newChunk, verifyHash: false, removeChunksWithGreaterNumbers: false);
@@ -323,8 +323,8 @@ namespace EventStore.Core.TransactionLog.Chunks
             catch(Exception ex)
             {
                 if (retries > 0) {
-                    Log.Error("Failed to delete the temp chunk. Retrying {@fixthisvar}/{@maxRetryCount}. Reason: {@ex}",
-                        MaxRetryCount - retries, MaxRetryCount, ex); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                    Log.Error("Failed to delete the temp chunk. Retrying {@retry}/{@maxRetryCount}. Reason: {@ex}",
+                        MaxRetryCount - retries, MaxRetryCount, ex);
                     DeleteTempChunk(tmpChunkPath, retries - 1);
                 }
                 else

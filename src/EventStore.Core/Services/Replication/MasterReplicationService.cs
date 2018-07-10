@@ -174,9 +174,9 @@ namespace EventStore.Core.Services.Replication
             try
             {
                 var epochs = lastEpochs ?? new Epoch[0];
-                Log.Info("SUBSCRIBE REQUEST from [{@replicaEndPoint},C:{1:B},S:{2:B},{@logPosition}(0x{3:X}),{4}]...",
-                         replica.ReplicaEndPoint, replica.ConnectionId, replica.SubscriptionId, logPosition,
-                         string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x)))); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {4}*/
+                Log.Info("SUBSCRIBE REQUEST from [{@replicaEndPoint},C:{@connectionId:B},S:{@subscriptionId:B},{@logPosition}(0x{@logPosition:X}),{@epochs}]...",
+                         replica.ReplicaEndPoint, replica.ConnectionId, replica.SubscriptionId, logPosition, logPosition,
+                         string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x))));
 
                 var epochCorrectedLogPos = GetValidLogPosition(logPosition, epochs, replica.ReplicaEndPoint, replica.SubscriptionId);
                 var subscriptionPos = SetSubscriptionPosition(replica, epochCorrectedLogPos, chunkId,

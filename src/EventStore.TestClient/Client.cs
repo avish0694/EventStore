@@ -115,7 +115,7 @@ namespace EventStore.TestClient
                         }
                         catch (Exception exc)
                         {
-                            Log.ErrorException(exc, "Error during executing command."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                            Log.ErrorException(exc, "Error during executing command.");
                         }
                     }
                     finally
@@ -179,7 +179,8 @@ namespace EventStore.TestClient
             {
                 var message = string.Format("TcpTypedConnection: connection to [{0}, L{1}, {2:B}] failed. Error: {3}.",
                                             conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId, error);
-                Log.Error(message); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Error("TcpTypedConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] failed. Error: {@error}.",
+                                            conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId, error);
 
                 if (connectionClosed != null)
                     connectionClosed(null, error);
@@ -256,9 +257,9 @@ namespace EventStore.TestClient
                     catch (Exception ex)
                     {
                         Log.InfoException(ex,
-                                          "TcpTypedConnection: [{@remoteEndPoint}, L{@localEndPoint}] ERROR for {@fixthisvar}. Connection will be closed.",
+                                          "TcpTypedConnection: [{@remoteEndPoint}, L{@localEndPoint}] ERROR for {@package}. Connection will be closed.",
                                           conn.RemoteEndPoint, conn.LocalEndPoint,
-                                          validPackage ? package.Command as object : "<invalid package>"); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
+                                          validPackage ? package.Command as object : "<invalid package>");
                         conn.Close(ex.Message);
 
                         if (failContextOnError)

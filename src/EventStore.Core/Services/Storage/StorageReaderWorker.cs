@@ -225,7 +225,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadStreamEventsForward request."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error during processing ReadStreamEventsForward request.");
                     return NoData(msg, ReadStreamResult.Error, lastCommitPosition, error: exc.Message);
                 }
             }
@@ -357,7 +357,7 @@ namespace EventStore.Core.Services.Storage
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error during processing ReadAllEventsBackward request."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    Log.ErrorException(exc, "Error during processing ReadAllEventsBackward request."); 
                     return NoData(msg, ReadAllResult.Error, pos, lastCommitPosition, exc.Message);
                 }
             }

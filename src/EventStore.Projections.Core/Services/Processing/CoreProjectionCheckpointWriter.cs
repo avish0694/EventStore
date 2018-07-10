@@ -73,8 +73,8 @@ namespace EventStore.Projections.Core.Services.Processing
                 if (_logger != null)
                 {
                     _logger.Info(
-                        "Failed to write projection checkpoint to stream {@eventStreamId}. Error: {@fixthisvar}", eventStreamId,
-                        Enum.GetName(typeof (OperationResult), operationResult)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                        "Failed to write projection checkpoint to stream {@eventStreamId}. Error: {@operationResult}", eventStreamId,
+                        Enum.GetName(typeof (OperationResult), operationResult));
                 }
                 switch (operationResult)
                 {

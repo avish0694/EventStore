@@ -324,8 +324,8 @@ namespace EventStore.Core.Bus
                     var elapsed = DateTime.UtcNow - start;
                     if (elapsed > _slowMsgThreshold)
                     {
-                        Log.Trace("SLOW BUS MSG [{@name}]: {@fixthisvar} - {@fixthisvar}ms. Handler: {@handlerName}.",
-                                  Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{2}*/
+                        Log.Trace("SLOW BUS MSG [{@name}]: {@messageName} - {@elapsed}ms. Handler: {@handlerName}.",
+                                  Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName);
                         if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(message is SystemMessage.SystemInit))
                             Log.Error("---!!! VERY SLOW BUS MSG [{@name}]: {@messageName} - {@elapsedTime}ms. Handler: {@handlerName}.",
                                       Name, message.GetType().Name, (int)elapsed.TotalMilliseconds, handler.HandlerName);

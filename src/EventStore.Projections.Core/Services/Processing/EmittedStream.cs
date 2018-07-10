@@ -505,9 +505,9 @@ namespace EventStore.Projections.Core.Services.Processing
             }
             if (_logger != null)
             {
-                _logger.Info("Failed to write events to stream {@metadataStreamId}. Error: {@fixthisvar}",
+                _logger.Info("Failed to write events to stream {@metadataStreamId}. Error: {@result}",
                              _metadataStreamId,
-                             Enum.GetName(typeof(OperationResult), message.Result)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                             Enum.GetName(typeof(OperationResult), message.Result));
             }
             switch (message.Result)
             {

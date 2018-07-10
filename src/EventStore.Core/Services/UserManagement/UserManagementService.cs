@@ -543,7 +543,7 @@ namespace EventStore.Core.Services.UserManagement
                                         switch (completed.Result)
                                         {
                                             case OperationResult.Success:
-                                                _log.Info("'admin' user account has been created."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                _log.Info("'admin' user account has been created.");
                                                 WriteUsersStreamEvent("admin", x =>
                                                     {
                                                         if (x.Result == OperationResult.Success)
@@ -559,7 +559,7 @@ namespace EventStore.Core.Services.UserManagement
                                                 break;
                                             case OperationResult.CommitTimeout:
                                             case OperationResult.PrepareTimeout:
-                                                _log.Error("'admin' user account creation timed out retrying."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                _log.Error("'admin' user account creation timed out retrying.");
                                                 CreateAdminUser();
                                                 break;
                                             default:
@@ -598,7 +598,7 @@ namespace EventStore.Core.Services.UserManagement
                                         switch (completed.Result)
                                         {
                                             case OperationResult.Success:
-                                                _log.Info("'ops' user account has been created."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                _log.Info("'ops' user account has been created."); 
                                                 WriteUsersStreamEvent("ops", x =>
                                                     {
                                                         if (x.Result == OperationResult.Success)
@@ -614,7 +614,7 @@ namespace EventStore.Core.Services.UserManagement
                                                 break;
                                             case OperationResult.CommitTimeout:
                                             case OperationResult.PrepareTimeout:
-                                                _log.Error("'ops' user account creation timed out retrying."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                _log.Error("'ops' user account creation timed out retrying.");
                                                 CreateOperationsUser();
                                                 break;
                                             default:

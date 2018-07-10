@@ -110,7 +110,8 @@ namespace EventStore.Core.TransactionLog.Chunks
 
             if (_config.WriterCheckpoint.Read() > truncateChk)
             {
-                Log.Info("Truncating writer from {@fixthisvar} (0x{0:X}) to {1} (0x{1:X}).", _config.WriterCheckpoint.Read(), truncateChk); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {1}*/
+                var writerCheckpoint = _config.WriterCheckpoint.Read();
+                Log.Info("Truncating writer from {@writerCheckpoint} (0x{@writerCheckpoint:X}) to {@truncateChk} (0x{@truncateChk:X}).", writerCheckpoint ,writerCheckpoint, truncateChk, truncateChk);
                 _config.WriterCheckpoint.Write(truncateChk);
                 _config.WriterCheckpoint.Flush();
             }

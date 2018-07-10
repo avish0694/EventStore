@@ -141,7 +141,7 @@ namespace EventStore.Core.Services
             if (_state == ElectionsState.Shutdown) return;
             if (_state == ElectionsState.ElectingLeader) return;
 
-            Log.Debug("ELECTIONS: STARTING ELECTIONS."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            Log.Debug("ELECTIONS: STARTING ELECTIONS."); 
             ShiftToLeaderElection(_lastAttemptedView + 1);
             _publisher.Publish(TimerMessage.Schedule.Create(SendViewChangeProofInterval,
                                                             _publisherEnvelope,
@@ -241,8 +241,8 @@ namespace EventStore.Core.Services
             }
             else
             {
-                Log.Debug("ELECTIONS: (IV={@installedView}) VIEWCHANGEPROOF FROM [{@serverInternalHttp}, {2:B}]. JUMPING TO NON-LEADER STATE.",
-                          message.InstalledView, message.ServerInternalHttp, message.ServerId); /*TODO: structured-log @avish0694: the following parameters need attention: {2:B}*/
+                Log.Debug("ELECTIONS: (IV={@installedView}) VIEWCHANGEPROOF FROM [{@serverInternalHttp}, {@serverId:B}]. JUMPING TO NON-LEADER STATE.",
+                          message.InstalledView, message.ServerInternalHttp, message.ServerId);
 
                 ShiftToRegNonLeader();
             }
@@ -339,8 +339,8 @@ namespace EventStore.Core.Services
 
             _masterProposal = master;
 
-            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) SENDING PROPOSAL CANDIDATE: {@fixthisvar}, ME: {@fixthisvar}.",
-                      _lastAttemptedView, FormatNodeInfo(master), FormatNodeInfo(GetOwnInfo())); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{2}*/
+            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) SENDING PROPOSAL CANDIDATE: {@formatNodeInfo}, ME: {@getOwnInfo}.",
+                      _lastAttemptedView, FormatNodeInfo(master), FormatNodeInfo(GetOwnInfo()));
 
             var proposal = new ElectionMessage.Proposal(_nodeInfo.InstanceId, _nodeInfo.InternalHttp,
                                                         master.InstanceId, master.InternalHttp,

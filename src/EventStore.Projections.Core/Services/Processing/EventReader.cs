@@ -59,7 +59,7 @@ namespace EventStore.Projections.Core.Services.Processing
 
             _paused = false;
             _pauseRequested = false;
-//            _logger.Trace("Resuming event distribution {@eventReaderCorrelationId} at '{@fixthisvar}'", EventReaderCorrelationId, FromAsText()); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+//            _logger.Trace("Resuming event distribution {@eventReaderCorrelationId} at '{@fixthisvar}'", EventReaderCorrelationId, FromAsText());
             RequestEvents();
         }
 

@@ -144,7 +144,7 @@ namespace EventStore.Core.Services.Storage
         {
             if (BlockWriter && !(message is SystemMessage.StateChangeMessage))
             {
-                Log.Trace("Blocking message {@fixthisvar} in StorageWriterService. Message:", message.GetType().Name); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Trace("Blocking message {@message} in StorageWriterService. Message:", message.GetType().Name); 
                 Log.Trace("{@message}", message);
                 return;
             }
@@ -304,7 +304,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally
@@ -486,7 +486,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally
@@ -573,7 +573,7 @@ namespace EventStore.Core.Services.Storage
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Exception in writer."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Exception in writer.");
                 throw;
             }
             finally

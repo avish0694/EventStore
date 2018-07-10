@@ -115,7 +115,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                                                                        }
                                                                                        catch
                                                                                        {
-                                                                                           Log.Info("EXCEPTION"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                                                                                           Log.Info("EXCEPTION");
                                                                                        }
                                                                                        Log.Info("Data written for iteration {@iteration}.", GetIterationCode();})*/);
             

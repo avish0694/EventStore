@@ -146,7 +146,7 @@ namespace EventStore.Projections.Core.Services.Processing
                             readResult = completed;
                             success = true;
                         },
-                        () => Log.Warn("Read backward of stream {@fixthisvar} timed out. Retrying", coreControlStreamID)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                        () => Log.Warn("Read backward of stream {@coreControlStreamID} timed out. Retrying", coreControlStreamID));
             }
 
             long from = 0;

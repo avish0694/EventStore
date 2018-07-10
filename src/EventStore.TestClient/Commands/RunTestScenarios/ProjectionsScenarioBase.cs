@@ -91,7 +91,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             }
             catch (Exception ex)
             {
-                Log.InfoException(ex, "Failed to read projection statistics. Will continue."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.InfoException(ex, "Failed to read projection statistics. Will continue.");
                 rawState = null;
             }
 
@@ -166,7 +166,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                     }
                     else
                     {
-                        Log.Debug(string.Format("Already enabled *{@fixthisvar}* projection", byCategoryProjection)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                        Log.Debug(string.Format("Already enabled *{@byCategoryProjection}* projection", byCategoryProjection));
                     }
 
                     exception = null;

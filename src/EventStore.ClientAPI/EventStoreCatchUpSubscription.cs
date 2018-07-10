@@ -153,8 +153,13 @@ namespace EventStore.ClientAPI
         /// </summary>
         public void Stop()
         {
+<<<<<<< Updated upstream
             if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: requesting stop...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
             if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+=======
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@IsSubscribedToAll}: requesting stop...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); 
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @Lougarou: the following parameters need attention: {1}*/
+>>>>>>> Stashed changes
             _connection.Connected -= OnReconnect;
 
             ShouldStop = true;
@@ -163,8 +168,13 @@ namespace EventStore.ClientAPI
 
         private void OnReconnect(object sender, ClientConnectionEventArgs clientConnectionEventArgs)
         {
+<<<<<<< Updated upstream
             if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: recovering after reconnection.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
             if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+=======
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@fixthisvar}: recovering after reconnection.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); /*TODO: structured-log @shaan1337: the following parameters need attention: {1}*/
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@IsSubscribedToAll}: unhooking from connection.Connected.", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+>>>>>>> Stashed changes
             _connection.Connected -= OnReconnect;
             RunSubscriptionAsync();
         }
@@ -206,7 +216,11 @@ namespace EventStore.ClientAPI
         {
             if (!ShouldStop)
             {
+<<<<<<< Updated upstream
                 if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: subscribing...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+=======
+                if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@IsSubscribedToAll}: subscribing...", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId); 
+>>>>>>> Stashed changes
 
                 var subscription =
                     StreamId == string.Empty
@@ -250,7 +264,11 @@ namespace EventStore.ClientAPI
             if (_liveProcessingStarted != null)
                 _liveProcessingStarted(this);
 
+<<<<<<< Updated upstream
             if (Verbose) Log.Debug("Catch-up Subscription {0} to {1}: hooking to connection.Connected", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+=======
+            if (Verbose) Log.Debug("Catch-up Subscription {@subscriptionName} to {@IsSubscribedToAll}: hooking to connection.Connected", SubscriptionName, IsSubscribedToAll ? "<all>" : StreamId);
+>>>>>>> Stashed changes
             _connection.Connected += OnReconnect;
 
             _allowProcessing = true;
@@ -339,7 +357,11 @@ namespace EventStore.ClientAPI
             if (Interlocked.CompareExchange(ref _isDropped, 1, 0) == 0)
             {
                 if (Verbose)
+<<<<<<< Updated upstream
                     Log.Debug("Catch-up Subscription {0} to {1}: dropping subscription, reason: {2} {3}.",
+=======
+                    Log.Debug("Catch-up Subscription {@subscriptionName} to {@streamId}: dropping subscription, reason: {@reason} {@emptyString}.",
+>>>>>>> Stashed changes
                               SubscriptionName,
                               IsSubscribedToAll ? "<all>" : StreamId,
                               reason, error == null ? string.Empty : error.ToString());
@@ -552,10 +574,17 @@ namespace EventStore.ClientAPI
             if (shouldStopOrDone && Verbose)
             {
                 Log.Debug(
+<<<<<<< Updated upstream
                     "Catch-up Subscription {0} to {1}: finished reading events, nextReadEventNumber = {2}.",
                     SubscriptionName,
                     IsSubscribedToAll ? "<all>" : StreamId,
                     _nextReadEventNumber);
+=======
+                    "Catch-up Subscription {@subscriptionName} to {@IsSubscribedToAll}: finished reading events, nextReadEventNumber = {@nextReadEventNumber}.",
+                    SubscriptionName,
+                    IsSubscribedToAll ? "<all>" : StreamId,
+                    _nextReadEventNumber); 
+>>>>>>> Stashed changes
             }
             return shouldStopOrDone;
         }

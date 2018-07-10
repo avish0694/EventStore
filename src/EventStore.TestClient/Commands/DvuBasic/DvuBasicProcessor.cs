@@ -64,7 +64,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
                 if (!int.TryParse(args[0], out writersArg))
                 {
-                    context.Log.Error("Invalid argument value for <writers>"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <writers>");
                     return false;
                 }
                 if (!int.TryParse(args[1], out readersArg))
@@ -79,7 +79,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 }
                 if (!int.TryParse(args[3], out streamsArg))
                 {
-                    context.Log.Error("Invalid argument value for <streams>"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    context.Log.Error("Invalid argument value for <streams>");
                     return false;
                 }
                 string[] producersArg = args[4].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -167,7 +167,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
                 readNotification.Wait();
             }
 
-            context.Log.Info("dvub finished execution : "); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            context.Log.Info("dvub finished execution : ");
 
             var writersTable = new ConsoleTable("WRITER ID", "Status");
             

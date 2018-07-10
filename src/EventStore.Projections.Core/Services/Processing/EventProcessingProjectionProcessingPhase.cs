@@ -163,7 +163,7 @@ namespace EventStore.Projections.Core.Services.Processing
                     var result = InternalProcessCommittedEvent(partition, message);
                     return result;
                 case PhaseState.Stopped:
-                    _logger.Error("Ignoring committed event in stopped state"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                    _logger.Error("Ignoring committed event in stopped state"); 
                     return null;
                 default:
                     throw new NotSupportedException();

@@ -278,8 +278,8 @@ namespace EventStore.Core.Services.Storage.EpochManager
                 _checkpoint.Write(epoch.EpochPosition);
                 _checkpoint.Flush();
 
-                Log.Debug("=== Update Last Epoch E{@epochNumber}@{@epochPosition}:{2:B} (previous epoch at {@prevEpochPosition}).", 
-                          epoch.EpochNumber, epoch.EpochPosition, epoch.EpochId, epoch.PrevEpochPosition); /*TODO: structured-log @avish0694: the following parameters need attention: {2:B}*/                
+                Log.Debug("=== Update Last Epoch E{@epochNumber}@{@epochPosition}:{@EpochId:B} (previous epoch at {@prevEpochPosition}).", 
+                          epoch.EpochNumber, epoch.EpochPosition, epoch.EpochId, epoch.PrevEpochPosition);             
             }
         }
 

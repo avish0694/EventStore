@@ -684,7 +684,7 @@ namespace EventStore.Core.Services.VNode
             if (message.ClusterInfo.Members.Count(x => x.IsAlive && x.State == VNodeState.Master) > 1)
             {
                 Log.Debug("There are FEW MASTERS according to gossip, need to start elections. MASTER: [{@master}]", _master);
-                Log.Debug("GOSSIP:"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.Debug("GOSSIP:");
                 Log.Debug("{@clusterInfo}", message.ClusterInfo);
                 _mainQueue.Publish(new ElectionMessage.StartElections());
             }
@@ -798,10 +798,10 @@ namespace EventStore.Core.Services.VNode
         {
             if (IsLegitimateReplicationMessage(message))
             {
-                Log.Info("========== [{@internalHttp}] CLONE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@fixthisvar},{3:B}].",
+                Log.Info("========== [{@internalHttp}] CLONE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@InternalSecureTcp},{@masterId:B}].",
                          _nodeInfo.InternalHttp,
                          _master.InternalTcp, _master.InternalSecureTcp == null ? "n/a" : _master.InternalSecureTcp.ToString(),
-                         message.MasterId); /*TODO: structured-log @avish0694: the following parameters need attention: {2},{3:B}*/
+                         message.MasterId);
                 _outputBus.Publish(message);
                 _fsm.Handle(new SystemMessage.BecomeClone(_stateCorrelationId, _master));
             }

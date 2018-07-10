@@ -110,7 +110,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@fixthisvar}.", message.Message, exc.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@excMessage}.", message.Message, exc.Message));
                 }
                 else
                 {

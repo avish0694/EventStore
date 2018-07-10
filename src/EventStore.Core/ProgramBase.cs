@@ -147,10 +147,10 @@ namespace EventStore.Core
             LogManager.Init(componentName, logsDirectory, structuredLog, Locations.DefaultConfigurationDirectory);
 
             Log.Info("\n{@esVersionStr,-25} {@version} ({@branch}/{@hashtag}, {@timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
-            Log.Info("{0,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
+            Log.Info("{@osStr,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion);
             Log.Info("{@desc,-25} {@osRuntimeVersion} ({@value}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
-            Log.Info("{0,-25} {@fixthisvar}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1)); /*TODO: structured-log @shaan1337: the following parameters need attention: {0,-25},{1}*/
-            Log.Info("{0,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory); /*TODO: structured-log @avish0694: the following parameters need attention: {0,-25}*/
+            Log.Info("{@gcStr,-25} {@fixthisvar}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
+            Log.Info("{@logsStr,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory);
             Log.Info("{@esOptions}", EventStoreOptions.DumpOptions());
 
             if (options.WhatIf)

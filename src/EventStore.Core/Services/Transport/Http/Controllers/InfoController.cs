@@ -55,7 +55,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
             "OK",
             entity.ResponseCodec.ContentType,
             null,
-            e => Log.ErrorException(e, "Error while writing HTTP response (info)")); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+            e => Log.ErrorException(e, "Error while writing HTTP response (info)"));
         }
 
         private void OnGetOptions(HttpEntityManager entity, UriTemplateMatch match)

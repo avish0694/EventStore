@@ -297,7 +297,7 @@ namespace EventStore.Projections.Core.Services.Processing
 
             if (_eventReaders.Count > 0)
             {
-                _logger.Info("_eventReaders is not empty after all the projections have been killed"); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                _logger.Info("_eventReaders is not empty after all the projections have been killed"); 
                 _eventReaders.Clear();
             }
 

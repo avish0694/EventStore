@@ -414,7 +414,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error deserializing SystemSettings record."); /*TODO: structured-log @avish0694: seems like no changes are required here, just review.*/
+                Log.ErrorException(exc, "Error deserializing SystemSettings record.");
             }
             return null;
         }
