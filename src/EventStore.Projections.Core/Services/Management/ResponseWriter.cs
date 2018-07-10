@@ -83,9 +83,6 @@ namespace EventStore.Projections.Core.Services.Management
                     }
                     else
                     {
-                        var message = String.Format("PROJECTIONS: Failed writing events to {0} because of {1}: {2}",
-                            ProjectionNamesBuilder._projectionsMasterStream,
-                            completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data)))));
                         _logger.Debug("PROJECTIONS: Failed writing events to {@projectionsMasterStream} because of {@result}: {@events}",
                             ProjectionNamesBuilder._projectionsMasterStream,
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data))))); //Can't do anything about it, log and move on

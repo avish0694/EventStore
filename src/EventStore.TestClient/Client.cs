@@ -177,9 +177,7 @@ namespace EventStore.TestClient
             };
             Action<ITcpConnection, SocketError> onConnectionFailed = (conn, error) =>
             {
-                var message = string.Format("TcpTypedConnection: connection to [{0}, L{1}, {2:B}] failed. Error: {3}.",
-                                            conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId, error);
-                Log.Error("TcpTypedConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] failed. Error: {@error}.",
+                Log.Error("TcpTypedConnection: connection to [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] failed. Error: {@e}.",
                                             conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId, error);
 
                 if (connectionClosed != null)
