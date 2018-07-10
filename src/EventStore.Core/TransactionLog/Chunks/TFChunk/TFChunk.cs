@@ -611,7 +611,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             }
             catch (FileBeingDeletedException)
             {
-                Log.Debug("CACHING FAILED due to FileBeingDeleted exception (TFChunk is being disposed) in TFChunk {@fixthisvar}.", this); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Debug("CACHING FAILED due to FileBeingDeleted exception (TFChunk is being disposed) in TFChunk {@chunk}.", this);
                 _isCached = 0;
                 return;
             }
@@ -621,7 +621,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
             {
                 if (Interlocked.Add(ref _memStreamCount, -_maxReaderCount) == 0)
                     FreeCachedData();
-                Log.Trace("CACHING ABORTED for TFChunk {@tfchunk} as TFChunk was probably marked for deletion.", this);
+                Log.Trace("CACHING ABORTED for TFChunk {@chunk} as TFChunk was probably marked for deletion.", this);
                 return;
             }
 
@@ -709,7 +709,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
 
                 TryDestructMemStreams();
 
-                Log.Trace("UNCACHED TFChunk {@fixthisvar}.", this); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                Log.Trace("UNCACHED TFChunk {@chunk}.", this);
             }
         }
 

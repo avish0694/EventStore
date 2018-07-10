@@ -44,7 +44,7 @@ namespace EventStore.Common.Log
 
         public void Fatal(string format, params object[] args)
         {
-            _logger.Fatal(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            _logger.Fatal(format, args); 
         }
 
         public void Error(string format, params object[] args)
@@ -59,7 +59,7 @@ namespace EventStore.Common.Log
 
         public void Debug(string format, params object[] args)
         {
-            _logger.Debug(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            _logger.Debug(format, args); 
         }
 
         public void Warn(string format, params object[] args)
@@ -75,7 +75,7 @@ namespace EventStore.Common.Log
 
         public void FatalException(Exception exc, string format, params object[] args)
         {
-            _logger.Fatal(format, args, exc); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            _logger.Fatal(format, args, exc);
         }
 
         public void ErrorException(Exception exc, string format, params object[] args)
@@ -90,7 +90,7 @@ namespace EventStore.Common.Log
 
         public void DebugException(Exception exc, string format, params object[] args)
         {
-           _logger.Debug(format, args,exc); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+           _logger.Debug(format, args,exc); 
         }
 
         public void TraceException(Exception exc, string format, params object[] args)

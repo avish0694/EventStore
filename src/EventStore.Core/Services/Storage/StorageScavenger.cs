@@ -193,7 +193,7 @@ namespace EventStore.Core.Services.Storage
         {
             if(msg.Result != OperationResult.Success){
                 if(retryCount > 0){
-                    Log.Error("Failed to write an event to the {@streamId} stream. Retrying {@fixthisvar}/{@maxRetryCount}. Reason: {@result}", streamId, (MaxRetryCount - retryCount) + 1, MaxRetryCount, msg.Result); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                    Log.Error("Failed to write an event to the {@streamId} stream. Retrying {@retryCount}/{@maxRetryCount}. Reason: {@result}", streamId, (MaxRetryCount - retryCount) + 1, MaxRetryCount, msg.Result);
                     WriteScavengeDetailEvent(streamId, eventToWrite, --retryCount);
                 }else{
                     Log.Error("Failed to write an event to the {@streamId} stream. Retry limit of {@maxRetryCount} reached. Reason: {@result}", streamId, MaxRetryCount, msg.Result);

@@ -433,17 +433,19 @@ namespace EventStore.Transport.Http.EntityManagement
         {
             if (_logHttpRequests)
             {
-                var logBuilder = new StringBuilder();
-                logBuilder.AppendLine("HTTP Request Received");
-                logBuilder.AppendFormat("{0}\n", DateTime.Now);
-                logBuilder.AppendFormat("From: {0}\n", HttpEntity.Request.RemoteEndPoint.ToString());
-                logBuilder.AppendFormat("{0} {1}\n", HttpEntity.Request.HttpMethod, HttpEntity.Request.Url);
-                logBuilder.AppendLine(CreateHeaderLog(HttpEntity.Request.Headers));
+                var bodyStr = "";
                 if (body != null && body.Length > 0)
                 {
-                    logBuilder.AppendLine(System.Text.Encoding.Default.GetString(body));
+                    bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
-                Log.Debug(logBuilder.ToString()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                Log.Debug("HTTP Request Received\n{@dateTime}\nFrom: {@remoteEndpoint}\n{@httpMethod} {@requestUrl}\n{@headers}\n{@body}"
+                , DateTime.Now
+                , HttpEntity.Request.RemoteEndPoint.ToString()
+                , HttpEntity.Request.HttpMethod
+                , HttpEntity.Request.Url
+                , CreateHeaderLog(HttpEntity.Request.Headers)
+                , bodyStr
+                ); /*TODO: structured-log test this*/
             }
         }
 

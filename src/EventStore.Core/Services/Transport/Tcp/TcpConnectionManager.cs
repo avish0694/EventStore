@@ -163,7 +163,7 @@ namespace EventStore.Core.Services.Transport.Tcp
 
         private void OnConnectionEstablished(ITcpConnection connection)
         {
-            Log.Info("Connection '{@connectionName}' ({1:B}) to [{@remoteEndPoint}] established.", ConnectionName, ConnectionId, connection.RemoteEndPoint); /*TODO: structured-log @avish0694: the following parameters need attention: {1:B}*/
+            Log.Info("Connection '{@connectionName}' ({@connectionId:B}) to [{@remoteEndPoint}] established.", ConnectionName, ConnectionId, connection.RemoteEndPoint);
 
             ScheduleHeartbeat(0);
 
@@ -371,9 +371,9 @@ namespace EventStore.Core.Services.Transport.Tcp
 
         public void Stop(string reason = null)
         {
-            Log.Trace("Closing connection '{@connectionName}{@fixthisvar}' [{@remoteEndPoint}, L{@localEndPoint}, {4:B}] cleanly.{@fixthisvar}",
+            Log.Trace("Closing connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] cleanly.{@reason}",
                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId,
-                      reason.IsEmpty() ? string.Empty : " Reason: " + reason); /*TODO: structured-log @avish0694: the following parameters need attention: {1},{4:B},{5}*/
+                      reason.IsEmpty() ? string.Empty : " Reason: " + reason);
             _connection.Close(reason);
         }
 

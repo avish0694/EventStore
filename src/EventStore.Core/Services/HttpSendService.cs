@@ -256,7 +256,7 @@ namespace EventStore.Core.Services
                         return;
                     }
 
-                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{@requestedUrl}': {@fixthisvar}.", manager.RequestedUrl, exc.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{@requestedUrl}': {@message}.", manager.RequestedUrl, exc.Message));
                 });
         }
     }

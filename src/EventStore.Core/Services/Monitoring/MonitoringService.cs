@@ -158,7 +158,7 @@ namespace EventStore.Core.Services.Monitoring
             }
 
             var line = StatsCsvEncoder.GetLine(rawStats);
-            RegularLog.Info(line); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+            RegularLog.Info(line);
         }
 
         private void SaveStatsToStream(Dictionary<string, object> rawStats)

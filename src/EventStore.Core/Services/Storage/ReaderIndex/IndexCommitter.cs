@@ -116,8 +116,8 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
                     processed += 1;
                     if (DateTime.UtcNow - lastTime > reportPeriod || processed % 100000 == 0)
                     {
-                        Log.Debug("ReadIndex Rebuilding: processed {@processed} records ({1:0.0}%).",
-                                  processed, (result.RecordPostPosition - startPosition) * 100.0 / (buildToPosition - startPosition)); /*TODO: structured-log @avish0694: the following parameters need attention: {1:0.0}*/
+                        Log.Debug("ReadIndex Rebuilding: processed {@processed} records ({@resultPosition:0.0}%).",
+                                  processed, (result.RecordPostPosition - startPosition) * 100.0 / (buildToPosition - startPosition));
                         lastTime = DateTime.UtcNow;
                     }
                 }

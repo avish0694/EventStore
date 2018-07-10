@@ -227,10 +227,10 @@ namespace EventStore.Core.Services.Replication
             }
             if (commonEpoch == null)
             {
-                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{2:X}),{3}]. Subscribing at 0. Master LogPosition: {4} (0x{4:X}), known epochs: {5}.",
-                          replicaEndPoint, subscriptionId, logPosition,
+                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{@logPosition:X}),{3}]. Subscribing at 0. Master LogPosition: {4} (0x{4:X}), known epochs: {5}.",
+                          replicaEndPoint, subscriptionId, logPosition, logPosition,
                           string.Join(", ", epochs.Select(x => x.AsString())),
-                          masterCheckpoint, string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString()))); /*TODO: structured-log @avish0694: parameter indexes not in strict order, reached hole: {3}*/
+                          masterCheckpoint, string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())));
                 return 0;
             }
 
@@ -287,8 +287,8 @@ namespace EventStore.Core.Services.Replication
                                  sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos, logPosition, logPosition);
                         if (chunkStartPos != logPosition)
                         {
-                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPos} (0x{2:X})...",
-                                     sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos); /*TODO: structured-log @avish0694: the following parameters need attention: {2:X}*/
+                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPos} (0x{@chunkStartPos:X})...",
+                                     sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos); 
                         }
                     }
 

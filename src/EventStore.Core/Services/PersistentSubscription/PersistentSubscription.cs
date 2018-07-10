@@ -341,7 +341,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             {
                 foreach (var id in processedEventIds)
                 {
-                    Log.Info("Message NAK'ed id {@id} action to take {@action} reason '{@fixthisvar}'", id, action, reason ?? ""); /*TODO: structured-log @avish0694: the following parameters need attention: {2}*/
+                    Log.Info("Message NAK'ed id {@id} action to take {@action} reason '{@reason}'", id, action, reason ?? "");
                     HandleNackedMessage(action, id, reason);
                 }
                 RemoveProcessingMessages(correlationId, processedEventIds);

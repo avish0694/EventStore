@@ -310,7 +310,7 @@ namespace EventStore.Core.Services
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {@fixthisvar}", eventRecord.ToString()); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                    Log.ErrorException(exc, "Error while resolving link for event record: {@eventRecord}", eventRecord.ToString());
                 }
                 // return unresolved link
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);

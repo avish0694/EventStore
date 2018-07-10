@@ -40,7 +40,7 @@ namespace EventStore.Core.Services.Transport.Http
                     {
                         req = _pending.DeleteMin();
                         req.Item2.ReplyStatus(HttpStatusCode.RequestTimeout, "Server was unable to handle request in time",
-                                              e => Log.Debug("Error occurred while closing timed out connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                                              e => Log.Debug("Error occurred while closing timed out connection (HTTP service core): {@message}.", e.Message));
                     }
                     else 
                         break;
@@ -147,7 +147,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager(Codec.NoCodec, Codec.NoCodec, allowed, _ => { });
             entity.ReplyStatus(HttpStatusCode.OK, "OK",
-                               e => Log.Debug("Error while closing HTTP connection (http service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (http service core): {@message}.", e.Message));
         }
 
         private void MethodNotAllowed(HttpEntity httpEntity, string[] allowed)
@@ -168,7 +168,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager();
             entity.ReplyStatus(HttpStatusCode.InternalServerError, "Internal Server Error",
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@fixthisvar}.", e.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@e}.", e.Message));
         }
 
         private void BadCodec(HttpEntity httpEntity, string reason)

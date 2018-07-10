@@ -19,7 +19,7 @@ namespace EventStore.TestClient
         public void Error(string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.Error(format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Error(format); 
             else
                 _log.Error(format, args);
         }
@@ -29,7 +29,7 @@ namespace EventStore.TestClient
             if (args.Length == 0)
                 _log.ErrorException(ex, format);
             else
-                _log.ErrorException(ex, format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.ErrorException(ex, format, args);
         }
 
         public void Info(string format, params object[] args)
@@ -43,7 +43,7 @@ namespace EventStore.TestClient
         public void Info(Exception ex, string format, params object[] args)
         {
             if (args.Length == 0)
-                _log.InfoException(ex, format); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.InfoException(ex, format); 
             else
                 _log.InfoException(ex, format, args);
         }
@@ -53,7 +53,7 @@ namespace EventStore.TestClient
             if (args.Length == 0)
                 _log.Debug(format);
             else
-                _log.Debug(format, args); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Debug(format, args);
         }
 
         public void Debug(Exception ex, string format, params object[] args)

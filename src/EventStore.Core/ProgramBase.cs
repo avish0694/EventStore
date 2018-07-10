@@ -85,7 +85,7 @@ namespace EventStore.Core
                 if(LogManager.Initialized)
                 {
                     Log.FatalException(ex, msg);
-                    Log.FatalException(ex, "{@fixthisvar}", FormatExceptionMessage(ex)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                    Log.FatalException(ex, "{@e}", FormatExceptionMessage(ex));
                 }
                 else
                 {

@@ -52,7 +52,7 @@ namespace EventStore.TestClient.Commands.DvuBasic
             table.AppendRow(threadId.ToString(), fails.ToString(), all.ToString());
 
             if (fails != 0)
-                _log.Fatal(table.CreateIndentedTable()); /*TODO: structured-log @avish0694: unrecognized format, content string not found*/
+                _log.Fatal(table.CreateIndentedTable());
             else
                 _log.Info(table.CreateIndentedTable());
         }

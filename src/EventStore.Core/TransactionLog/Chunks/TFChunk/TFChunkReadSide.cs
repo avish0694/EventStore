@@ -177,7 +177,7 @@ namespace EventStore.Core.TransactionLog.Chunks.TFChunk
                 }
 
                 if(bf == null){
-                    Log.Warn(String.Format("Could not create bloom filter for chunk: {@fileName}, map count: {@fixthisvar}",Chunk.FileName, mapCount)); /*TODO: structured-log @avish0694: the following parameters need attention: {1}*/
+                    Log.Warn("Could not create bloom filter for chunk: {@fileName}, map count: {@mapCount}",Chunk.FileName, mapCount);
                     return null;
                 }
 

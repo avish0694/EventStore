@@ -448,8 +448,8 @@ namespace EventStore.Core.Services
             if (!IsLegitimateMaster(message.View, message.ServerInternalHttp, message.ServerId, candidate))
                 return;
 
-            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PROPOSAL FROM [{@serverInternalHttp},{2:B}] M={@fixthisvar}. ME={@fixthisvar}.", _lastAttemptedView,
-                      message.ServerInternalHttp, message.ServerId, FormatNodeInfo(candidate), FormatNodeInfo(GetOwnInfo())); /*TODO: structured-log @avish0694: the following parameters need attention: {2:B},{3},{4}*/
+            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PROPOSAL FROM [{@serverInternalHttp},{@serverId:B}] M={@candidate}. ME={@getOwnInfo}.", _lastAttemptedView,
+                      message.ServerInternalHttp, message.ServerId, FormatNodeInfo(candidate), FormatNodeInfo(GetOwnInfo()));
 
             if (_masterProposal == null)
             {

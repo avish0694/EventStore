@@ -57,7 +57,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
         {
             httpEntityManager.ReplyStatus(HttpStatusCode.OK,
                                           "OK",
-                                          e => Log.Debug("Error while closing HTTP connection (ok): {@fixthisvar}.", e.Message)); /*TODO: structured-log @avish0694: the following parameters need attention: {0}*/
+                                          e => Log.Debug("Error while closing HTTP connection (ok): {@e}.", e.Message));
             return new RequestParams(done: true);
         }
 
