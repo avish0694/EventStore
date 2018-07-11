@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.IO;
 using EventStore.Common.Utils;
+using NLog.Config;
 
 namespace EventStore.Common.Log
 {
@@ -69,6 +70,7 @@ namespace EventStore.Common.Log
             var configFilePath = potentialNLogConfigurationFilePaths.FirstOrDefault(x => File.Exists(x));
             if(!String.IsNullOrEmpty(configFilePath))
             {
+                ConfigurationItemFactory.Default.ValueFormatter = new ESValueFormatter(isStructured);
                 NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(configFilePath);
             }
             else

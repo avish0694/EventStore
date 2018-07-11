@@ -59,6 +59,9 @@
     <Compile Include="Log\ConsoleLogger.cs" />
     <Compile Include="Log\LazyLogger.cs" />
     <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\ESValueFormatter.cs" />
+    <Compile Include="Log\MruCache.cs" />
+    <Compile Include="Log\SingleItemOptimizedHashSet.cs" />
     <Compile Include="Log\LogManager.cs" />
     <Compile Include="Log\NLogDirectoryLayoutRendered.cs" />
     <Compile Include="Log\NLogger.cs" />
