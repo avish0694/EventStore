@@ -5,8 +5,9 @@ using System.Runtime.InteropServices;
 using EventStore.Common.Log;
 using EventStore.Common.Utils;
 using EventStore.Core.Tests.Helpers;
+using NLog;
+using NLog.Targets;
 using NUnit.Framework;
-
 namespace EventStore.Core.Tests
 {
     [SetUpFixture]
@@ -16,7 +17,14 @@ namespace EventStore.Core.Tests
         public void SetUp()
         {
             Console.WriteLine("Initializing tests (setting console loggers)...");
-            LogManager.SetLogFactory(x => new ConsoleLogger());
+            
+            ConsoleTarget consoleTarget = new ConsoleTarget("testconsole");
+            var config = new NLog.Config.LoggingConfiguration();        
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget);
+            consoleTarget.Layout = "${message}";
+            NLog.LogManager.Configuration = config;
+            EventStore.Common.Log.LogManager.SetLogFactory(x => new NLogger(x));
+
             Application.AddDefines(new[] { Application.AdditionalCommitChecks });
             LogEnvironmentInfo();
 
@@ -26,7 +34,7 @@ namespace EventStore.Core.Tests
 
         private void LogEnvironmentInfo()
         {
-            var log = LogManager.GetLoggerFor<TestsInitFixture>();
+            var log = EventStore.Common.Log.LogManager.GetLoggerFor<TestsInitFixture>();
 
             log.Info("\n{0,-25} {1} ({2}/{3}, {4})\n"
                      + "{5,-25} {6} ({7})\n"
@@ -52,7 +60,7 @@ namespace EventStore.Core.Tests
                                     MiniNode.RunCount);
 
             Console.WriteLine(msg);
-            LogManager.Finish();
+            EventStore.Common.Log.LogManager.Finish();
         }
     }
 }
