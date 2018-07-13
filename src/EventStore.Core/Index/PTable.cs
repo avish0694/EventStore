@@ -200,7 +200,7 @@ namespace EventStore.Core.Index
             catch (PossibleToHandleOutOfMemoryException)
             {
                 Log.Error("Unable to create midpoints for PTable '{@string}' ({@count} entries, depth {@depth} requested). "
-                          , "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth);
+                          + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth);
             }
             Log.Trace("Loading PTable (Version: {@version}) '{@path}' ({@count} entries, cache depth {@calcdepth}) done in {@elapsed}.",
                       _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed);
