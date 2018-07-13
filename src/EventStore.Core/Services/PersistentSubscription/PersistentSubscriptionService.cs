@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             _state = message.State;
 
             if (message.State == VNodeState.Master) return;
-            Log.Debug(string.Format("Subscriptions received state change to {@state} stopping listening.", _state));
+            Log.Debug("Subscriptions received state change to {@state} stopping listening.", _state);
             ShutdownSubscriptions();
             Stop();
         }
@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("create subscription @key", key);
+            Log.Debug("create subscription {@key}", key);
             //TODO revisit for permissions. maybe make admin only?
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
@@ -412,7 +412,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(TcpMessage.ConnectionClosed message)
         {
             //TODO CC make a map for this
-            Log.Debug("Lost connection from @remoteEndPoint", message.Connection.RemoteEndPoint);
+            Log.Debug("Lost connection from {@remoteEndPoint}", message.Connection.RemoteEndPoint);
             if (_subscriptionsById == null) return; //havn't built yet.
             foreach (var subscription in _subscriptionsById.Values)
             {

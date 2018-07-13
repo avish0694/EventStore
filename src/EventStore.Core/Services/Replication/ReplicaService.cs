@@ -188,7 +188,7 @@ namespace EventStore.Core.Services.Replication
             var epochs = _epochManager.GetLastEpochs(ClusterConsts.SubscriptionLastEpochCount).ToArray();
             
             Log.Info("Subscribing at LogPosition: {@logPosition} (0x{@logPosition:X}) to MASTER [{@remoteEndPoint}, {@masterId:B}] as replica with SubscriptionId: {@subscriptionId:B}, "
-                     , "ConnectionId: {@ConnectionId:B}, LocalEndPoint: [{@LocalEndPoint}], Epochs:\n{@epochs}...\n.",
+                     + "ConnectionId: {@ConnectionId:B}, LocalEndPoint: [{@LocalEndPoint}], Epochs:\n{@epochs}...\n.",
                       logPosition, logPosition , _connection.RemoteEndPoint, message.MasterId, message.SubscriptionId,
                       _connection.ConnectionId, _connection.LocalEndPoint, string.Join("\n", epochs.Select(x => x.AsString())));
 

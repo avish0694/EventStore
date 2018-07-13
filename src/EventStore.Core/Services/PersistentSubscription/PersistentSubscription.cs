@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 _state = PersistentSubscriptionState.Behind;
                 if (!checkpoint.HasValue)
                 {
-                    Log.Debug(string.Format("Subscription {@subscriptionId}: read no checksum.", _settings.SubscriptionId));
+                    Log.Debug("Subscription {@subscriptionId}: read no checksum.", _settings.SubscriptionId);
 
                     Log.Debug("strtfrom = " + _settings.StartFrom);
                     _nextEventToPullFrom = _settings.StartFrom >= 0 ? _settings.StartFrom : 0;

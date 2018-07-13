@@ -1423,7 +1423,7 @@ namespace EventStore.Core
             var infoController = new InfoController(options, _projectionType);
             var epochCheckpoint = _db.Config.EpochCheckpoint.Read();
 
-            _log.Info("{instanceIdStr,-25} {@instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId);
+            _log.Info("{@instanceIdStr,-25} {@instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId);
             _log.Info("{@databaseStr,-25} {@path}", "DATABASE:", _db.Config.Path); 
             _log.Info("{@writerCheckpointStr,-25} {@writerCheckpoint} (0x{@writerCheckpoint:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read(),_db.Config.WriterCheckpoint.Read());
             _log.Info("{@chaserCheckpointStr,-25} {@chaserCheckpoint} (0x{@chaserCheckpoint:X})", "CHASER CHECKPOINT:", _db.Config.ChaserCheckpoint.Read(), _db.Config.ChaserCheckpoint.Read());
