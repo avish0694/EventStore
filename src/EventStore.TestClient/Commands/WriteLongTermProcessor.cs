@@ -155,7 +155,7 @@ namespace EventStore.TestClient.Commands
                                                  elapsedMinutesInt,
                                                  runTimeMinutes,
                                                  sent,
-                                                 dataSizeCoefficient);
+                                                 dataSizeCoefficient); //To Verify
                             }
 
                             sleepTime = 1000 / sentCount;
@@ -207,7 +207,7 @@ namespace EventStore.TestClient.Commands
 
             context.Log.Info("Completed. Successes: {@success}, failures: {@fail}", succ, fail);
             var reqPerSec = (requestsCnt + 0.0)/sw.ElapsedMilliseconds*1000;
-            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@reqPerSec:0.00} reqs per sec).",
+            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@rate:0.00} reqs per sec).",
                              requestsCnt,
                              sw.ElapsedMilliseconds,
                              reqPerSec);

@@ -105,7 +105,7 @@ namespace EventStore.TestClient.Commands
                                 context.Log.Trace("\nDONE TOTAL {@localAll} WRITES IN {@elapsed} ({@elapsedTotalMilliseconds:0.0}/s).",
                                                   localAll,
                                                   elapsed,
-                                                  1000.0*100000/elapsed.TotalMilliseconds);
+                                                  1000.0*100000/elapsed.TotalMilliseconds); //To Verify
                             }
                             if (localAll == requestsCnt)
                             {

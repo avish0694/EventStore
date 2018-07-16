@@ -133,7 +133,7 @@ namespace EventStore.Projections.Core.Services.Processing
                     DeleteEmittedStreamsFrom(eventNumber + 1, onEmittedStreamsDeleted);
                     return;
                 }
-                Log.Error("PROJECTIONS: Failed to delete emitted stream {@streamId}, Retrying ({@retry}/{@retryLimit}). Reason: {@result}", streamId, (RetryLimit - _retryCount) + 1, RetryLimit, deleteStreamCompleted.Result);
+                Log.Error("PROJECTIONS: Failed to delete emitted stream {@streamId}, Retrying ({@retryCount}/{@maxRetryCount}). Reason: {@reason}", streamId, (RetryLimit - _retryCount) + 1, RetryLimit, deleteStreamCompleted.Result);
                 _retryCount--;
                 DeleteEmittedStreamsFrom(eventNumber, onEmittedStreamsDeleted);
             }
