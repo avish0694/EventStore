@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
 
         private void OnPostGossip(HttpEntityManager entity, UriTemplateMatch match)
         {
-            entity.ReadTextRequestAsync(OnPostGossipRequestRead, e => Log.Debug("Error while reading request (gossip): {@exception}", e.Message));
+            entity.ReadTextRequestAsync(OnPostGossipRequestRead, e => Log.Debug("Error while reading request (gossip): {@e}", e.Message));
         }
 
         private void OnPostGossipRequestRead(HttpEntityManager manager, string body)

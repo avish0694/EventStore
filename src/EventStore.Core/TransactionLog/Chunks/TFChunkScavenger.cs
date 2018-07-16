@@ -323,13 +323,13 @@ namespace EventStore.Core.TransactionLog.Chunks
             catch(Exception ex)
             {
                 if (retries > 0) {
-                    Log.Error("Failed to delete the temp chunk. Retrying {@retry}/{@maxRetryCount}. Reason: {@ex}",
+                    Log.Error("Failed to delete the temp chunk. Retrying {@retry}/{@maxRetryCount}. Reason: {@e}",
                         MaxRetryCount - retries, MaxRetryCount, ex);
                     DeleteTempChunk(tmpChunkPath, retries - 1);
                 }
                 else
                 {
-                    Log.Error("Failed to delete the temp chunk. Retry limit of {@maxRetryCount} reached. Reason: {@ex}", MaxRetryCount, ex);
+                    Log.Error("Failed to delete the temp chunk. Retry limit of {@maxRetryCount} reached. Reason: {@e}", MaxRetryCount, ex);
                     throw;
                 }
             }

@@ -154,7 +154,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager(Codec.NoCodec, Codec.NoCodec, allowed, _ => { });
             entity.ReplyStatus(HttpStatusCode.MethodNotAllowed, "Method Not Allowed",
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@exception}.", e.Message));
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@e}.", e.Message));
         }
 
         private void NotFound(HttpEntity httpEntity)
@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager();
             entity.ReplyStatus(HttpStatusCode.NotAcceptable, reason,
-                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@exception}.", e.Message));
+                               e => Log.Debug("Error while closing HTTP connection (HTTP service core): {@e}.", e.Message));
         }
 
         private void BadContentType(HttpEntity httpEntity, string reason)

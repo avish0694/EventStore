@@ -121,7 +121,7 @@ namespace EventStore.Core.Services.Storage.ReaderIndex
                         lastTime = DateTime.UtcNow;
                     }
                 }
-                Log.Debug("ReadIndex rebuilding done: total processed {@processed} records, time elapsed: {@timeElapsed}.", processed, DateTime.UtcNow - startTime);
+                Log.Debug("ReadIndex rebuilding done: total processed {@processed} records, time elapsed: {@elapsed}.", processed, DateTime.UtcNow - startTime);
                 _bus.Publish(new StorageMessage.TfEofAtNonCommitRecord());
                 _backend.SetSystemSettings(GetSystemSettings());
             }

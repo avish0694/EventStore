@@ -266,7 +266,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                     }
                     catch (Exception ex)
                     {
-                        Log.Error("Error identifying client: {@ex}", ex);
+                        Log.Error("Error identifying client: {@e}", ex);
                     }
                     break;
                 }

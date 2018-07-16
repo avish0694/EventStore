@@ -110,7 +110,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@excMessage}.", message.Message, exc.Message));
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@e}.", message.Message, exc.Message));
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace EventStore.Core.Services
                         config.Description,
                         config.ContentType,
                         config.Headers,
-                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@exception}.", message.Message, exc.Message));
+                        exc => Log.Debug("Error occurred while replying to HTTP with message {@message}: {@e}.", message.Message, exc.Message));
                 }
                 HistogramService.SetValue(_httpSendHistogram,
                    (long)((((double)_watch.ElapsedTicks - start) / Stopwatch.Frequency) * 1000000000));

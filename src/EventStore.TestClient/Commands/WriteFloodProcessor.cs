@@ -180,12 +180,12 @@ namespace EventStore.TestClient.Commands
             sw.Stop();
             clients.ForEach(client => client.Close());
 
-            context.Log.Info("Completed. Successes: {@succ}, failures: {@fail} (WRONG VERSION: {@wrongExpVersion}, P: {@prepTimeout}, C: {@commitTimeout}, F: {@forwardTimeout}, D: {@streamDeleted})",
+            context.Log.Info("Completed. Successes: {@success}, failures: {@fail} (WRONG VERSION: {@wrongExpVersion}, P: {@prepTimeout}, C: {@commitTimeout}, F: {@forwardTimeout}, D: {@streamDeleted})",
                              succ, fail,
                              wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted);
 
             var reqPerSec = (all + 0.0) / sw.ElapsedMilliseconds * 1000;
-            context.Log.Info("{@all} requests completed in {@elapsedMilliseconds}ms ({@reqPerSec:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
+            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@rate:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
 
             PerfUtils.LogData(
                 Keyword,

@@ -78,7 +78,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                     break;
 
                 var sleepTimeSeconds = 10 + Streams * EventsPerStream / 1000.0;
-                Log.Info("Sleep 1 for {@sleepTimeSeconds} seconds, remaining count {@count}", sleepTimeSeconds, count);
+                Log.Info("Sleep 1 for {@sleepTime} seconds, remaining count {@count}", sleepTimeSeconds, count);
                 Thread.Sleep(TimeSpan.FromSeconds(sleepTimeSeconds));
             }
 
@@ -100,7 +100,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                     break;
 
                 var sleepTimeSeconds = 10 + (Streams * EventsPerStream) / 500;
-                Log.Info("Sleep 2 for {@sleepTimeSeconds} seconds, remaining count {@count}", sleepTimeSeconds, count);
+                Log.Info("Sleep 2 for {@sleepTime} seconds, remaining count {@count}", sleepTimeSeconds, count);
                 Thread.Sleep(TimeSpan.FromSeconds(sleepTimeSeconds));
 
                 count -= 1;

@@ -205,9 +205,9 @@ namespace EventStore.TestClient.Commands
                 client.Close();
             }
 
-            context.Log.Info("Completed. Successes: {@succ}, failures: {@fail}", succ, fail);
+            context.Log.Info("Completed. Successes: {@success}, failures: {@fail}", succ, fail);
             var reqPerSec = (requestsCnt + 0.0)/sw.ElapsedMilliseconds*1000;
-            context.Log.Info("{@requestsCnt} requests completed in {@elapsedMilliseconds}ms ({@reqPerSec:0.00} reqs per sec).",
+            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@reqPerSec:0.00} reqs per sec).",
                              requestsCnt,
                              sw.ElapsedMilliseconds,
                              reqPerSec);
