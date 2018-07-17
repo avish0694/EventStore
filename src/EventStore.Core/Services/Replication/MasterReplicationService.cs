@@ -249,15 +249,30 @@ namespace EventStore.Core.Services.Replication
             }
             if (nextEpoch == null)
             {
-                var msg = string.Format("Replica [{@replicaEndPoint},S:{@subscriptionId},{@logPosition}(0x{@logPosition:X}),epochs:\n{@epochs}]\n provided epochs which are not in "
-                                        + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterLogPosition} (0x{@masterLogPosition:X}). "
+                var msg = string.Format("Replica [{0},S:{1},{2}(0x{3:X}),epochs:\n{4}]\n provided epochs which are not in "
+                                        + "EpochManager (possibly too old, known epochs:\n{5}).\nMaster LogPosition: {6} (0x{7:X}). "
                                         + "We do not support this case as of now.\n"
-                                        + "CommonEpoch: {@commonEpoch}, AfterCommonEpoch: {@afterCommonEpoch}",
+                                        + "CommonEpoch: {8}, AfterCommonEpoch: {9}",
                                         replicaEndPoint, subscriptionId, logPosition,logPosition,
                                         string.Join("\n", epochs.Select(x => x.AsString())),
                                         string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())), masterCheckpoint,masterCheckpoint,
                                         commonEpoch.AsString(), afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString());
-                Log.Error(msg);
+                Log.Error(
+                    "Replica [{@replicaEndPoint},S:{@subscriptionId},{@logPosition}(0x{@logPosition:X}),epochs:\n{@epochs}]\n provided epochs which are not in "
+                    + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterLogPosition} (0x{@masterLogPosition:X}). "
+                    + "We do not support this case as of now.\n"
+                    + "CommonEpoch: {@commonEpoch}, AfterCommonEpoch: {@afterCommonEpoch}",
+                    replicaEndPoint,
+                    subscriptionId,
+                    logPosition,
+                    logPosition,
+                    string.Join("\n", epochs.Select(x => x.AsString())),
+                    string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())),
+                    masterCheckpoint,
+                    masterCheckpoint,
+                    commonEpoch.AsString(),
+                    afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString()
+                );
                 throw new Exception(msg);
             }
 

@@ -453,16 +453,19 @@ namespace EventStore.Transport.Http.EntityManagement
         {
             if (_logHttpRequests)
             {
-                var logBuilder = new StringBuilder();
-                logBuilder.AppendLine("HTTP Response");
-                logBuilder.AppendFormat("{0}\n", DateTime.Now);
-                logBuilder.AppendFormat("{0} {1}\n", HttpEntity.Response.StatusCode, HttpEntity.Response.StatusDescription);
-                logBuilder.AppendLine(CreateHeaderLog(HttpEntity.Response.Headers));
+                var bodyStr = "";
                 if (body != null && body.Length > 0)
                 {
-                    logBuilder.AppendLine(System.Text.Encoding.Default.GetString(body));
+                    bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
-                Log.Debug(logBuilder.ToString()); /*TODO: structured-log @Lougarou: unrecognized format, content string not found*/
+
+                Log.Debug("HTTP Response\n{@dateTime}\n{@statusCode} {@statusDescription}\n{@headers}\n{@body}",
+                    DateTime.Now,
+                    HttpEntity.Response.StatusCode,
+                    HttpEntity.Response.StatusDescription,
+                    CreateHeaderLog(HttpEntity.Response.Headers),
+                    bodyStr
+                ); /*TODO: structured-log test this*/
             }
         }
 

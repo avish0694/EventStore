@@ -80,8 +80,8 @@ namespace EventStore.TestClient
                 }
                 catch (Exception exc)
                 {
-                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for HttpListener. Error: {@message}.", port, exc.Message);
-                    continue; // To Verify
+                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for HttpListener. Error: {@e}.", port, exc.Message);
+                    continue;
                 }
 
                 AvailablePorts.Enqueue(port);

@@ -151,11 +151,11 @@ namespace EventStore.TestClient.Commands
                             if (currentMinute != elapsedMinutesInt)
                             {
                                 currentMinute = elapsedMinutesInt;
-                                context.Log.Info("\nElapsed {@elapsedMinutesInt} of {@runTimeMinutes} minutes, sent {@sent}; next block coef. {@dataSizeCoefficient}",
+                                context.Log.Info("\nElapsed {@elapsed} of {@runTime} minutes, sent {@sent}; next block coef. {@dataSizeCoefficient}",
                                                  elapsedMinutesInt,
                                                  runTimeMinutes,
                                                  sent,
-                                                 dataSizeCoefficient); //To Verify
+                                                 dataSizeCoefficient);
                             }
 
                             sleepTime = 1000 / sentCount;
