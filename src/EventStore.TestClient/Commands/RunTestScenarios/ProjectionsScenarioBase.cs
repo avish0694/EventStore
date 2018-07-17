@@ -161,12 +161,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                     if (!isRunning)
                     {
-                        Log.Debug(string.Format("Enable *{@projection}* projection", byCategoryProjection));
+                        Log.Debug("Enable *{@projection}* projection", byCategoryProjection);
                         GetProjectionsManager().EnableAsync(byCategoryProjection, AdminCredentials).Wait();
                     }
                     else
                     {
-                        Log.Debug(string.Format("Already enabled *{@byCategoryProjection}* projection", byCategoryProjection));
+                        Log.Debug("Already enabled *{@byCategoryProjection}* projection", byCategoryProjection);
                     }
 
                     exception = null;

@@ -71,10 +71,10 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                     {
                         var msg = string.Format("Received as RESPONSE invalid ClusterInfo from [{0}]. Content-Type: {1}, Body:\n{2}.",
                                                 url, response.ContentType, response.Body);
-                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{@url}]. Content-Type: {@contentType}.",
-                                                url, response.ContentType));
-                        Log.Error(string.Format("Received as RESPONSE invalid ClusterInfo from [{@url}]. Body: {@body}.",
-                                                url, response.Body));
+                        Log.Error("Received as RESPONSE invalid ClusterInfo from [{@url}]. Content-Type: {@contentType}.",
+                                                url, response.ContentType);
+                        Log.Error("Received as RESPONSE invalid ClusterInfo from [{@url}]. Body: {@body}.",
+                                                url, response.Body);
                         Publish(new GossipMessage.GossipSendFailed(msg, endPoint));
                         return;
                     }
@@ -96,8 +96,8 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
             {
                 var msg = string.Format("Received as POST invalid ClusterInfo from [{0}]. Content-Type: {1}, Body:\n{2}.",
                                         manager.RequestedUrl, manager.RequestCodec.ContentType, body);
-                Log.Error(string.Format("Received as POST invalid ClusterInfo from [{@requestedUrl}]. Content-Type: {@contentType}.",
-                                        manager.RequestedUrl, manager.RequestCodec.ContentType));
+                Log.Error("Received as POST invalid ClusterInfo from [{@requestedUrl}]. Content-Type: {@contentType}.",
+                                        manager.RequestedUrl, manager.RequestCodec.ContentType);
                 Log.Error("Received as POST invalid ClusterInfo from [{@requestedUrl}]. Body: {@body}.",
                                         manager.RequestedUrl, body);
                 SendBadRequest(manager, msg);

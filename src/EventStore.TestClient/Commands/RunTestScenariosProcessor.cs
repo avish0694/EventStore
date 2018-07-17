@@ -108,7 +108,7 @@ namespace EventStore.TestClient.Commands
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Invalid arguments ({@e)", e.Message);
+                        Log.Error("Invalid arguments ({@e})", e.Message);
                         return false;
                     }
                 }

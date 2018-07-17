@@ -234,7 +234,7 @@ namespace EventStore.Core.Services.Gossip
                     if ((DateTime.UtcNow - member.TimeStamp).Duration() > AllowedTimeDifference)
                     {
                         Log.Error("Time difference between us and [{@peerEndPoint}] is too great! "
-                                  , "UTC now: {@dateTime:yyyy-MM-dd HH:mm:ss.fff}, peer's time stamp: {@memberTimestamp:yyyy-MM-dd HH:mm:ss.fff}.",
+                                  + "UTC now: {@dateTime:yyyy-MM-dd HH:mm:ss.fff}, peer's time stamp: {@memberTimestamp:yyyy-MM-dd HH:mm:ss.fff}.",
                                   peerEndPoint, DateTime.UtcNow, member.TimeStamp);
                     }
                     mems[member.InternalHttpEndPoint] = member;

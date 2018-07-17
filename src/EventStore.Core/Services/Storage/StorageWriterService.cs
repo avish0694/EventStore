@@ -529,12 +529,12 @@ namespace EventStore.Core.Services.Storage
         {
             if (transactionInfo.TransactionOffset < -1 || transactionInfo.EventStreamId.IsEmptyString())
             {
-                Log.Error(string.Format("Invalid transaction info found for transaction ID {@transactionId}. "
-                                        +
-                                        "Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@eventStreamId}",
+                Log.Error(
+                    "Invalid transaction info found for transaction ID {@transactionId}. "
+                   +"Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@eventStreamId}",
                     transactionId,
                     transactionInfo.TransactionOffset,
-                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId));
+                    transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId);
                 return false;
             }
             return true;

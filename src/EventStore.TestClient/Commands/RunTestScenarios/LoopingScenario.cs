@@ -47,12 +47,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             var runIndex = 0;
             while (stopWatch.Elapsed < _executionPeriod)
             {
-                var msg = string.Format("=================== Start run #{0}, elapsed {1} of {2} minutes, {@name} =================== ",
+                var msg = string.Format("=================== Start run #{0}, elapsed {1} of {2} minutes, {@type} =================== ",
                                         runIndex,
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {executionElapsed} minutes, {@name} =================== ",
+                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionElapsed} minutes, {@type} =================== ",
                                         runIndex,
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,

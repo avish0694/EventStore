@@ -137,7 +137,7 @@ namespace EventStore.Core.Messaging
             catch (ReflectionTypeLoadException ex)
             {
                 if(ex.LoaderExceptions.Length > 0)
-                    Log.Info("The exception(s) occured when scanning for message types: ",
+                    Log.Info("The exception(s) occured when scanning for message types: {@e}",
                         string.Join(",", ex.LoaderExceptions.Select(x => x.Message)));
                 else
                 {

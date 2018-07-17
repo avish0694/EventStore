@@ -798,9 +798,10 @@ namespace EventStore.Core.Services.VNode
         {
             if (IsLegitimateReplicationMessage(message))
             {
-                Log.Info("========== [{@internalHttp}] CLONE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@InternalSecureTcp},{@masterId:B}].",
+                Log.Info("========== [{@internalHttp}] CLONE ASSIGNMENT RECEIVED FROM [{@internalTcp},{@internalSecureTcp},{@masterId:B}].",
                          _nodeInfo.InternalHttp,
-                         _master.InternalTcp, _master.InternalSecureTcp == null ? "n/a" : _master.InternalSecureTcp.ToString(),
+                         _master.InternalTcp,
+                         _master.InternalSecureTcp == null ? "n/a" : _master.InternalSecureTcp.ToString(),
                          message.MasterId);
                 _outputBus.Publish(message);
                 _fsm.Handle(new SystemMessage.BecomeClone(_stateCorrelationId, _master));

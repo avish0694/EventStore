@@ -257,7 +257,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                     try 
                     {
                         var message = (ClientMessage.IdentifyClient)_dispatcher.UnwrapPackage(package, _tcpEnvelope, null, null, null, this, _version);
-                        Log.Info("Connection '{@connectionName}' ({@ConnectionId:B}) identified by client. Client connection name: '{@messageConnectionName}', Client version: {@version}.",
+                        Log.Info("Connection '{@connectionName}' ({@connectionId:B}) identified by client. Client connection name: '{@clientConnectionName}', Client version: {@clientVersion}.",
                             ConnectionName, ConnectionId, message.ConnectionName, (ClientVersion)message.Version);
                         _version = (byte)message.Version;
                         _clientConnectionName = message.ConnectionName;

@@ -653,7 +653,7 @@ namespace EventStore.Core.Index
                     File.Delete(path);
             }
             catch{
-                Log.Error("Could not delete force index verification file at: @path", path); 
+                Log.Error("Could not delete force index verification file at: {@path}", path);
             }
         }
     }

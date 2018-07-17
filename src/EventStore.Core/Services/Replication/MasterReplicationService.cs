@@ -227,10 +227,12 @@ namespace EventStore.Core.Services.Replication
             }
             if (commonEpoch == null)
             {
-                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{@logPosition:X}),{3}]. Subscribing at 0. Master LogPosition: {4} (0x{4:X}), known epochs: {5}.",
-                          replicaEndPoint, subscriptionId, logPosition, logPosition,
+                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{@logPosition:X}),{@epochs}]. Subscribing at 0. Master LogPosition: {@masterCheckpoint} (0x{@masterCheckpoint:X}), known epochs: {@knownEpochs}.",
+                          replicaEndPoint, subscriptionId,
+                          logPosition, logPosition,
                           string.Join(", ", epochs.Select(x => x.AsString())),
-                          masterCheckpoint, string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())));
+                          masterCheckpoint, masterCheckpoint,
+                          string.Join(", ", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())));
                 return 0;
             }
 

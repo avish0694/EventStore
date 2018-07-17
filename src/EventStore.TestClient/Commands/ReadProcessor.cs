@@ -56,12 +56,12 @@ namespace EventStore.TestClient.Commands
 
                     var dto = pkg.Data.Deserialize<TcpClientMessageDto.ReadEventCompleted>();
                     context.Log.Info("READ events from <{@eventStreamId}>:\n\n"
-                                     + "\tEventStreamId: {1}\n"
-                                     + "\tEventNumber:   {2}\n"
-                                     + "\tReadResult:    {3}\n"
-                                     + "\tEventType:     {4}\n"
-                                     + "\tData:          {5}\n"
-                                     + "\tMetadata:      {6}\n",
+                                     + "\tEventStreamId: {@eventStreamId}\n"
+                                     + "\tEventNumber:   {@eventNumber}\n"
+                                     + "\tReadResult:    {@readResult}\n"
+                                     + "\tEventType:     {@eventType}\n"
+                                     + "\tData:          {@data}\n"
+                                     + "\tMetadata:      {@metadata}\n",
                                      eventStreamId,
                                      eventStreamId,
                                      dto.Event.Event.EventNumber,

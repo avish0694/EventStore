@@ -170,7 +170,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                 WaitAndCheckIfIsFaulted(projectionName);
 
-                Log.Debug(string.Format("Done iteration {@runIndex}", runIndex));
+                Log.Debug("Done iteration {@runIndex}", runIndex);
             }
             finally
             {

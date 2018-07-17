@@ -134,8 +134,7 @@ namespace EventStore.Projections.Core.v8
                     // ignore - browser based debugging only
                     break;
                 default:
-                    Log.Debug(
-                        string.Format("Unknown command handler registered. Command name: {@commandName}", commandName));
+                    Log.Debug("Unknown command handler registered. Command name: {@commandName}", commandName);
                     break;
             }
         }

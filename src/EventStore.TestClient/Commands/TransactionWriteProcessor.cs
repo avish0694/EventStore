@@ -69,7 +69,7 @@ namespace EventStore.TestClient.Commands
                                 else
                                 {
                                     context.Log.Info("Successfully started transaction. TransactionId: {@transactionId}.", dto.TransactionId);
-                                    context.Log.Info("Now sending transactional events...", dto.TransactionId);
+                                    context.Log.Info("Now sending transactional events. TransactionId: {@transactionId}", dto.TransactionId);
 
                                     transactionId = dto.TransactionId;
                                     stage = Stage.Writing;
