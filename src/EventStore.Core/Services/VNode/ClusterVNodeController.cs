@@ -335,7 +335,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS CLONE... MASTER IS [{@internalHttp},{@instanceId:B}]",
+            Log.Info("========== [{@internalHttp}] IS CLONE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.Clone;
             _outputBus.Publish(message);
