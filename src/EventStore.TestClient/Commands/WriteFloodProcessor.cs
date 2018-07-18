@@ -127,7 +127,7 @@ namespace EventStore.TestClient.Commands
                         {
                             var elapsed = sw2.Elapsed;
                             sw2.Restart();
-                            context.Log.Trace("\nDONE TOTAL {@writes} WRITES IN {@elapsed} ({@rate:0.0}/s) [S:{@success}, F:{@failures} (WEV:{@wrongExpectedVersion}, P:{@prepareTimeout}, C:{@commitTimeout}, F:{@forwardTimeout}, D:{@streamDeleted})].",
+                            context.Log.Trace("\nDONE TOTAL {writes} WRITES IN {elapsed} ({rate:0.0}/s) [S:{success}, F:{failures} (WEV:{wrongExpectedVersion}, P:{prepareTimeout}, C:{commitTimeout}, F:{forwardTimeout}, D:{streamDeleted})].",
                                               localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds,
                                               succ, fail,
                                               wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted);
@@ -180,12 +180,12 @@ namespace EventStore.TestClient.Commands
             sw.Stop();
             clients.ForEach(client => client.Close());
 
-            context.Log.Info("Completed. Successes: {@success}, failures: {@failures} (WRONG VERSION: {@wrongExpectedVersion}, P: {@prepareTimeout}, C: {@commitTimeout}, F: {@forwardTimeout}, D: {@streamDeleted})",
+            context.Log.Info("Completed. Successes: {success}, failures: {failures} (WRONG VERSION: {wrongExpectedVersion}, P: {prepareTimeout}, C: {commitTimeout}, F: {forwardTimeout}, D: {streamDeleted})",
                              succ, fail,
                              wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted);
 
             var reqPerSec = (all + 0.0) / sw.ElapsedMilliseconds * 1000;
-            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@rate:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
+            context.Log.Info("{requests} requests completed in {elapsed}ms ({rate:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
 
             PerfUtils.LogData(
                 Keyword,

@@ -108,7 +108,7 @@ namespace EventStore.TestClient.Commands
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Invalid arguments ({@e})", e.Message);
+                        Log.Error("Invalid arguments ({e})", e.Message);
                         return false;
                     }
                 }
@@ -117,11 +117,11 @@ namespace EventStore.TestClient.Commands
             context.IsAsync();
 
             Log.Info("\n---" +
-                     "\nRunning scenario {@scenario} using {@connections} connections with {@maxConcurrentRequests} max concurrent requests," +
-                     "\nfor {@streams} streams {@eventsPerStream} events each deleting every {@streamDeleteStep}th stream. " +
-                     "\nExecution period {@executionPeriod} minutes. " +
-                     "\nDatabase path {@dbParentPath};" +
-                     "\nCustom Node {@customNode};" +
+                     "\nRunning scenario {scenario} using {connections} connections with {maxConcurrentRequests} max concurrent requests," +
+                     "\nfor {streams} streams {eventsPerStream} events each deleting every {streamDeleteStep}th stream. " +
+                     "\nExecution period {executionPeriod} minutes. " +
+                     "\nDatabase path {dbParentPath};" +
+                     "\nCustom Node {customNode};" +
                      "\n---",
                      scenarioName,
                      connections,
@@ -208,13 +208,13 @@ namespace EventStore.TestClient.Commands
                                             customNode), 
                 };
 
-            Log.Info("Found scenarios {@scenariosCount} total :\n{@scenarios}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
+            Log.Info("Found scenarios {scenariosCount} total :\n{scenarios}.", allScenarios.Length, allScenarios.Aggregate(new StringBuilder(),
                                                                                                        (sb, s) => sb.AppendFormat("{0}, ", s.GetType().Name)));
             var scenarios = allScenarios.Where(x => scenarioName == AllScenariosFlag
                                                     || x.GetType().Name.Equals(scenarioName, StringComparison.InvariantCultureIgnoreCase))
                                         .ToArray();
 
-            Log.Info("Running test scenarios ({@scenarios} total)...", scenarios.Length);
+            Log.Info("Running test scenarios ({scenarios} total)...", scenarios.Length);
 
             foreach (var scenario in scenarios)
             {
@@ -222,7 +222,7 @@ namespace EventStore.TestClient.Commands
                 {
                     try
                     {
-                        Log.Info("Run scenario {@type}", scenario.GetType().Name);
+                        Log.Info("Run scenario {type}", scenario.GetType().Name);
                         scenario.Run();
                         scenario.Clean();
                         Log.Info("Scenario run successfully");

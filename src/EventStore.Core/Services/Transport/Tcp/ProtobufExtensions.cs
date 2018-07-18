@@ -60,7 +60,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             }
             catch (Exception e)
             {
-                Log.InfoException(e, "Deserialization to {@type} failed", typeof (T).FullName);
+                Log.InfoException(e, "Deserialization to {type} failed", typeof (T).FullName);
                 return default(T);
             }
         }

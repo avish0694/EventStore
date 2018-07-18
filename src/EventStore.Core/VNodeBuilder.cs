@@ -1423,12 +1423,12 @@ namespace EventStore.Core
             var infoController = new InfoController(options, _projectionType);
             var epochCheckpoint = _db.Config.EpochCheckpoint.Read();
 
-            _log.Info("{@description,-25} {@instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId);
-            _log.Info("{@description,-25} {@path}", "DATABASE:", _db.Config.Path);
-            _log.Info("{@description,-25} {@writerCheckpoint} (0x{@writerCheckpoint:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read(),_db.Config.WriterCheckpoint.Read());
-            _log.Info("{@description,-25} {@chaserCheckpoint} (0x{@chaserCheckpoint:X})", "CHASER CHECKPOINT:", _db.Config.ChaserCheckpoint.Read(), _db.Config.ChaserCheckpoint.Read());
-            _log.Info("{@description,-25} {@epochCheckpoint} (0x{@epochCheckpoint:X})", "EPOCH CHECKPOINT:", epochCheckpoint, epochCheckpoint);
-            _log.Info("{@description,-25} {@truncateCheckpoint} (0x{@truncateCheckpoint:X})", "TRUNCATE CHECKPOINT:", _db.Config.TruncateCheckpoint.Read(), _db.Config.TruncateCheckpoint.Read());
+            _log.Info("{description,-25} {instanceId}", "INSTANCE ID:", _vNodeSettings.NodeInfo.InstanceId);
+            _log.Info("{description,-25} {path}", "DATABASE:", _db.Config.Path);
+            _log.Info("{description,-25} {writerCheckpoint} (0x{writerCheckpoint:X})", "WRITER CHECKPOINT:", _db.Config.WriterCheckpoint.Read(),_db.Config.WriterCheckpoint.Read());
+            _log.Info("{description,-25} {chaserCheckpoint} (0x{chaserCheckpoint:X})", "CHASER CHECKPOINT:", _db.Config.ChaserCheckpoint.Read(), _db.Config.ChaserCheckpoint.Read());
+            _log.Info("{description,-25} {epochCheckpoint} (0x{epochCheckpoint:X})", "EPOCH CHECKPOINT:", epochCheckpoint, epochCheckpoint);
+            _log.Info("{description,-25} {truncateCheckpoint} (0x{truncateCheckpoint:X})", "TRUNCATE CHECKPOINT:", _db.Config.TruncateCheckpoint.Read(), _db.Config.TruncateCheckpoint.Read());
 
             return new ClusterVNode(_db, _vNodeSettings, GetGossipSource(), infoController, _subsystems.ToArray());
         }
@@ -1490,9 +1490,9 @@ namespace EventStore.Core
                 {
                     if (dbPath == Locations.DefaultDataDirectory)
                     {
-                        log.Info("Access to path {@dbPath} denied. The Event Store database will be created in {@fallbackDefaultDataDirectory}", dbPath, Locations.FallbackDefaultDataDirectory);
+                        log.Info("Access to path {dbPath} denied. The Event Store database will be created in {fallbackDefaultDataDirectory}", dbPath, Locations.FallbackDefaultDataDirectory);
                         dbPath = Locations.FallbackDefaultDataDirectory;
-                        log.Info("Defaulting DB Path to {@dbPath}", dbPath);
+                        log.Info("Defaulting DB Path to {dbPath}", dbPath);
 
                         if (!Directory.Exists(dbPath)) // mono crashes without this check
                             Directory.CreateDirectory(dbPath);

@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             _state = message.State;
 
             if (message.State == VNodeState.Master) return;
-            Log.Debug("Subscriptions received state change to {@state} stopping listening.", _state);
+            Log.Debug("Subscriptions received state change to {state} stopping listening.", _state);
             ShutdownSubscriptions();
             Stop();
         }
@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("create subscription {@subscriptionKey}", key);
+            Log.Debug("create subscription {subscriptionKey}", key);
             //TODO revisit for permissions. maybe make admin only?
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
@@ -187,7 +187,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                                     message.NamedConsumerStrategy,
                                     ToTimeout(message.MessageTimeoutMilliseconds)
                                     );
-            Log.Debug("New persistent subscription {@group}.", message.GroupName);
+            Log.Debug("New persistent subscription {group}.", message.GroupName);
             _config.Updated = DateTime.Now;
             _config.UpdatedBy = message.User.Identity.Name;
             _config.Entries.Add(new PersistentSubscriptionEntry
@@ -216,7 +216,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("update subscription {@subscriptionKey}" , key);
+            Log.Debug("update subscription {subscriptionKey}" , key);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -338,7 +338,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(ClientMessage.DeletePersistentSubscription message)
         {
             if (!_started) return;
-            Log.Debug("delete subscription {@group}", message.GroupName);
+            Log.Debug("delete subscription {group}", message.GroupName);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -412,7 +412,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(TcpMessage.ConnectionClosed message)
         {
             //TODO CC make a map for this
-            Log.Debug("Lost connection from {@remoteEndPoint}", message.Connection.RemoteEndPoint);
+            Log.Debug("Lost connection from {remoteEndPoint}", message.Connection.RemoteEndPoint);
             if (_subscriptionsById == null) return; //havn't built yet.
             foreach (var subscription in _subscriptionsById.Values)
             {
@@ -450,7 +450,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 message.Envelope.ReplyWith(new ClientMessage.SubscriptionDropped(message.CorrelationId, SubscriptionDropReason.SubscriberMaxCountReached));
                 return;
             }
-            Log.Debug("New connection to persistent subscription {@subscriptionId}.", message.SubscriptionId);
+            Log.Debug("New connection to persistent subscription {subscriptionId}.", message.SubscriptionId);
             var lastEventNumber = _readIndex.GetStreamLastEventNumber(message.EventStreamId);
             var lastCommitPos = _readIndex.LastCommitPosition;
             var subscribedMessage = new ClientMessage.PersistentSubscriptionConfirmation(key, message.CorrelationId, lastCommitPos, lastEventNumber);
@@ -503,7 +503,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 }
                 catch (Exception exc)
                 {
-                    Log.ErrorException(exc, "Error while resolving link for event record: {@eventRecord}", eventRecord.ToString());
+                    Log.ErrorException(exc, "Error while resolving link for event record: {eventRecord}", eventRecord.ToString());
                 }
 
                 return ResolvedEvent.ForFailedResolvedLink(eventRecord, ReadEventResult.Error, commitPosition);
@@ -651,7 +651,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         {
                             if (!_consumerStrategyRegistry.ValidateStrategy(entry.NamedConsumerStrategy))
                             {
-                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{@strategy}'. Ignoring it.", entry.NamedConsumerStrategy);
+                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{strategy}'. Ignoring it.", entry.NamedConsumerStrategy);
                                 continue;
                             }
 

@@ -44,7 +44,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                Log.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@workerId}. Current status of Writer: Busy: {@isBusy}", command, "$projections-$" + workerId, queue.Busy);
+                Log.Debug("PROJECTIONS: Scheduling the writing of {command} to {workerId}. Current status of Writer: Busy: {isBusy}", command, "$projections-$" + workerId, queue.Busy);
             }
             queue.Items.Add(new Queue.Item { Command = command, Body = body });
             if (!queue.Busy)
@@ -75,13 +75,13 @@ namespace EventStore.Projections.Core.Services.Management
                             //TODO: PROJECTIONS: Remove before release
                             if (!Logging.FilteredMessages.Contains(evt.EventType))
                             {
-                                Log.Debug("PROJECTIONS: Finished writing events to {@stream}: {@eventType}", streamId, evt.EventType);
+                                Log.Debug("PROJECTIONS: Finished writing events to {stream}: {eventType}", streamId, evt.EventType);
                             }
                         }
                     }
                     else
                     {
-                        Log.Debug("PROJECTIONS: Failed writing events to {@stream} because of {@completedResult}: {@events}", 
+                        Log.Debug("PROJECTIONS: Failed writing events to {stream} because of {completedResult}: {events}", 
                             streamId, 
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}", x.EventType))));
                     }

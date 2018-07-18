@@ -776,7 +776,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                                                 stream, expectedVersion, events, manager.User);
                         Publish(msg);
                     },
-                e => Log.Debug("Error while reading request (POST entry): {@e}.", e.Message));
+                e => Log.Debug("Error while reading request (POST entry): {e}.", e.Message));
         }
 
         private void GetStreamEvent(HttpEntityManager manager, string stream, long eventNumber,

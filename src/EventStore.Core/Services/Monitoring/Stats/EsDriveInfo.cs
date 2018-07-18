@@ -38,7 +38,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception ex)
             {
-                log.Debug("Error while reading drive info for path {@path}. Message: {@e}.", path, ex.Message);
+                log.Debug("Error while reading drive info for path {path}. Message: {e}.", path, ex.Message);
                 return null;
             }
         }
@@ -76,7 +76,7 @@ namespace EventStore.Core.Services.Monitoring.Stats
             }
             catch (Exception ex)
             {
-                log.DebugException(ex, "Could not get drive name for directory '{@directory}' on Unix.", directory);
+                log.DebugException(ex, "Could not get drive name for directory '{directory}' on Unix.", directory);
                 return null;
             }
         }

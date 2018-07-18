@@ -47,7 +47,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                _logger.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@stream}. Current status of Writer: Busy: {@isBusy}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy);
+                _logger.Debug("PROJECTIONS: Scheduling the writing of {command} to {stream}. Current status of Writer: Busy: {isBusy}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy);
             }
             Items.Add(new Item { Command = command, Body = body });
             if (!Busy)
@@ -77,13 +77,13 @@ namespace EventStore.Projections.Core.Services.Management
                             //TODO: PROJECTIONS: Remove before release
                             if (!Logging.FilteredMessages.Contains(evt.EventType))
                             {
-                                _logger.Debug("PROJECTIONS: Finished writing events to {@stream}: {@eventType}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType);
+                                _logger.Debug("PROJECTIONS: Finished writing events to {stream}: {eventType}", ProjectionNamesBuilder._projectionsMasterStream, evt.EventType);
                             }
                         }
                     }
                     else
                     {
-                        _logger.Debug("PROJECTIONS: Failed writing events to {@stream} because of {@e}: {@events}",
+                        _logger.Debug("PROJECTIONS: Failed writing events to {stream} because of {e}: {events}",
                             ProjectionNamesBuilder._projectionsMasterStream,
                             completed.Result, String.Join(",", events.Select(x => String.Format("{0}-{1}", x.EventType, Helper.UTF8NoBom.GetString(x.Data))))); //Can't do anything about it, log and move on
                         //throw new Exception(message);

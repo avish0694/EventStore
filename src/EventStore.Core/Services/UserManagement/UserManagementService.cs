@@ -552,7 +552,7 @@ namespace EventStore.Core.Services.UserManagement
                                                         }
                                                         else
                                                         {
-                                                            _log.Error("unable to add 'admin' to $users. {@e}", x.Result);
+                                                            _log.Error("unable to add 'admin' to $users. {e}", x.Result);
                                                         }
                                                         NotifyInitialized();
                                                     });
@@ -607,7 +607,7 @@ namespace EventStore.Core.Services.UserManagement
                                                         }
                                                         else
                                                         {
-                                                            _log.Error("unable to add 'ops' to $users. {@e}", x.Result);
+                                                            _log.Error("unable to add 'ops' to $users. {e}", x.Result);
                                                         }
                                                         NotifyInitialized();
                                                     });

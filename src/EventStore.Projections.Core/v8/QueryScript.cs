@@ -73,7 +73,7 @@ namespace EventStore.Projections.Core.v8
                         DoEmit(commandBody);
                         break;
                     default:
-                        Log.Debug("Ignoring unknown reverse command: '{@command}'", commandName);
+                        Log.Debug("Ignoring unknown reverse command: '{command}'", commandName);
                         break;
                 }
             }
@@ -134,7 +134,7 @@ namespace EventStore.Projections.Core.v8
                     // ignore - browser based debugging only
                     break;
                 default:
-                    Log.Debug("Unknown command handler registered. Command name: {@command}", commandName);
+                    Log.Debug("Unknown command handler registered. Command name: {command}", commandName);
                     break;
             }
         }

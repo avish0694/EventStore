@@ -91,7 +91,7 @@ namespace EventStore.TestClient.Commands
                 step++;
             }
 
-            Log.Info("Sent {@packages} packages. {@commandsToCheck} invalid dtos, {@barFormattedPackages} bar formatted packages. Got {@badRequests} BadRequests. Success",
+            Log.Info("Sent {packages} packages. {commandsToCheck} invalid dtos, {barFormattedPackages} bar formatted packages. Got {badRequests} BadRequests. Success",
                      packages.Count(),
                      commandsToCheck.Length,
                      packages.Count() - commandsToCheck.Length,

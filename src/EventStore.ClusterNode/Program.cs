@@ -78,7 +78,7 @@ namespace EventStore.ClusterNode
                 return;
 
             if (!ThreadPool.SetMinThreads(options.MonoMinThreadpoolSize, minIocpThreads))
-                Log.Error("Cannot override the minimum number of Threadpool threads (machine default: {@minWorkerThreads}, specified value: {@monoMinThreadpoolSize})", minWorkerThreads, options.MonoMinThreadpoolSize);
+                Log.Error("Cannot override the minimum number of Threadpool threads (machine default: {minWorkerThreads}, specified value: {monoMinThreadpoolSize})", minWorkerThreads, options.MonoMinThreadpoolSize);
         }
 
         protected override void Create(ClusterNodeOptions opts)
@@ -144,7 +144,7 @@ namespace EventStore.ClusterNode
 
             var prepareCount = options.PrepareCount > quorumSize ? options.PrepareCount : quorumSize;
             var commitCount = options.CommitCount > quorumSize ? options.CommitCount : quorumSize;
-            Log.Info("Quorum size set to {@quorum}", prepareCount);
+            Log.Info("Quorum size set to {quorum}", prepareCount);
             if(options.DisableInsecureTCP)
             {
                 if (!options.UseInternalSsl) {
@@ -325,7 +325,7 @@ namespace EventStore.ClusterNode
                 try
                 {
                     var plugin = potentialPlugin.Value;
-                    Log.Info("Loaded consumer strategy plugin: {@plugin} version {@version}.", plugin.Name, plugin.Version);
+                    Log.Info("Loaded consumer strategy plugin: {plugin} version {version}.", plugin.Name, plugin.Version);
                     strategyFactories.Add(plugin.GetConsumerStrategyFactory());
                 }
                 catch (CompositionException ex)
@@ -351,7 +351,7 @@ namespace EventStore.ClusterNode
                 {
                     var plugin = potentialPlugin.Value;
                     var commandLine = plugin.CommandLineName.ToLowerInvariant();
-                    Log.Info("Loaded authentication plugin: {@plugin} version {@version} (Command Line: {@commandLine})", plugin.Name, plugin.Version, commandLine);
+                    Log.Info("Loaded authentication plugin: {plugin} version {version} (Command Line: {commandLine})", plugin.Name, plugin.Version, commandLine);
                     authenticationTypeToPlugin.Add(commandLine, () => plugin.GetAuthenticationProviderFactory(authenticationConfigFile));
                 }
                 catch (CompositionException ex)
@@ -379,12 +379,12 @@ namespace EventStore.ClusterNode
 
             if (Directory.Exists(Locations.PluginsDirectory))
             {
-                Log.Info("Plugins path: {@pluginsDirectory}", Locations.PluginsDirectory);
+                Log.Info("Plugins path: {pluginsDirectory}", Locations.PluginsDirectory);
                 catalog.Catalogs.Add(new DirectoryCatalog(Locations.PluginsDirectory));
             }
             else
             {
-                Log.Info("Cannot find plugins path: {@pluginsDirectory}", Locations.PluginsDirectory);
+                Log.Info("Cannot find plugins path: {pluginsDirectory}", Locations.PluginsDirectory);
             }
 
             return new CompositionContainer(catalog);

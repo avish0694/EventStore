@@ -79,7 +79,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             while (stopWatch.Elapsed < TimeSpan.FromMilliseconds(1000 + 10 * streams.Length * EventsPerStream))
             {
                 state = projectionManager.GetState(countItemsProjectionName);
-                Log.Info("Raw state: {@state}", state);
+                Log.Info("Raw state: {state}", state);
                 if (state.Contains(expectedAllEventsCount))
                 {
                     success = true;

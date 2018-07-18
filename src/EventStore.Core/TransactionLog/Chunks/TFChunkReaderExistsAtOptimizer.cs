@@ -29,7 +29,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 var chunk = (TFChunk.TFChunk) o;
                 if(chunk == null)
                     return false;
-                Log.Debug("Optimizing chunk {@chunk} for fast merge...", chunk.FileName);
+                Log.Debug("Optimizing chunk {chunk} for fast merge...", chunk.FileName);
                 chunk.OptimizeExistsAt();
                 return true;
             };
@@ -38,7 +38,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 var chunk = (TFChunk.TFChunk) o;
                 if(chunk == null)
                     return false;
-                Log.Debug("Clearing fast merge optimizations from chunk {@chunk}...",chunk.FileName);
+                Log.Debug("Clearing fast merge optimizations from chunk {chunk}...",chunk.FileName);
                 chunk.DeOptimizeExistsAt();
                 return true;
             };

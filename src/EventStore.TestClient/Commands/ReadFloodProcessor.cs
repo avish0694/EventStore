@@ -89,7 +89,7 @@ namespace EventStore.TestClient.Commands
                         {
                             var elapsed = sw2.Elapsed;
                             sw2.Restart();
-                            context.Log.Trace("\nDONE TOTAL {@reads} READS IN {@elapsed} ({@rate:0.0}/s).", localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds);
+                            context.Log.Trace("\nDONE TOTAL {reads} READS IN {elapsed} ({rate:0.0}/s).", localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds);
                         }
                         if (localAll == requestsCnt)
                         {
@@ -127,8 +127,8 @@ namespace EventStore.TestClient.Commands
             clients.ForEach(client => client.Close());
 
             var reqPerSec = (all + 0.0) / sw.ElapsedMilliseconds * 1000;
-            context.Log.Info("Completed. READS succ: {@success}, fail: {@failures}.", Interlocked.Read(ref succ), Interlocked.Read(ref fail));
-            context.Log.Info("{@requests} requests completed in {@elapsed}ms ({@rate:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
+            context.Log.Info("Completed. READS succ: {success}, fail: {failures}.", Interlocked.Read(ref succ), Interlocked.Read(ref fail));
+            context.Log.Info("{requests} requests completed in {elapsed}ms ({rate:0.00} reqs per sec).", all, sw.ElapsedMilliseconds, reqPerSec);
             _monitor.GetMeasurementDetails();
             PerfUtils.LogData(Keyword,
                               PerfUtils.Row(PerfUtils.Col("clientsCnt", clientsCnt),

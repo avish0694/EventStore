@@ -85,7 +85,7 @@ namespace EventStore.Core
                 if(LogManager.Initialized)
                 {
                     Log.FatalException(ex, msg);
-                    Log.FatalException(ex, "{@e}", FormatExceptionMessage(ex));
+                    Log.FatalException(ex, "{e}", FormatExceptionMessage(ex));
                 }
                 else
                 {
@@ -146,15 +146,15 @@ namespace EventStore.Core
             
             LogManager.Init(componentName, logsDirectory, structuredLog, Locations.DefaultConfigurationDirectory);
 
-            Log.Info("\n{@description,-25} {@version} ({@branch}/{@hashtag}, {@timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
-            Log.Info("{@description,-25} {@osFlavor} ({@oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion);
-            Log.Info("{@description,-25} {@osRuntimeVersion} ({@bits}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
-            Log.Info("{@description,-25} {@maxGeneration}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
-            Log.Info("{@description,-25} {@logsDirectory}", "LOGS:", LogManager.LogsDirectory);
+            Log.Info("\n{description,-25} {version} ({branch}/{hashtag}, {timestamp})", "ES VERSION:", VersionInfo.Version, VersionInfo.Branch, VersionInfo.Hashtag, VersionInfo.Timestamp);
+            Log.Info("{description,-25} {osFlavor} ({oSVersion})", "OS:", OS.OsFlavor, Environment.OSVersion);
+            Log.Info("{description,-25} {osRuntimeVersion} ({bits}-bit)", "RUNTIME:", OS.GetRuntimeVersion(), Marshal.SizeOf(typeof(IntPtr)) * 8);
+            Log.Info("{description,-25} {maxGeneration}", "GC:", GC.MaxGeneration == 0 ? "NON-GENERATION (PROBABLY BOEHM)" : string.Format("{0} GENERATIONS", GC.MaxGeneration + 1));
+            Log.Info("{description,-25} {logsDirectory}", "LOGS:", LogManager.LogsDirectory);
             if(!structuredLog)
-                Log.Info("{@esOptions}", EventStoreOptions.DumpOptions());
+                Log.Info("{esOptions}", EventStoreOptions.DumpOptions());
             else
-                Log.Info("{@esOptions}", EventStoreOptions.DumpOptionsStructured());
+                Log.Info("{esOptions}", EventStoreOptions.DumpOptionsStructured());
 
             if (options.WhatIf)
                 Application.Exit(ExitCode.Success, "WhatIf option specified");

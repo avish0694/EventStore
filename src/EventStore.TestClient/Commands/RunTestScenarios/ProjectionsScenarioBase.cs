@@ -95,7 +95,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 rawState = null;
             }
 
-            Log.Info("Raw {@projection} stats: {@rawState}", projectionName, rawState);
+            Log.Info("Raw {projection} stats: {rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;
@@ -119,7 +119,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
         {
             var rawState = GetProjectionStateSafe(projectionName);
 
-            Log.Info("Raw {@projection} state: {@rawState}", projectionName, rawState);
+            Log.Info("Raw {projection} state: {rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;
@@ -161,12 +161,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
                     if (!isRunning)
                     {
-                        Log.Debug("Enable *{@projection}* projection", byCategoryProjection);
+                        Log.Debug("Enable *{projection}* projection", byCategoryProjection);
                         GetProjectionsManager().EnableAsync(byCategoryProjection, AdminCredentials).Wait();
                     }
                     else
                     {
-                        Log.Debug("Already enabled *{@projection}* projection", byCategoryProjection);
+                        Log.Debug("Already enabled *{projection}* projection", byCategoryProjection);
                     }
 
                     exception = null;
@@ -175,7 +175,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 catch (Exception ex)
                 {
                     exception = new ApplicationException("Failed to enable by_category.", ex);
-                    Log.ErrorException(ex, "Failed to enable *$by_category* projection, retry #{@retryCount}.", retryCount);
+                    Log.ErrorException(ex, "Failed to enable *$by_category* projection, retry #{retryCount}.", retryCount);
                 }
                 retryCount += 1;
             }

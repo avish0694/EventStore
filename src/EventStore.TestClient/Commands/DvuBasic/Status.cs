@@ -59,12 +59,12 @@ namespace EventStore.TestClient.Commands.DvuBasic
 
         public void ReportReadError(int threadId, string stream, int indx)
         {
-            _log.Fatal("FATAL : READER [{@threadId}] encountered an error in {@stream} ({@indx})", threadId, stream, indx);
+            _log.Fatal("FATAL : READER [{threadId}] encountered an error in {stream} ({indx})", threadId, stream, indx);
         }
 
         public void ReportNotFoundOnRead(int threadId, string stream, int indx)
         {
-            _log.Fatal("FATAL : READER [{@threadId}] asked for event {@indx} in '{@stream}' but server returned 'Not Found'", threadId,
+            _log.Fatal("FATAL : READER [{threadId}] asked for event {indx} in '{stream}' but server returned 'Not Found'", threadId,
                        indx, stream);
         }
 

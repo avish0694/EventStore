@@ -115,7 +115,7 @@ namespace EventStore.Projections.Core.Services.Processing
             var eventReader = projectionSubscription.CreatePausedEventReader(
                 _publisher, _ioDispatcher, distibutionPointCorrelationId);
 //            _logger.Trace(
-//                "The '{@subscriptionId}' projection subscribed to the '{@distibutionPointCorrelationId}' distribution point", subscriptionId,
+//                "The '{subscriptionId}' projection subscribed to the '{distibutionPointCorrelationId}' distribution point", subscriptionId,
 //                distibutionPointCorrelationId);
             _eventReaders.Add(distibutionPointCorrelationId, eventReader);
             _subscriptionEventReaders.Add(subscriptionId, distibutionPointCorrelationId);

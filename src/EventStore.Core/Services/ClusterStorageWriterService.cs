@@ -83,7 +83,7 @@ namespace EventStore.Core.Services
             _subscriptionId = message.SubscriptionId;
             _ackedSubscriptionPos = _subscriptionPos = message.SubscriptionPosition;
 
-            Log.Info("=== SUBSCRIBED to [{@masterEndPoint},{@masterId:B}] at {@subscriptionPosition} (0x{@subscriptionPosition:X}). SubscriptionId: {@subscriptionId:B}.",
+            Log.Info("=== SUBSCRIBED to [{masterEndPoint},{masterId:B}] at {subscriptionPosition} (0x{subscriptionPosition:X}). SubscriptionId: {subscriptionId:B}.",
                      message.MasterEndPoint, message.MasterId, message.SubscriptionPosition,message.SubscriptionPosition, message.SubscriptionId);
 
             var writerCheck = Db.Config.WriterCheckpoint.ReadNonFlushed();
@@ -91,25 +91,25 @@ namespace EventStore.Core.Services
             {
                 ReplicationFail(
                 "Master [{0},{1:B}] subscribed us at {2} (0x{3:X}), which is greater than our writer checkpoint {4} (0x{5:X}). REPLICATION BUG.",
-                "Master [{@masterEndpoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is greater than our writer checkpoint {@writerCheckpoint} (0x{@writerCheckpoint:X}). REPLICATION BUG.",
+                "Master [{masterEndpoint},{masterId:B}] subscribed us at {subscriptionPosition} (0x{subscriptionPosition:X}), which is greater than our writer checkpoint {writerCheckpoint} (0x{writerCheckpoint:X}). REPLICATION BUG.",
                 message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionPosition, writerCheck, writerCheck);
             }
             
             if (message.SubscriptionPosition < writerCheck)
             {
-                Log.Info("Master [{@masterEndPoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is less than our writer checkpoint {@writerCheckpoint} (0x{@writerCheckpoint:X}). TRUNCATION IS NEEDED.",
+                Log.Info("Master [{masterEndPoint},{masterId:B}] subscribed us at {subscriptionPosition} (0x{subscriptionPosition:X}), which is less than our writer checkpoint {writerCheckpoint} (0x{writerCheckpoint:X}). TRUNCATION IS NEEDED.",
                          message.MasterEndPoint, message.MasterId, message.SubscriptionPosition, message.SubscriptionPosition, writerCheck, writerCheck);
 
                 var lastCommitPosition = _getLastCommitPosition();
                 if (message.SubscriptionPosition > lastCommitPosition)
                     Log.Info("ONLINE TRUNCATION IS NEEDED. NOT IMPLEMENTED. OFFLINE TRUNCATION WILL BE PERFORMED. SHUTTING DOWN NODE.");
                 else
-                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {@subscriptionPosition} (0x{@subscriptionPosition:X}) <= LastCommitPosition {@lastCommitPosition} (0x{@lastCommitPosition:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition,message.SubscriptionPosition,lastCommitPosition,lastCommitPosition);
+                    Log.Info("OFFLINE TRUNCATION IS NEEDED (SubscribedAt {subscriptionPosition} (0x{subscriptionPosition:X}) <= LastCommitPosition {lastCommitPosition} (0x{lastCommitPosition:X})). SHUTTING DOWN NODE.", message.SubscriptionPosition,message.SubscriptionPosition,lastCommitPosition,lastCommitPosition);
 
                 EpochRecord lastEpoch = EpochManager.GetLastEpoch();
                 if (AreAnyCommittedRecordsTruncatedWithLastEpoch(message.SubscriptionPosition, lastEpoch, lastCommitPosition))
                 {
-                    Log.Error("Master [{@masterEndPoint},{@masterId:B}] subscribed us at {@subscriptionPosition} (0x{@subscriptionPosition:X}), which is less than our last epoch and LastCommitPosition {@lastCommitPosition} (0x{@lastCommitPosition:X}) >= lastEpoch.EpochPosition {@lastEpochPosition} (0x{@lastEpochPosition:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
+                    Log.Error("Master [{masterEndPoint},{masterId:B}] subscribed us at {subscriptionPosition} (0x{subscriptionPosition:X}), which is less than our last epoch and LastCommitPosition {lastCommitPosition} (0x{lastCommitPosition:X}) >= lastEpoch.EpochPosition {lastEpochPosition} (0x{lastEpochPosition:X}). That might be bad, especially if the LastCommitPosition is way beyond EpochPosition.",
                                 message.MasterEndPoint, message.MasterId, message.SubscriptionPosition,  message.SubscriptionPosition, lastCommitPosition, lastCommitPosition, lastEpoch.EpochPosition, lastEpoch.EpochPosition);
                     Log.Error("ATTEMPT TO TRUNCATE EPOCH WITH COMMITTED RECORDS. THIS MAY BE BAD, BUT IT IS OK IF JUST-ELECTED MASTER FAILS IMMEDIATELY AFTER ITS ELECTION.");
                 }
@@ -152,7 +152,7 @@ namespace EventStore.Core.Services
                 {
                     ReplicationFail(
                         "Received request to create a new ongoing chunk #{0}-{1}, but current chunks count is {2}.",
-                        "Received request to create a new ongoing chunk #{@chunkStartNumber}-{@chunkEndNumber}, but current chunks count is {@chunksCount}.",
+                        "Received request to create a new ongoing chunk #{chunkStartNumber}-{chunkEndNumber}, but current chunks count is {chunksCount}.",
                         message.ChunkHeader.ChunkStartNumber, message.ChunkHeader.ChunkEndNumber, Db.Manager.ChunksCount);
                 }
                 Db.Manager.AddNewChunk(message.ChunkHeader, message.FileSize);
@@ -173,13 +173,13 @@ namespace EventStore.Core.Services
 
             if (_activeChunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || _activeChunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
             {
-                Log.Error("Received RawChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {@activeChunk}.",
+                Log.Error("Received RawChunkBulk for TFChunk {chunkStartNumber}-{chunkEndNumber}, but active chunk is {activeChunk}.",
                           message.ChunkStartNumber, message.ChunkEndNumber, _activeChunk);
                 return;
             }
             if (_activeChunk.RawWriterPosition != message.RawPosition)
             {
-                Log.Error("Received RawChunkBulk at raw pos {@rawPosition} (0x{@rawPosition:X}) while current writer raw pos is {@rawWriterPosition} (0x{@rawWriterPosition:X}).",
+                Log.Error("Received RawChunkBulk at raw pos {rawPosition} (0x{rawPosition:X}) while current writer raw pos is {rawWriterPosition} (0x{rawWriterPosition:X}).",
                           message.RawPosition,message.RawPosition, _activeChunk.RawWriterPosition,_activeChunk.RawWriterPosition);
                 return;
             }
@@ -188,7 +188,7 @@ namespace EventStore.Core.Services
             {
                 ReplicationFail(
                     "Could not append raw bytes to chunk {0}-{1}, raw pos: {2} (0x{3:X}), bytes length: {4} (0x{5:X}). Chunk file size: {6} (0x{7:X}).",
-                    "Could not append raw bytes to chunk {@chunkStartNumber}-{@chunkEndNumber}, raw pos: {@rawPosition} (0x{@rawPosition:X}), bytes length: {@rawBytesLength} (0x{@rawBytesLength:X}). Chunk file size: {@chunkFileSize} (0x{@chunkFileSize:X}).",
+                    "Could not append raw bytes to chunk {chunkStartNumber}-{chunkEndNumber}, raw pos: {rawPosition} (0x{rawPosition:X}), bytes length: {rawBytesLength} (0x{rawBytesLength:X}). Chunk file size: {chunkFileSize} (0x{chunkFileSize:X}).",
                     message.ChunkStartNumber, message.ChunkEndNumber, message.RawPosition, message.RawPosition, message.RawBytes.Length,  message.RawBytes.Length, _activeChunk.FileSize, _activeChunk.FileSize);
             }
 
@@ -196,7 +196,7 @@ namespace EventStore.Core.Services
 
             if (message.CompleteChunk)
             {
-                Log.Trace("Completing raw chunk {@chunkStartNumber}-{@chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
+                Log.Trace("Completing raw chunk {chunkStartNumber}-{chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
                 Writer.CompleteReplicatedRawChunk(_activeChunk);
 
                 _subscriptionPos = _activeChunk.ChunkHeader.ChunkEndPosition;
@@ -225,14 +225,14 @@ namespace EventStore.Core.Services
                 var chunk = Writer.CurrentChunk;
                 if (chunk.ChunkHeader.ChunkStartNumber != message.ChunkStartNumber || chunk.ChunkHeader.ChunkEndNumber != message.ChunkEndNumber)
                 {
-                    Log.Error("Received DataChunkBulk for TFChunk {@chunkStartNumber}-{@chunkEndNumber}, but active chunk is {@activeChunkStartNumber}-{@activeChunkEndNumber}.",
+                    Log.Error("Received DataChunkBulk for TFChunk {chunkStartNumber}-{chunkEndNumber}, but active chunk is {activeChunkStartNumber}-{activeChunkEndNumber}.",
                               message.ChunkStartNumber, message.ChunkEndNumber, chunk.ChunkHeader.ChunkStartNumber, chunk.ChunkHeader.ChunkEndNumber);
                     return;
                 }
 
                 if (_subscriptionPos != message.SubscriptionPosition)
                 {
-                    Log.Error("Received DataChunkBulk at SubscriptionPosition {@subscriptionPosition} (0x{@subscriptionPosition:X}) while current SubscriptionPosition is {@subscriptionPos} (0x{@subscriptionPos:X}).",
+                    Log.Error("Received DataChunkBulk at SubscriptionPosition {subscriptionPosition} (0x{subscriptionPosition:X}) while current SubscriptionPosition is {subscriptionPos} (0x{subscriptionPos:X}).",
                               message.SubscriptionPosition,message.SubscriptionPosition, _subscriptionPos, _subscriptionPos); 
                     return;
                 }
@@ -242,7 +242,7 @@ namespace EventStore.Core.Services
 
                 if (message.CompleteChunk)
                 {
-                    Log.Trace("Completing data chunk {@chunkStartNumber}-{@chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
+                    Log.Trace("Completing data chunk {chunkStartNumber}-{chunkEndNumber}...", message.ChunkStartNumber, message.ChunkEndNumber);
                     Writer.CompleteChunk();
 
                     if (_framer.HasData) 
@@ -278,7 +278,7 @@ namespace EventStore.Core.Services
             if (!Writer.Write(record, out newPos))
                 ReplicationFail(
                     "First write failed when writing replicated record: {0}.",
-                    "First write failed when writing replicated record: {@record}.",
+                    "First write failed when writing replicated record: {record}.",
                     record);
         }
 

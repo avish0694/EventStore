@@ -83,7 +83,7 @@ namespace EventStore.Core.Index
                     fs.FlushToDisk();
                 }
             }
-            Log.Trace("Dumped MemTable [{@id}, {@table} entries] in {@elapsed}.", table.Id, table.Count, sw.Elapsed);
+            Log.Trace("Dumped MemTable [{id}, {table} entries] in {elapsed}.", table.Id, table.Count, sw.Elapsed);
             return new PTable(filename, table.Id, depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
 
@@ -181,7 +181,7 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@dumpedEntryCount}).",
+            Log.Trace("PTables merge finished in {elapsed} ([{entryCount}] entries merged into {dumpedEntryCount}).",
                       watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
@@ -286,7 +286,7 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@dumpedEntryCount}).",
+            Log.Trace("PTables merge finished in {elapsed} ([{entryCount}] entries merged into {dumpedEntryCount}).",
                       watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
@@ -376,10 +376,10 @@ namespace EventStore.Core.Index
                     AppendMidpointRecordTo(bs,buffer,version,pt,indexEntrySize);
                 }
                 midpointsWritten = midpoints.Count;
-                Log.Debug("Cached {@midpointsWritten} index midpoints to PTable", midpointsWritten);
+                Log.Debug("Cached {midpointsWritten} index midpoints to PTable", midpointsWritten);
             }
             else
-                Log.Debug("Not caching index midpoints to PTable due to count mismatch. Table entries: {@numIndexEntries} / Dumped entries: {@dumpedEntryCount}, Required midpoint count: {@requiredMidpointCount} /  Actual midpoint count: {@midpoints}", numIndexEntries, dumpedEntryCount, requiredMidpointCount, midpoints.Count);
+                Log.Debug("Not caching index midpoints to PTable due to count mismatch. Table entries: {numIndexEntries} / Dumped entries: {dumpedEntryCount}, Required midpoint count: {requiredMidpointCount} /  Actual midpoint count: {midpoints}", numIndexEntries, dumpedEntryCount, requiredMidpointCount, midpoints.Count);
 
             bs.Flush();
             fs.SetLength(fs.Position + PTableFooter.GetSize(version));

@@ -57,7 +57,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 foreach (var chunkFile in _config.FileNamingStrategy.GetAllVersionsFor(i))
                 {
-                    Log.Info("File {@chunk} will be deleted during TruncateDb procedure.", chunkFile);
+                    Log.Info("File {chunk} will be deleted during TruncateDb procedure.", chunkFile);
                     File.SetAttributes(chunkFile, FileAttributes.Normal);
                     File.Delete(chunkFile);
                 }
@@ -73,7 +73,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                     truncateChk = newLastChunkHeader.ChunkStartPosition;
 
                     // we need to delete EVERYTHING from ChunkStartNumber up to newLastChunkNum, inclusive
-                    Log.Info("Setting TruncateCheckpoint to {@truncateCheckpoint} and deleting ALL chunks from #{@chunkStartNumber} inclusively "
+                    Log.Info("Setting TruncateCheckpoint to {truncateCheckpoint} and deleting ALL chunks from #{chunkStartNumber} inclusively "
                              + "as truncation position is in the middle of scavenged chunk.",
                              truncateChk, newLastChunkHeader.ChunkStartNumber);
                     for (int i = newLastChunkNum; i >= newLastChunkHeader.ChunkStartNumber; --i)
@@ -81,7 +81,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         var chunksToDelete = _config.FileNamingStrategy.GetAllVersionsFor(i);
                         foreach (var chunkFile in chunksToDelete)
                         {
-                            Log.Info("File {@chunk} will be deleted during TruncateDb procedure.", chunkFile);
+                            Log.Info("File {chunk} will be deleted during TruncateDb procedure.", chunkFile);
                             File.SetAttributes(chunkFile, FileAttributes.Normal);
                             File.Delete(chunkFile);
                         }
@@ -95,7 +95,7 @@ namespace EventStore.Core.TransactionLog.Chunks
 
             if (_config.EpochCheckpoint.Read() >= truncateChk)
             {
-                Log.Info("Truncating epoch from {@epochFrom} (0x{@epochFrom:X}) to {@epochTo} (0x{@epochTo:X}).", _config.EpochCheckpoint.Read(),_config.EpochCheckpoint.Read(), -1,-1);
+                Log.Info("Truncating epoch from {epochFrom} (0x{epochFrom:X}) to {epochTo} (0x{epochTo:X}).", _config.EpochCheckpoint.Read(),_config.EpochCheckpoint.Read(), -1,-1);
                 _config.EpochCheckpoint.Write(-1);
                 _config.EpochCheckpoint.Flush();
             }
@@ -103,7 +103,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             if (_config.ChaserCheckpoint.Read() > truncateChk)
             {
                 var chaserChk = _config.ChaserCheckpoint.Read();
-                Log.Info("Truncating chaser from {@chaserCheckpoint} (0x{@chaserCheckpoint:X}) to {@truncateCheckpoint} (0x{@truncateCheckpoint:X}).", chaserChk, chaserChk, truncateChk, truncateChk);
+                Log.Info("Truncating chaser from {chaserCheckpoint} (0x{chaserCheckpoint:X}) to {truncateCheckpoint} (0x{truncateCheckpoint:X}).", chaserChk, chaserChk, truncateChk, truncateChk);
                 _config.ChaserCheckpoint.Write(truncateChk);
                 _config.ChaserCheckpoint.Flush();
             }
@@ -111,12 +111,12 @@ namespace EventStore.Core.TransactionLog.Chunks
             if (_config.WriterCheckpoint.Read() > truncateChk)
             {
                 var writerCheckpoint = _config.WriterCheckpoint.Read();
-                Log.Info("Truncating writer from {@writerCheckpoint} (0x{@writerCheckpoint:X}) to {@truncateCheckpoint} (0x{@truncateCheckpoint:X}).", writerCheckpoint ,writerCheckpoint, truncateChk, truncateChk);
+                Log.Info("Truncating writer from {writerCheckpoint} (0x{writerCheckpoint:X}) to {truncateCheckpoint} (0x{truncateCheckpoint:X}).", writerCheckpoint ,writerCheckpoint, truncateChk, truncateChk);
                 _config.WriterCheckpoint.Write(truncateChk);
                 _config.WriterCheckpoint.Flush();
             }
 
-            Log.Info("Resetting TruncateCheckpoint to {@epoch} (0x{@epoch:X}).", -1,-1);
+            Log.Info("Resetting TruncateCheckpoint to {epoch} (0x{epoch:X}).", -1,-1);
             _config.TruncateCheckpoint.Write(-1);
             _config.TruncateCheckpoint.Flush();
         }

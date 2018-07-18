@@ -104,7 +104,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (ArgumentException e)
             {
-                Log.ErrorException(e, "Description string '{@desc}' did not pass validation. Status description was not set.", desc);
+                Log.ErrorException(e, "Description string '{desc}' did not pass validation. Status description was not set.", desc);
             }
         }
 
@@ -120,7 +120,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content type on HTTP response: {@e}.", e.Message);
+                Log.Debug("Error during setting content type on HTTP response: {e}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -140,11 +140,11 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content length on HTTP response: {@e}.", e.Message);
+                Log.Debug("Error during setting content length on HTTP response: {e}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
-                Log.ErrorException(e, "Attempt to set invalid value '{@length}' as content length.", length);
+                Log.ErrorException(e, "Attempt to set invalid value '{length}' as content length.", length);
             }
         }
 
@@ -165,7 +165,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set required response headers: {@e}.", e.Message);
+                Log.Debug("Failed to set required response headers: {e}.", e.Message);
             }
         }
 
@@ -177,7 +177,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set Content-Encoding header: {@e}.", e.Message);
+                Log.Debug("Failed to set Content-Encoding header: {e}.", e.Message);
             }
         }
 
@@ -196,7 +196,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set additional response headers: {@e}.", e.Message);
+                Log.Debug("Failed to set additional response headers: {e}.", e.Message);
             }
         }
 
@@ -248,7 +248,7 @@ namespace EventStore.Transport.Http.EntityManagement
         {
             IOStreams.SafelyDispose(_currentOutputStream);
             _currentOutputStream = null;
-            CloseConnection(e => Log.Debug(message + "\nException: {@e}",e.Message));
+            CloseConnection(e => Log.Debug(message + "\nException: {e}",e.Message));
         }
 
         public void EndReply()
@@ -348,7 +348,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.ErrorException(e, "Failed to set up forwarded response parameters for '{@requestedUrl}'.", RequestedUrl);
+                Log.ErrorException(e, "Failed to set up forwarded response parameters for '{requestedUrl}'.", RequestedUrl);
             }
         }
 
@@ -387,7 +387,7 @@ namespace EventStore.Transport.Http.EntityManagement
             if (copier.Error != null)
             {
                 state.Dispose();
-                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {@e}", exc.Message));
+                CloseConnection(exc => Log.Debug("Close connection error (after crash in read request): {e}", exc.Message));
 
                 state.OnError(copier.Error);
                 return;
@@ -438,7 +438,7 @@ namespace EventStore.Transport.Http.EntityManagement
                 {
                     bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
-                Log.Debug("HTTP Request Received\n{@dateTime}\nFrom: {@remoteEndPoint}\n{@httpMethod} {@requestUrl}\n{@headers}\n{@body}"
+                Log.Debug("HTTP Request Received\n{dateTime}\nFrom: {remoteEndPoint}\n{httpMethod} {requestUrl}\n{headers}\n{body}"
                 , DateTime.Now
                 , HttpEntity.Request.RemoteEndPoint.ToString()
                 , HttpEntity.Request.HttpMethod
@@ -459,7 +459,7 @@ namespace EventStore.Transport.Http.EntityManagement
                     bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
 
-                Log.Debug("HTTP Response\n{@dateTime}\n{@statusCode} {@statusDescription}\n{@headers}\n{@body}",
+                Log.Debug("HTTP Response\n{dateTime}\n{statusCode} {statusDescription}\n{headers}\n{body}",
                     DateTime.Now,
                     HttpEntity.Response.StatusCode,
                     HttpEntity.Response.StatusDescription,

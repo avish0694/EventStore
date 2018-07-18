@@ -117,10 +117,10 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                                                                        {
                                                                                            Log.Info("EXCEPTION");
                                                                                        }
-                                                                                       Log.Info("Data written for iteration {@iteration}.", GetIterationCode();})*/);
+                                                                                       Log.Info("Data written for iteration {iteration}.", GetIterationCode();})*/);
             
 //            return task;
-            return task.ContinueWith(x => Log.Info("Data written for iteration {@iteration}.", GetIterationCode()));
+            return task.ContinueWith(x => Log.Info("Data written for iteration {iteration}.", GetIterationCode()));
         }
     }
 }

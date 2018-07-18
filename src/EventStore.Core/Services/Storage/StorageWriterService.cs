@@ -144,15 +144,15 @@ namespace EventStore.Core.Services.Storage
         {
             if (BlockWriter && !(message is SystemMessage.StateChangeMessage))
             {
-                Log.Trace("Blocking message {@message} in StorageWriterService. Message:", message.GetType().Name); 
-                Log.Trace("{@message}", message);
+                Log.Trace("Blocking message {message} in StorageWriterService. Message:", message.GetType().Name); 
+                Log.Trace("{message}", message);
                 return;
             }
 
             if (_vnodeState != VNodeState.Master && message is StorageMessage.IMasterWriteMessage)
             {
               
-                Log.Fatal("{@message} appeared in StorageWriter during state {@vnodeStrate}.", message.GetType().Name,
+                Log.Fatal("{message} appeared in StorageWriter during state {vnodeStrate}.", message.GetType().Name,
                     _vnodeState);
                 var msg = String.Format("{0} appeared in StorageWriter during state {1}.", message.GetType().Name,
                     _vnodeState);
@@ -232,7 +232,7 @@ namespace EventStore.Core.Services.Storage
 
             var totalTime = message.TotalTimeWasted + sw.Elapsed;
             if (totalTime < TimeSpan.FromSeconds(5) || (int) totalTime.TotalSeconds%30 == 0) // too verbose otherwise
-                Log.Debug("Still waiting for chaser to catch up already for {@totalTime}...", totalTime);
+                Log.Debug("Still waiting for chaser to catch up already for {totalTime}...", totalTime);
             Bus.Publish(new SystemMessage.WaitForChaserToCatchUp(message.CorrelationId, totalTime));
         }
 
@@ -530,8 +530,8 @@ namespace EventStore.Core.Services.Storage
             if (transactionInfo.TransactionOffset < -1 || transactionInfo.EventStreamId.IsEmptyString())
             {
                 Log.Error(
-                    "Invalid transaction info found for transaction ID {@transactionId}. "
-                   +"Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@stream}",
+                    "Invalid transaction info found for transaction ID {transactionId}. "
+                   +"Possibly wrong transactionId provided. TransactionOffset: {transactionOffset}, EventStreamId: {stream}",
                     transactionId,
                     transactionInfo.TransactionOffset,
                     transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId);

@@ -133,7 +133,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
                                                    var dto = manager.RequestCodec.From<TDto>(body);
                                                    return dto != null ? unwrapper(dto) : null;
                                                });
-            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {@e}.", e.Message));
+            manager.ReadTextRequestAsync(OnPostRequestRead, e => Log.Debug("Error while reading request: {e}.", e.Message));
         }
 
         private void OnPostRequestRead(HttpEntityManager manager, string body)

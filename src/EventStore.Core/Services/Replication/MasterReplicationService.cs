@@ -132,8 +132,8 @@ namespace EventStore.Core.Services.Replication
                 {
                     ReplicaSubscription existingSubscr;
                     _subscriptions.TryGetValue(subscription.SubscriptionId, out existingSubscr);
-                    Log.Error("There is already a subscription with SubscriptionID {@subscriptionId:B}: {@existingSubscription}.", subscription.SubscriptionId, existingSubscr);
-                    Log.Error("Subscription we tried to add: {@existingSubscription}.", existingSubscr);
+                    Log.Error("There is already a subscription with SubscriptionID {subscriptionId:B}: {existingSubscription}.", subscription.SubscriptionId, existingSubscr);
+                    Log.Error("Subscription we tried to add: {existingSubscription}.", existingSubscr);
                     subscription.SendBadRequestAndClose(message.CorrelationId, string.Format("There is already a subscription with SubscriptionID {0:B}: {1}.\nSubscription we tried to add: {2}",
                                             subscription.SubscriptionId, existingSubscr, subscription));
                     subscription.Dispose();
@@ -174,7 +174,7 @@ namespace EventStore.Core.Services.Replication
             try
             {
                 var epochs = lastEpochs ?? new Epoch[0];
-                Log.Info("SUBSCRIBE REQUEST from [{@replicaEndPoint},C:{@connectionId:B},S:{@subscriptionId:B},{@logPosition}(0x{@logPosition:X}),{@epochs}]...",
+                Log.Info("SUBSCRIBE REQUEST from [{replicaEndPoint},C:{connectionId:B},S:{subscriptionId:B},{logPosition}(0x{logPosition:X}),{epochs}]...",
                          replica.ReplicaEndPoint, replica.ConnectionId, replica.SubscriptionId, logPosition, logPosition,
                          string.Join(", ", epochs.Select(x => EpochRecordExtensions.AsString((Epoch) x))));
 
@@ -204,7 +204,7 @@ namespace EventStore.Core.Services.Replication
                                             replicaEndPoint, subscriptionId,
                                             string.Join(", ", epochs.Select(x => x.AsString())), logPosition);
                     Log.Info(
-                        "Replica [{@replicaEndPoint},S:{@subscriptionId},{@epochs}] has positive LogPosition {@logPosition} (0x{@logPosition:X}), but does not have epochs.",
+                        "Replica [{replicaEndPoint},S:{subscriptionId},{epochs}] has positive LogPosition {logPosition} (0x{logPosition:X}), but does not have epochs.",
                         replicaEndPoint, subscriptionId,
                         string.Join(", ", epochs.Select(x => x.AsString())), logPosition, logPosition);
                     throw new Exception(msg);
@@ -227,7 +227,7 @@ namespace EventStore.Core.Services.Replication
             }
             if (commonEpoch == null)
             {
-                Log.Error("No common epoch found for replica [{@replicaEndPoint},S{@subscriptionId},{@logPosition}(0x{@logPosition:X}),{@epochs}]. Subscribing at 0. Master LogPosition: {@masterCheckpoint} (0x{@masterCheckpoint:X}), known epochs: {@knownEpochs}.",
+                Log.Error("No common epoch found for replica [{replicaEndPoint},S{subscriptionId},{logPosition}(0x{logPosition:X}),{epochs}]. Subscribing at 0. Master LogPosition: {masterCheckpoint} (0x{masterCheckpoint:X}), known epochs: {knownEpochs}.",
                           replicaEndPoint, subscriptionId,
                           logPosition, logPosition,
                           string.Join(", ", epochs.Select(x => x.AsString())),
@@ -258,10 +258,10 @@ namespace EventStore.Core.Services.Replication
                                         string.Join("\n", _epochManager.GetLastEpochs(int.MaxValue).Select(x => x.AsString())), masterCheckpoint,masterCheckpoint,
                                         commonEpoch.AsString(), afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString());
                 Log.Error(
-                    "Replica [{@replicaEndPoint},S:{@subscriptionId},{@logPosition}(0x{@logPosition:X}),epochs:\n{@epochs}]\n provided epochs which are not in "
-                    + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterCheckpoint} (0x{@masterCheckpoint:X}). "
+                    "Replica [{replicaEndPoint},S:{subscriptionId},{logPosition}(0x{logPosition:X}),epochs:\n{epochs}]\n provided epochs which are not in "
+                    + "EpochManager (possibly too old, known epochs:\n{lastEpochs}).\nMaster LogPosition: {masterCheckpoint} (0x{masterCheckpoint:X}). "
                     + "We do not support this case as of now.\n"
-                    + "CommonEpoch: {@commonEpoch}, AfterCommonEpoch: {@afterCommonEpoch}",
+                    + "CommonEpoch: {commonEpoch}, AfterCommonEpoch: {afterCommonEpoch}",
                     replicaEndPoint,
                     subscriptionId,
                     logPosition,
@@ -300,11 +300,11 @@ namespace EventStore.Core.Services.Replication
                     var chunkStartPos = chunk.ChunkHeader.ChunkStartPosition;
                     if (verbose)
                     {
-                        Log.Info("Subscribed replica [{@replicaEndPoint}, S:{@subscriptionId}] for raw send at {@chunkStartPosition} (0x{@chunkStartPosition:X}) (requested {@logPosition} (0x{@logPosition:X})).",
+                        Log.Info("Subscribed replica [{replicaEndPoint}, S:{subscriptionId}] for raw send at {chunkStartPosition} (0x{chunkStartPosition:X}) (requested {logPosition} (0x{logPosition:X})).",
                                  sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos, logPosition, logPosition);
                         if (chunkStartPos != logPosition)
                         {
-                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPosition} (0x{@chunkStartPosition:X})...",
+                            Log.Info("Forcing replica [{replicaEndPoint}, S:{subscriptionId}] to recreate chunk from position {chunkStartPosition} (0x{chunkStartPosition:X})...",
                                      sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos); 
                         }
                     }
@@ -323,7 +323,7 @@ namespace EventStore.Core.Services.Replication
                 else
                 {
                     if (verbose)
-                        Log.Info("Subscribed replica [{@replicaEndPoint},S:{@subscriptionId}] for data send at {@logPosition} (0x{@logPosition:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition, logPosition);
+                        Log.Info("Subscribed replica [{replicaEndPoint},S:{subscriptionId}] for data send at {logPosition} (0x{logPosition:X}).", sub.ReplicaEndPoint, sub.SubscriptionId, logPosition, logPosition);
 
                     sub.LogPosition = logPosition;
                     sub.RawSend = false;
@@ -442,7 +442,7 @@ namespace EventStore.Core.Services.Replication
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "Error during replication send to replica: {@subscription}.", subscription);
+                    Log.InfoException(exc, "Error during replication send to replica: {subscription}.", subscription);
                 }
             }
             return dataFound;

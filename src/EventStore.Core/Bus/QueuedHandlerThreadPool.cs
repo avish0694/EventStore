@@ -107,10 +107,10 @@ namespace EventStore.Core.Bus
                             var elapsed = DateTime.UtcNow - start;
                             if (elapsed > _slowMsgThreshold)
                             {
-                                Log.Trace("SLOW QUEUE MSG [{@queue}]: {@message} - {@elapsed}ms. Q: {@prevQueueCount}/{@curQueueCount}.",
+                                Log.Trace("SLOW QUEUE MSG [{queue}]: {message} - {elapsed}ms. Q: {prevQueueCount}/{curQueueCount}.",
                                           _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
                                 if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(msg is SystemMessage.SystemInit))
-                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{@queue}]: {@message} - {@elapsed}ms. Q: {@prevQueueCount}/{@curQueueCount}.",
+                                    Log.Error("---!!! VERY SLOW QUEUE MSG [{queue}]: {message} - {elapsed}ms. Q: {prevQueueCount}/{curQueueCount}.",
                                               _queueStats.Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, queueCnt, _queue.Count);
                             }
                         }
@@ -123,7 +123,7 @@ namespace EventStore.Core.Bus
                     }
                     catch (Exception ex)
                     {
-                        Log.ErrorException(ex, "Error while processing message {@message} in queued handler '{@queue}'.", msg, _queueStats.Name);
+                        Log.ErrorException(ex, "Error while processing message {message} in queued handler '{queue}'.", msg, _queueStats.Name);
                     }
                 }
 

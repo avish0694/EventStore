@@ -131,7 +131,7 @@ namespace EventStore.Transport.Tcp
                 }
                 catch (AuthenticationException exc)
                 {
-                    Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on BeginAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
+                    Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Authentication exception on BeginAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
                 catch (ObjectDisposedException)
@@ -140,7 +140,7 @@ namespace EventStore.Transport.Tcp
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Exception on BeginAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
+                    Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Exception on BeginAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
             }
@@ -163,7 +163,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (AuthenticationException exc)
             {
-                Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on EndAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
+                Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Authentication exception on EndAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
             catch (ObjectDisposedException)
@@ -172,7 +172,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (Exception exc)
             {
-                Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Exception on EndAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
+                Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Exception on EndAuthenticateAsServer.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
         }
@@ -205,7 +205,7 @@ namespace EventStore.Transport.Tcp
                 }
                 catch (AuthenticationException exc)
                 {
-                    Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                    Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Authentication exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
                 catch (ObjectDisposedException)
@@ -214,7 +214,7 @@ namespace EventStore.Transport.Tcp
                 }
                 catch (Exception exc)
                 {
-                    Log.InfoException(exc, "[S{@remoteEndPoint}, {@localEndPoint}]: Exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                    Log.InfoException(exc, "[S{remoteEndPoint}, {localEndPoint}]: Exception on BeginAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                     CloseInternal(SocketError.SocketError, exc.Message);
                 }
             }
@@ -237,7 +237,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (AuthenticationException exc)
             {
-                Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Authentication exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Authentication exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
             catch (ObjectDisposedException)
@@ -246,7 +246,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (Exception exc)
             {
-                Log.InfoException(exc, "[S{@remoteEndPoint}, L{@localEndPoint}]: Exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
+                Log.InfoException(exc, "[S{remoteEndPoint}, L{localEndPoint}]: Exception on EndAuthenticateAsClient.", RemoteEndPoint, LocalEndPoint);
                 CloseInternal(SocketError.SocketError, exc.Message);
             }
         }
@@ -259,28 +259,28 @@ namespace EventStore.Transport.Tcp
 
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
-            Log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {@e}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
+            Log.Error("[S{remoteEndPoint}, L{localEndPoint}]: Certificate error: {e}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
             // Do not allow this client to communicate with unauthenticated servers. 
             return false;
         }
 
         private void DisplaySslStreamInfo(SslStream stream)
         {
-            Log.Info("[S{@remoteEndPoint}, L{@localEndPoint}]", RemoteEndPoint, LocalEndPoint);
-            Log.Info("Cipher: {@cipherAlgorithm} strength {@cipherStrength}", stream.CipherAlgorithm, stream.CipherStrength);
-            Log.Info("Hash: {@hashAlgorithm} strength {@hashStrength}", stream.HashAlgorithm, stream.HashStrength);
-            Log.Info("Key exchange: {@keyExchangeAlgorithm} strength {@keyExchangeStrength}", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
-            Log.Info("Protocol: {@sslProtocol}", stream.SslProtocol);
-            Log.Info("Is authenticated: {@isAuthenticated} as server? {@isServer}", stream.IsAuthenticated, stream.IsServer);
-            Log.Info("IsSigned: {@isSigned}", stream.IsSigned);
-            Log.Info("Is Encrypted: {@isEncrypted}", stream.IsEncrypted);
-            Log.Info("Can read: {@canRead}, write {@canWrite}", stream.CanRead, stream.CanWrite);
-            Log.Info("Can timeout: {@canTimeout}", stream.CanTimeout);
-            Log.Info("Certificate revocation list checked: {@checkCertRevocationStatus}", stream.CheckCertRevocationStatus);
+            Log.Info("[S{remoteEndPoint}, L{localEndPoint}]", RemoteEndPoint, LocalEndPoint);
+            Log.Info("Cipher: {cipherAlgorithm} strength {cipherStrength}", stream.CipherAlgorithm, stream.CipherStrength);
+            Log.Info("Hash: {hashAlgorithm} strength {hashStrength}", stream.HashAlgorithm, stream.HashStrength);
+            Log.Info("Key exchange: {keyExchangeAlgorithm} strength {keyExchangeStrength}", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
+            Log.Info("Protocol: {sslProtocol}", stream.SslProtocol);
+            Log.Info("Is authenticated: {isAuthenticated} as server? {isServer}", stream.IsAuthenticated, stream.IsServer);
+            Log.Info("IsSigned: {isSigned}", stream.IsSigned);
+            Log.Info("Is Encrypted: {isEncrypted}", stream.IsEncrypted);
+            Log.Info("Can read: {canRead}, write {canWrite}", stream.CanRead, stream.CanWrite);
+            Log.Info("Can timeout: {canTimeout}", stream.CanTimeout);
+            Log.Info("Certificate revocation list checked: {checkCertRevocationStatus}", stream.CheckCertRevocationStatus);
 
             X509Certificate localCert = stream.LocalCertificate;
             if (localCert != null)
-                Log.Info("Local certificate was issued to {@subject} and is valid from {@effectiveDate} until {@expirationDate}.",
+                Log.Info("Local certificate was issued to {subject} and is valid from {effectiveDate} until {expirationDate}.",
                                 localCert.Subject, localCert.GetEffectiveDateString(), localCert.GetExpirationDateString());
             else
                 Log.Info("Local certificate is null.");
@@ -288,7 +288,7 @@ namespace EventStore.Transport.Tcp
             // Display the properties of the client's certificate.
             X509Certificate remoteCert = stream.RemoteCertificate;
             if (remoteCert != null)
-                Log.Info("Remote certificate was issued to {@subject} and is valid from {@remoteCertEffectiveDate} until {@remoteCertExpirationDate}.",
+                Log.Info("Remote certificate was issued to {subject} and is valid from {remoteCertEffectiveDate} until {remoteCertExpirationDate}.",
                                 remoteCert.Subject, remoteCert.GetEffectiveDateString(), remoteCert.GetExpirationDateString());
             else
                 Log.Info("Remote certificate is null.");
@@ -336,7 +336,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@e}' during BeginWrite.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{e}' during BeginWrite.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginWrite.");
             }
             catch (ObjectDisposedException)
@@ -365,7 +365,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@e}' during EndWrite.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{e}' during EndWrite.", exc.SocketErrorCode);
                 NotifySendCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndWrite.");
             }
@@ -403,7 +403,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@e}' during BeginRead.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{e}' during BeginRead.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginRead.");
             }
             catch (ObjectDisposedException)
@@ -426,7 +426,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@e}' during EndRead.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{e}' during EndRead.", exc.SocketErrorCode);
                 NotifyReceiveCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndRead.");
                 return;
@@ -522,16 +522,16 @@ namespace EventStore.Transport.Tcp
 
             if (_verbose)
             {
-                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
+                Log.Info("ES {connectionType} closed [{dateTime:HH:mm:ss.fff}: N{remoteEndPoint}, L{localEndPoint}, {connectionId:B}]:Received bytes: {totalBytesReceived}, Sent bytes: {totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         TotalBytesReceived, TotalBytesSent);
-                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
+                Log.Info("ES {connectionType} closed [{dateTime:HH:mm:ss.fff}: N{remoteEndPoint}, L{localEndPoint}, {connectionId:B}]:Send calls: {sendCalls}, callbacks: {sendCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         SendCalls, SendCallbacks); 
-                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
+                Log.Info("ES {connectionType} closed [{dateTime:HH:mm:ss.fff}: N{remoteEndPoint}, L{localEndPoint}, {connectionId:B}]:Receive calls: {receiveCalls}, callbacks: {receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         ReceiveCalls, ReceiveCallbacks);
-                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Close reason: [{@e}] {@reason}",
+                Log.Info("ES {connectionType} closed [{dateTime:HH:mm:ss.fff}: N{remoteEndPoint}, L{localEndPoint}, {connectionId:B}]:Close reason: [{e}] {reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         socketError, reason);
             }

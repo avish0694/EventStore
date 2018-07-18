@@ -163,7 +163,7 @@ namespace EventStore.BufferManagement
                     _buffers.Push(chunk);
                 }
 
-                Log.Debug("Segments count: {@segments}, buffers count: {@buffers}, should be when full: {@full}",
+                Log.Debug("Segments count: {segments}, buffers count: {buffers}, should be when full: {full}",
                                   _segments.Count,
                                   _buffers.Count,
                                   _segments.Count * _segmentChunks);

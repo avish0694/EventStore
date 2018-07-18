@@ -57,7 +57,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             var sw = Stopwatch.StartNew();
             long spaceSaved = 0;
 
-            Log.Trace("SCAVENGING: started scavenging of DB. Chunks count at start: {@chunksCount}. Options: alwaysKeepScavenged = {@alwaysKeepScavenged}, mergeChunks = {@mergeChunks}",
+            Log.Trace("SCAVENGING: started scavenging of DB. Chunks count at start: {chunksCount}. Options: alwaysKeepScavenged = {alwaysKeepScavenged}, mergeChunks = {mergeChunks}",
                       _db.Manager.ChunksCount, alwaysKeepScavenged, mergeChunks);
 
             for (long scavengePos = 0; scavengePos < _db.Config.ChaserCheckpoint.Read(); )
@@ -65,7 +65,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 var chunk = _db.Manager.GetChunkFor(scavengePos);
                 if (!chunk.IsReadOnly)
                 {
-                    Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePosition}.", scavengePos);
+                    Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {scavengePosition}.", scavengePos);
                     break;
                 }
 
@@ -75,7 +75,7 @@ namespace EventStore.Core.TransactionLog.Chunks
 
                 scavengePos = chunk.ChunkHeader.ChunkEndPosition;
             }
-            Log.Trace("SCAVENGING: initial pass completed in {@elapsed}.", sw.Elapsed);
+            Log.Trace("SCAVENGING: initial pass completed in {elapsed}.", sw.Elapsed);
 
             if (mergeChunks)
             {
@@ -94,7 +94,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         var chunk = _db.Manager.GetChunkFor(scavengePos);
                         if (!chunk.IsReadOnly)
                         {
-                            Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePosition}.", scavengePos);
+                            Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {scavengePosition}.", scavengePos);
                             break;
                         }
                         if (totalDataSize + chunk.PhysicalDataSize > _maxChunkDataSize)
@@ -123,11 +123,11 @@ namespace EventStore.Core.TransactionLog.Chunks
                             mergedSomething = true;
                         }
                     }
-                    Log.Trace("SCAVENGING: merge pass #{@pass} completed in {@elapsed}. {@merged} merged.",
+                    Log.Trace("SCAVENGING: merge pass #{pass} completed in {elapsed}. {merged} merged.",
                               passNum, sw.Elapsed, mergedSomething ? "Some chunks" : "Nothing");
                 } while (mergedSomething);
             }
-            Log.Trace("SCAVENGING: total time taken: {@elapsed}, total space saved: {@spaceSaved}.", totalSw.Elapsed, spaceSaved);
+            Log.Trace("SCAVENGING: total time taken: {elapsed}, total space saved: {spaceSaved}.", totalSw.Elapsed, spaceSaved);
             return spaceSaved;
         }
 
@@ -146,8 +146,8 @@ namespace EventStore.Core.TransactionLog.Chunks
 
             var tmpChunkPath = Path.Combine(_db.Config.Path, Guid.NewGuid() + ".scavenge.tmp");
             var oldChunksList = string.Join("\n", oldChunks);
-            Log.Trace("SCAVENGING: started to scavenge & merge chunks: {@oldChunksList}", oldChunksList);
-            Log.Trace("Resulting temp chunk file: {@tmpChunk}.", Path.GetFileName(tmpChunkPath));
+            Log.Trace("SCAVENGING: started to scavenge & merge chunks: {oldChunksList}", oldChunksList);
+            Log.Trace("Resulting temp chunk file: {tmpChunk}.", Path.GetFileName(tmpChunkPath));
 
             TFChunk.TFChunk newChunk;
             try
@@ -224,10 +224,10 @@ namespace EventStore.Core.TransactionLog.Chunks
                 {
                     Log.Trace(
                         "Scavenging of chunks:"
-                        +"\n{@oldChunksList}"
-                        +"\ncompleted in {@elapsed}."
+                        +"\n{oldChunksList}"
+                        +"\ncompleted in {elapsed}."
                         +"\nOld chunks' versions are kept as they are smaller."
-                        +"\nOld chunk total size: {@oldSize}, scavenged chunk size: {@newSize}."
+                        +"\nOld chunk total size: {oldSize}, scavenged chunk size: {newSize}."
                         +"\nScavenged chunk removed.",oldChunksList, sw.Elapsed, oldSize, newSize);
 
                     newChunk.MarkForDeletion();
@@ -267,10 +267,10 @@ namespace EventStore.Core.TransactionLog.Chunks
                 {
                     Log.Trace(
                         "Scavenging of chunks:"
-                        +"\n{@oldChunksList}"
-                        +"\ncompleted in {@elapsed}."
-                        +"\nNew chunk: {@tmpChunk} --> #{@chunkStartNumber}-{@chunkEndNumber} ({@newChunk})."
-                        +"\nOld chunks total size: {@oldSize}, scavenged chunk size: {@newSize}.",
+                        +"\n{oldChunksList}"
+                        +"\ncompleted in {elapsed}."
+                        +"\nNew chunk: {tmpChunk} --> #{chunkStartNumber}-{chunkEndNumber} ({newChunk})."
+                        +"\nOld chunks total size: {oldSize}, scavenged chunk size: {newSize}.",
                         oldChunksList, sw.Elapsed, Path.GetFileName(tmpChunkPath), chunkStartNumber, chunkEndNumber, Path.GetFileName(chunk.FileName),
                         oldSize, newSize);
                     spaceSaved = oldSize - newSize;
@@ -281,10 +281,10 @@ namespace EventStore.Core.TransactionLog.Chunks
                 {
                     Log.Trace(
                         "Scavenging of chunks:"
-                        +"\n{@oldChunksList}"
-                        +"\ncompleted in {@elapsed}."
-                        +"\nBut switching was prevented for new chunk: #{@chunkStartNumber}-{@chunkEndNumber} ({@tmpChunk})."
-                        +"\nOld chunks total size: {@oldSize}, scavenged chunk size: {@newSize}.",
+                        +"\n{oldChunksList}"
+                        +"\ncompleted in {elapsed}."
+                        +"\nBut switching was prevented for new chunk: #{chunkStartNumber}-{chunkEndNumber} ({tmpChunk})."
+                        +"\nOld chunks total size: {oldSize}, scavenged chunk size: {newSize}.",
                         oldChunksList, sw.Elapsed, chunkStartNumber, chunkEndNumber, Path.GetFileName(tmpChunkPath), oldSize, newSize);
                     PublishChunksCompletedEvent(chunkStartNumber, chunkEndNumber, sw.Elapsed, false, spaceSaved);
                     return false;
@@ -294,9 +294,9 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 Log.Info("Got FileBeingDeletedException exception during scavenging, that probably means some chunks were re-replicated."
                         +"\nScavenging of following chunks will be skipped:"
-                        +"\n{@oldChunksList}"
-                        +"\nStopping scavenging and removing temp chunk '{@tmpChunkPath}'..."
-                        +"\nException message: {@e}.",
+                        +"\n{oldChunksList}"
+                        +"\nStopping scavenging and removing temp chunk '{tmpChunkPath}'..."
+                        +"\nException message: {e}.",
                         oldChunksList, tmpChunkPath, exc.Message);
 
                 DeleteTempChunk(tmpChunkPath, MaxRetryCount);
@@ -305,8 +305,8 @@ namespace EventStore.Core.TransactionLog.Chunks
             }
             catch (Exception ex)
             {
-                Log.Info("Got exception while scavenging chunk: #{@chunkStartNumber}-{@chunkEndNumber}. This chunk will be skipped\n"
-                         + "Exception: {@e}.", chunkStartNumber, chunkEndNumber, ex.ToString());
+                Log.Info("Got exception while scavenging chunk: #{chunkStartNumber}-{chunkEndNumber}. This chunk will be skipped\n"
+                         + "Exception: {e}.", chunkStartNumber, chunkEndNumber, ex.ToString());
                 DeleteTempChunk(tmpChunkPath, MaxRetryCount);
                 PublishChunksCompletedEvent(chunkStartNumber, chunkEndNumber, sw.Elapsed, false, 0, ex.Message);
                 return false;
@@ -323,13 +323,13 @@ namespace EventStore.Core.TransactionLog.Chunks
             catch(Exception ex)
             {
                 if (retries > 0) {
-                    Log.Error("Failed to delete the temp chunk. Retrying {@retry}/{@maxRetryCount}. Reason: {@e}",
+                    Log.Error("Failed to delete the temp chunk. Retrying {retry}/{maxRetryCount}. Reason: {e}",
                         MaxRetryCount - retries, MaxRetryCount, ex);
                     DeleteTempChunk(tmpChunkPath, retries - 1);
                 }
                 else
                 {
-                    Log.Error("Failed to delete the temp chunk. Retry limit of {@maxRetryCount} reached. Reason: {@e}", MaxRetryCount, ex);
+                    Log.Error("Failed to delete the temp chunk. Retry limit of {maxRetryCount} reached. Reason: {e}", MaxRetryCount, ex);
                     throw;
                 }
             }
@@ -362,7 +362,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 if(retryCount > 0){
                     WriteScavengeChunkCompletedEvent(streamId, eventToWrite, --retryCount);
                 }else{
-                    Log.Error("Failed to write an event to the {@stream} stream. Retry limit of {@maxRetryCount} reached. Reason: {@e}", streamId, MaxRetryCount, msg.Result);
+                    Log.Error("Failed to write an event to the {stream} stream. Retry limit of {maxRetryCount} reached. Reason: {e}", streamId, MaxRetryCount, msg.Result);
                 }
             }
         }
@@ -376,7 +376,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             if (prepare.Flags.HasAnyOf(PrepareFlags.StreamDelete))
             {
                 if(_unsafeIgnoreHardDeletes) {
-                    Log.Info("Removing hard deleted stream tombstone for stream {@stream} at position {@transactionPosition}", prepare.EventStreamId, prepare.TransactionPosition);
+                    Log.Info("Removing hard deleted stream tombstone for stream {stream} at position {transactionPosition}", prepare.EventStreamId, prepare.TransactionPosition);
                     commitInfo.TryNotToKeep();
                 } else {
                     commitInfo.ForciblyKeep();

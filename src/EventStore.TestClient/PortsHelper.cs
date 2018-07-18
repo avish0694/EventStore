@@ -28,7 +28,7 @@ namespace EventStore.TestClient
             {
             }
 
-            Log.Trace("PortsHelper: starting to examine ports at [{@ip}].", ip);
+            Log.Trace("PortsHelper: starting to examine ports at [{ip}].", ip);
 
             int succ = 0;
             for (int port = PortStart; port < PortStart + PortCount; ++port)
@@ -41,7 +41,7 @@ namespace EventStore.TestClient
                 }
                 catch (Exception exc)
                 {
-                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for TcpListener. Error: {@e}.", port, exc.Message);
+                    Log.TraceException(exc, "PortsHelper: port {port} unavailable for TcpListener. Error: {e}.", port, exc.Message);
                     continue;
                 }
 
@@ -80,7 +80,7 @@ namespace EventStore.TestClient
                 }
                 catch (Exception exc)
                 {
-                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for HttpListener. Error: {@e}.", port, exc.Message);
+                    Log.TraceException(exc, "PortsHelper: port {port} unavailable for HttpListener. Error: {e}.", port, exc.Message);
                     continue;
                 }
 
@@ -88,11 +88,11 @@ namespace EventStore.TestClient
                 succ += 1;
             }
 
-            Log.Trace("PortsHelper: {@ports} ports are available at [{@ip}].", succ, ip);
+            Log.Trace("PortsHelper: {ports} ports are available at [{ip}].", succ, ip);
             if (succ <= PortCount/2)
                 throw new Exception("More than half requested ports are unavailable.");
 
-            Log.Trace("PortsHelper: test took {@elapsed}.", sw.Elapsed);
+            Log.Trace("PortsHelper: test took {elapsed}.", sw.Elapsed);
         }
 
         public static int GetAvailablePort(IPAddress ip)

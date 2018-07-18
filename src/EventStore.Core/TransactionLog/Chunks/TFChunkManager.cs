@@ -178,7 +178,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             var chunkHeader = chunk.ChunkHeader;
             var oldFileName = chunk.FileName;
 
-            Log.Info("Switching chunk #{@chunkStartNumber}-{@chunkEndNumber} ({@oldFileName})...", chunkHeader.ChunkStartNumber, chunkHeader.ChunkEndNumber, Path.GetFileName(oldFileName));
+            Log.Info("Switching chunk #{chunkStartNumber}-{chunkEndNumber} ({oldFileName})...", chunkHeader.ChunkStartNumber, chunkHeader.ChunkEndNumber, Path.GetFileName(oldFileName));
             TFChunk.TFChunk newChunk;
 
             if (_config.InMemDb)
@@ -196,7 +196,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                             string.Format("The chunk that is being switched {0} is used by someone else.", chunk), exc);
                 }
                 var newFileName = _config.FileNamingStrategy.DetermineBestVersionFilenameFor(chunkHeader.ChunkStartNumber);
-                Log.Info("File {@oldFileName} will be moved to file {@newFileName}", Path.GetFileName(oldFileName), Path.GetFileName(newFileName));
+                Log.Info("File {oldFileName} will be moved to file {newFileName}", Path.GetFileName(oldFileName), Path.GetFileName(newFileName));
                 File.Move(oldFileName, newFileName);
                 newChunk = TFChunk.TFChunk.FromCompletedFile(newFileName, verifyHash, _config.Unbuffered, _config.InitialReaderCount, _config.OptimizeReadSideCache);
             }
@@ -205,7 +205,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 if (!ReplaceChunksWith(newChunk, "Old"))
                 {
-                    Log.Info("Chunk {@chunk} will be not switched, marking for remove...", newChunk);
+                    Log.Info("Chunk {chunk} will be not switched, marking for remove...", newChunk);
                     newChunk.MarkForDeletion();
                 }
 
@@ -253,7 +253,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 {
                     oldChunk.MarkForDeletion();
 
-                    Log.Info("{@chunkExplanation} chunk #{@oldChunk} is marked for deletion.", chunkExplanation, oldChunk);
+                    Log.Info("{chunkExplanation} chunk #{oldChunk} is marked for deletion.", chunkExplanation, oldChunk);
                 }
                 lastRemovedChunk = oldChunk;
             }
@@ -269,7 +269,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 if (oldChunk != null && !ReferenceEquals(lastRemovedChunk, oldChunk))
                 {
                     oldChunk.MarkForDeletion();
-                    Log.Info("{@chunkExplanation} chunk {@oldChunk} is marked for deletion.", chunkExplanation, oldChunk);
+                    Log.Info("{chunkExplanation} chunk {oldChunk} is marked for deletion.", chunkExplanation, oldChunk);
                 }
                 lastRemovedChunk = oldChunk;
             }

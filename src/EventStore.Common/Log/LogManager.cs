@@ -92,7 +92,7 @@ namespace EventStore.Common.Log
                 if (exc != null)
                     GlobalLogger.FatalException(exc, "Global Unhandled Exception occurred.");
                 else
-                    GlobalLogger.Fatal("Global Unhandled Exception object: {@e}.", e.ExceptionObject);
+                    GlobalLogger.Fatal("Global Unhandled Exception object: {e}.", e.ExceptionObject);
                 GlobalLogger.Flush(TimeSpan.FromMilliseconds(500));
             };
         }

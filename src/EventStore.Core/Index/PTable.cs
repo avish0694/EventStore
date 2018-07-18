@@ -87,7 +87,7 @@ namespace EventStore.Core.Index
             _id = id;
             _filename = filename;
 
-            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{@pTable}' started...", Path.GetFileName(Filename));
+            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{pTable}' started...", Path.GetFileName(Filename));
             var sw = Stopwatch.StartNew();
             _size = new FileInfo(_filename).Length;
 
@@ -199,10 +199,10 @@ namespace EventStore.Core.Index
             }
             catch (PossibleToHandleOutOfMemoryException)
             {
-                Log.Error("Unable to create midpoints for PTable '{@pTable}' ({@count} entries, depth {@depth} requested). "
+                Log.Error("Unable to create midpoints for PTable '{pTable}' ({count} entries, depth {depth} requested). "
                           + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth);
             }
-            Log.Trace("Loading PTable (Version: {@version}) '{@pTable}' ({@count} entries, cache depth {@depth}) done in {@elapsed}.",
+            Log.Trace("Loading PTable (Version: {version}) '{pTable}' ({count} entries, cache depth {depth}) done in {elapsed}.",
                       _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed);
         }
 
@@ -245,7 +245,7 @@ namespace EventStore.Core.Index
                             if(_midpointsCached == midpointsCount){
                                 //index verification is disabled and cached midpoints with the same depth requested are available
                                 //so, we can load them directly from the PTable file
-                                Log.Debug("Loading {@midpointsCached} cached midpoints from PTable",_midpointsCached);
+                                Log.Debug("Loading {midpointsCached} cached midpoints from PTable",_midpointsCached);
                                 long startOffset = stream.Length - MD5Size - PTableFooter.GetSize(_version) - _midpointsCacheSize;
                                 stream.Seek(startOffset,SeekOrigin.Begin);
                                 for(uint k=0;k<_midpointsCached;k++){
@@ -273,7 +273,7 @@ namespace EventStore.Core.Index
                                 return midpoints;
                             }
                             else
-                                Log.Debug("Skipping loading of cached midpoints from PTable due to count mismatch, cached midpoints: {@midpointsCached} / required midpoints: {@midpointsCount}",_midpointsCached, midpointsCount);
+                                Log.Debug("Skipping loading of cached midpoints from PTable due to count mismatch, cached midpoints: {midpointsCached} / required midpoints: {midpointsCount}",_midpointsCached, midpointsCount);
                         }
 
                         if(!skipIndexVerify){

@@ -231,7 +231,7 @@ namespace EventStore.Core.Services.Storage.EpochManager
                 if (!_writer.Write(rec, out pos))
                     throw new Exception(string.Format("Second write try failed at {0}.", epoch.EpochPosition));
             }
-            Log.Debug("=== Writing E{@epochNumber}@{@epochPosition}:{@epochId:B} (previous epoch at {@lastEpochPosition}).", epochNumber, epoch.EpochPosition, epochId, lastEpochPosition);
+            Log.Debug("=== Writing E{epochNumber}@{epochPosition}:{epochId:B} (previous epoch at {lastEpochPosition}).", epochNumber, epoch.EpochPosition, epochId, lastEpochPosition);
 
             _bus.Publish(new SystemMessage.EpochWritten(epoch));
             return epoch;
@@ -278,7 +278,7 @@ namespace EventStore.Core.Services.Storage.EpochManager
                 _checkpoint.Write(epoch.EpochPosition);
                 _checkpoint.Flush();
 
-                Log.Debug("=== Update Last Epoch E{@epochNumber}@{@epochPosition}:{@epochId:B} (previous epoch at {@prevEpochPosition}).", 
+                Log.Debug("=== Update Last Epoch E{epochNumber}@{epochPosition}:{epochId:B} (previous epoch at {prevEpochPosition}).", 
                           epoch.EpochNumber, epoch.EpochPosition, epoch.EpochId, epoch.PrevEpochPosition);             
             }
         }

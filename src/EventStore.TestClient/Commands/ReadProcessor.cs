@@ -37,7 +37,7 @@ namespace EventStore.TestClient.Commands
                 context,
                 connectionEstablished: conn =>
                 {
-                    context.Log.Info("[{@remoteEndPoint}, L{@localEndPoint}]: Reading...", conn.RemoteEndPoint, conn.LocalEndPoint);
+                    context.Log.Info("[{remoteEndPoint}, L{localEndPoint}]: Reading...", conn.RemoteEndPoint, conn.LocalEndPoint);
                     var readDto = new TcpClientMessageDto.ReadEvent(eventStreamId, fromNumber, resolveLinkTos, requireMaster);
                     var package = new TcpPackage(TcpCommand.ReadEvent, Guid.NewGuid(), readDto.Serialize()).AsByteArray();
                     sw.Start();
@@ -46,7 +46,7 @@ namespace EventStore.TestClient.Commands
                 handlePackage: (conn, pkg) =>
                 {
                     sw.Stop();
-                    context.Log.Info("Read request took: {@elapsed}.", sw.Elapsed);
+                    context.Log.Info("Read request took: {elapsed}.", sw.Elapsed);
 
                     if (pkg.Command != TcpCommand.ReadEventCompleted)
                     {
@@ -55,13 +55,13 @@ namespace EventStore.TestClient.Commands
                     }
 
                     var dto = pkg.Data.Deserialize<TcpClientMessageDto.ReadEventCompleted>();
-                    context.Log.Info("READ events from <{@stream}>:\n\n"
-                                     + "\tEventStreamId: {@stream}\n"
-                                     + "\tEventNumber:   {@eventNumber}\n"
-                                     + "\tReadResult:    {@readResult}\n"
-                                     + "\tEventType:     {@eventType}\n"
-                                     + "\tData:          {@data}\n"
-                                     + "\tMetadata:      {@metadata}\n",
+                    context.Log.Info("READ events from <{stream}>:\n\n"
+                                     + "\tEventStreamId: {stream}\n"
+                                     + "\tEventNumber:   {eventNumber}\n"
+                                     + "\tReadResult:    {readResult}\n"
+                                     + "\tEventType:     {eventType}\n"
+                                     + "\tData:          {data}\n"
+                                     + "\tMetadata:      {metadata}\n",
                                      eventStreamId,
                                      eventStreamId,
                                      dto.Event.Event.EventNumber,

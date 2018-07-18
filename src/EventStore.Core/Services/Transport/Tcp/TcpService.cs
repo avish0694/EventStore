@@ -118,7 +118,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             var conn = _securityType == TcpSecurityType.Secure
                 ? TcpConnectionSsl.CreateServerFromSocket(Guid.NewGuid(), endPoint, socket, _certificate, verbose: true)
                 : TcpConnection.CreateAcceptedTcpConnection(Guid.NewGuid(), endPoint, socket, verbose: true);
-            Log.Info("{@serviceType} TCP connection accepted: [{@securityType}, {@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}].",
+            Log.Info("{serviceType} TCP connection accepted: [{securityType}, {remoteEndPoint}, L{localEndPoint}, {connectionId:B}].",
                      _serviceType, _securityType, conn.RemoteEndPoint, conn.LocalEndPoint, conn.ConnectionId);
 
             var dispatcher = _dispatcherFactory(conn.ConnectionId, _serverEndPoint);

@@ -86,7 +86,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 _state = PersistentSubscriptionState.Behind;
                 if (!checkpoint.HasValue)
                 {
-                    Log.Debug("Subscription {@subscriptionId}: read no checksum.", _settings.SubscriptionId);
+                    Log.Debug("Subscription {subscriptionId}: read no checksum.", _settings.SubscriptionId);
 
                     Log.Debug("strtfrom = " + _settings.StartFrom);
                     _nextEventToPullFrom = _settings.StartFrom >= 0 ? _settings.StartFrom : 0;
@@ -97,7 +97,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                 else
                 {
                     _nextEventToPullFrom = checkpoint.Value + 1;
-                    Log.Debug("Subscription {@subscriptionId}: read checksum {@checkpoint}", _settings.SubscriptionId,
+                    Log.Debug("Subscription {subscriptionId}: read checksum {checkpoint}", _settings.SubscriptionId,
                         checkpoint.Value);
                     _streamBuffer = new StreamBuffer(_settings.BufferSize, _settings.LiveBufferSize, -1, true);
                     TryReadingNewBatch();
@@ -341,7 +341,7 @@ namespace EventStore.Core.Services.PersistentSubscription
             {
                 foreach (var id in processedEventIds)
                 {
-                    Log.Info("Message NAK'ed id {@id} action to take {@action} reason '{@reason}'", id, action, reason ?? "");
+                    Log.Info("Message NAK'ed id {id} action to take {action} reason '{reason}'", id, action, reason ?? "");
                     HandleNackedMessage(action, id, reason);
                 }
                 RemoveProcessingMessages(correlationId, processedEventIds);
@@ -392,12 +392,12 @@ namespace EventStore.Core.Services.PersistentSubscription
                 {
                     if (count < 5)
                     {
-                        Log.Info("Unable to park message {@stream}/{@eventNumber} operation failed {@e} retrying.", e.OriginalStreamId,
+                        Log.Info("Unable to park message {stream}/{eventNumber} operation failed {e} retrying.", e.OriginalStreamId,
                         e.OriginalEventNumber, result);
                         ParkMessage(e, reason, count + 1);
                         return;
                     }
-                    Log.Error("Unable to park message {@stream}/{@eventNumber} operation failed {@e} after retries. Possible message loss.", e.OriginalStreamId,
+                    Log.Error("Unable to park message {stream}/{eventNumber} operation failed {e} after retries. Possible message loss.", e.OriginalStreamId,
                         e.OriginalEventNumber, result);
                 }
                 lock (_lock)
@@ -450,7 +450,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         break;
                     }
 
-                    Log.Debug("Retrying event {@eventId} on subscription {@subscriptionId}", ev.OriginalEvent.EventId, _settings.SubscriptionId);
+                    Log.Debug("Retrying event {eventId} on subscription {subscriptionId}", ev.OriginalEvent.EventId, _settings.SubscriptionId);
                     _streamBuffer.AddRetry(new OutstandingMessage(ev.OriginalEvent.EventId, null, ev, 0));
                 }
 
@@ -475,7 +475,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
             if (result == StartMessageResult.SkippedDuplicate)
             {
-                Log.Warn("Skipping message {@stream}/{@eventNumber} with duplicate eventId {@eventId}",
+                Log.Warn("Skipping message {stream}/{eventNumber} with duplicate eventId {eventId}",
                     message.ResolvedEvent.OriginalStreamId,
                     message.ResolvedEvent.OriginalEventNumber,
                     message.EventId);
@@ -531,7 +531,7 @@ namespace EventStore.Core.Services.PersistentSubscription
 
         private void RetryMessage(ResolvedEvent @event, int count)
         {
-            Log.Debug("Retrying message {@subscriptionId} {@stream}/{@originalPosition}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition);
+            Log.Debug("Retrying message {subscriptionId} {stream}/{originalPosition}", SubscriptionId, @event.OriginalStreamId, @event.OriginalPosition);
             _outstandingMessages.Remove(@event.OriginalEvent.EventId);
             _pushClients.RemoveProcessingMessage(@event.OriginalEvent.EventId);
             _streamBuffer.AddRetry(new OutstandingMessage(@event.OriginalEvent.EventId, null, @event, count + 1));
