@@ -80,7 +80,7 @@ namespace EventStore.Transport.Http.Codecs
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Error serializing object of type {@fullName}", value.GetType().FullName);
+                Log.ErrorException(exc, "Error serializing object of type {@type}", value.GetType().FullName);
                 return null;
             }
         }

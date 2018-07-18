@@ -55,8 +55,8 @@ namespace EventStore.TestClient.Commands
                     }
 
                     var dto = pkg.Data.Deserialize<TcpClientMessageDto.ReadEventCompleted>();
-                    context.Log.Info("READ events from <{@eventStreamId}>:\n\n"
-                                     + "\tEventStreamId: {@eventStreamId}\n"
+                    context.Log.Info("READ events from <{@stream}>:\n\n"
+                                     + "\tEventStreamId: {@stream}\n"
                                      + "\tEventNumber:   {@eventNumber}\n"
                                      + "\tReadResult:    {@readResult}\n"
                                      + "\tEventType:     {@eventType}\n"

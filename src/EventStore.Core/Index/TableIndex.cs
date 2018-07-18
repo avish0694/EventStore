@@ -159,11 +159,11 @@ namespace EventStore.Core.Index
         {
             try
             {
-                Log.Error("IndexMap '{@indexmapFile}' content:\n {@content}", indexmapFile, Helper.FormatBinaryDump(File.ReadAllBytes(indexmapFile)));
+                Log.Error("IndexMap '{@indexMap}' content:\n {@content}", indexmapFile, Helper.FormatBinaryDump(File.ReadAllBytes(indexmapFile)));
             }
             catch (Exception exc)
             {
-                Log.ErrorException(exc, "Unexpected error while dumping IndexMap '{@indexmapFile}'.", indexmapFile);
+                Log.ErrorException(exc, "Unexpected error while dumping IndexMap '{@indexMap}'.", indexmapFile);
             }
         }
 
@@ -220,7 +220,7 @@ namespace EventStore.Core.Index
                     newTables.AddRange(_awaitingMemTables.Select(
                         (x, i) => i == 0 ? new TableItem(x.Table, prepareCheckpoint, commitPos) : x));
 
-                    Log.Trace("Switching MemTable, currently: {@newTables} awaiting tables.", newTables.Count);
+                    Log.Trace("Switching MemTable, currently: {@awaitingMemTables} awaiting tables.", newTables.Count);
 
                     _awaitingMemTables = newTables;
                     if (_inMem) return;

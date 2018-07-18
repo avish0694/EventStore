@@ -95,7 +95,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 rawState = null;
             }
 
-            Log.Info("Raw {@projectionName} stats: {@rawState}", projectionName, rawState);
+            Log.Info("Raw {@projection} stats: {@rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;
@@ -119,7 +119,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
         {
             var rawState = GetProjectionStateSafe(projectionName);
 
-            Log.Info("Raw {@projectionName} state: {@rawState}", projectionName, rawState);
+            Log.Info("Raw {@projection} state: {@rawState}", projectionName, rawState);
 
             if (string.IsNullOrEmpty(rawState))
                 return null;

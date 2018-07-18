@@ -531,7 +531,7 @@ namespace EventStore.Core.Services.Storage
             {
                 Log.Error(
                     "Invalid transaction info found for transaction ID {@transactionId}. "
-                   +"Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@eventStreamId}",
+                   +"Possibly wrong transactionId provided. TransactionOffset: {@transactionOffset}, EventStreamId: {@stream}",
                     transactionId,
                     transactionInfo.TransactionOffset,
                     transactionInfo.EventStreamId.IsEmptyString() ? "<null>" : transactionInfo.EventStreamId);

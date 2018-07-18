@@ -47,7 +47,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(command))
             {
-                _logger.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@stream}. Current status of Writer: Busy: {@busy}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy);
+                _logger.Debug("PROJECTIONS: Scheduling the writing of {@command} to {@stream}. Current status of Writer: Busy: {@isBusy}", command, ProjectionNamesBuilder._projectionsMasterStream, Busy);
             }
             Items.Add(new Item { Command = command, Body = body });
             if (!Busy)

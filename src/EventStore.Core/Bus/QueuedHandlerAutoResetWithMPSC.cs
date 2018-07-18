@@ -137,13 +137,13 @@ namespace EventStore.Core.Bus
                                     var elapsed = DateTime.UtcNow - start;
                                     if (elapsed > _slowMsgThreshold)
                                     {
-                                        Log.Trace("SLOW QUEUE MSG [{@queue}]: {@inProgressMessage} - {@elapsed}ms. Q: {@estimatedQueueCount}/{@curEstimatedQueueCount}.",
+                                        Log.Trace("SLOW QUEUE MSG [{@queue}]: {@message} - {@elapsed}ms. Q: {@prevEstimatedQueueCount}/{@curEstimatedQueueCount}.",
                                             Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
                                             estimatedQueueCount,
                                             _queue.EstimageCurrentQueueCount());
                                         if (elapsed > QueuedHandler.VerySlowMsgThreshold &&
                                             !(msg is SystemMessage.SystemInit))
-                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@elapsed}ms. Q: {@estimatedQueueCount}/{@curEstimatedQueueCount}.",
+                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{@queue}]: {@message} - {@elapsed}ms. Q: {@prevEstimatedQueueCount}/{@curEstimatedQueueCount}.",
                                                 Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
                                                 estimatedQueueCount, _queue.EstimageCurrentQueueCount());
                                     }
@@ -155,7 +155,7 @@ namespace EventStore.Core.Bus
                             }
                             catch (Exception ex)
                             {
-                                Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@name}'.", msg, Name);
+                                Log.ErrorException(ex, "Error while processing message {@message} in queued handler '{@queue}'.", msg, Name);
                             }
 
                             estimatedQueueCount -= 1;
@@ -165,7 +165,7 @@ namespace EventStore.Core.Bus
                 }
                 catch (Exception ex)
                 {
-                    Log.ErrorException(ex, "Error while processing message {@msg} in queued handler '{@name}'.", msg, Name);
+                    Log.ErrorException(ex, "Error while processing message {@message} in queued handler '{@queue}'.", msg, Name);
                 }
             }
             _queueStats.Stop();

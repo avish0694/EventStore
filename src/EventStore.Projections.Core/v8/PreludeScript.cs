@@ -110,7 +110,7 @@ namespace EventStore.Projections.Core.v8
             }
             catch (Exception ex)
             {
-                Log.ErrorException(ex, "Cannot load module '{@moduleName}'", moduleName);
+                Log.ErrorException(ex, "Cannot load module '{@module}'", moduleName);
                 //TODO: this is not a good way to report missing module and other exceptions back to caller
                 return IntPtr.Zero;
             }

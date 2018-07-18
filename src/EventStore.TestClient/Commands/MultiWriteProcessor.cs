@@ -72,7 +72,7 @@ namespace EventStore.TestClient.Commands
                     }
                     else
                     {
-                        context.Log.Info("Error while writing: {@result}.", dto.Result);
+                        context.Log.Info("Error while writing: {@e}.", dto.Result);
                         context.Fail();
                     }
                     conn.Close();

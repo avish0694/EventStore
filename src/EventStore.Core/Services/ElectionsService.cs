@@ -195,14 +195,14 @@ namespace EventStore.Core.Services
 
             if (message.AttemptedView <= _lastInstalledView) return;
 
-            Log.Debug("ELECTIONS: (V={@attemptedView}) VIEWCHANGE FROM [{@serverInternalHttp}, {@serverId:B}].", message.AttemptedView, message.ServerInternalHttp, message.ServerId);
+            Log.Debug("ELECTIONS: (V={@view}) VIEWCHANGE FROM [{@serverInternalHttp}, {@serverId:B}].", message.AttemptedView, message.ServerInternalHttp, message.ServerId);
 
             if (message.AttemptedView > _lastAttemptedView)
                 ShiftToLeaderElection(message.AttemptedView);
 
             if (_vcReceived.Add(message.ServerId) && _vcReceived.Count == _clusterSize/2 + 1)
             {
-                Log.Debug("ELECTIONS: (V={@attemptedView}) MAJORITY OF VIEWCHANGE.", message.AttemptedView);
+                Log.Debug("ELECTIONS: (V={@view}) MAJORITY OF VIEWCHANGE.", message.AttemptedView);
                 if (AmILeaderOf(_lastAttemptedView))
                     ShiftToPreparePhase();
             }
@@ -401,7 +401,7 @@ namespace EventStore.Core.Services
                     return true;
 
                 Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{@proposingServerId:B}] M={@candidateInfo}. "
-                          + "PREVIOUS MASTER IS ALIVE: [{@masterInternalHttpEndPoint},{@masterInstanceId:B}].",
+                          + "PREVIOUS MASTER IS ALIVE: [{@masterInternalHttp},{@masterId:B}].",
                           view, proposingServerEndPoint, proposingServerId, FormatNodeInfo(candidate),
                           master.InternalHttpEndPoint, master.InstanceId);
                 return false;

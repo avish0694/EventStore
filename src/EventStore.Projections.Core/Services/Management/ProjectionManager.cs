@@ -755,7 +755,7 @@ namespace EventStore.Projections.Core.Services.Management
                         if (string.IsNullOrEmpty(projectionName)
                             || _projections.ContainsKey(projectionName))
                         {
-                            _logger.Warn("PROJECTIONS: The following projection: {@projectionName} has a duplicate registration event.", projectionName);
+                            _logger.Warn("PROJECTIONS: The following projection: {@projection} has a duplicate registration event.", projectionName);
                             continue;
                         }
                         if (evnt.Event.EventType == ProjectionEventTypes.ProjectionCreated)
@@ -763,7 +763,7 @@ namespace EventStore.Projections.Core.Services.Management
                             if(registeredProjections.ContainsKey(projectionName))
                             {
                                 registeredProjections[projectionName] = projectionId;
-                                _logger.Warn("PROJECTIONS: The following projection: {@projectionName} has a duplicate created event. Using projection Id {@projectionId}", projectionName, projectionId);
+                                _logger.Warn("PROJECTIONS: The following projection: {@projection} has a duplicate created event. Using projection Id {@projectionId}", projectionName, projectionId);
                                 continue;
                             }
                             registeredProjections.Add(projectionName, projectionId);
@@ -1091,7 +1091,7 @@ namespace EventStore.Projections.Core.Services.Management
 
             _projectionsMap.Add(projectionCorrelationId, name);
             _projections.Add(name, managedProjectionInstance);
-            _logger.Debug("Adding projection {@projectionCorrelationId}@{@name} to list", projectionCorrelationId, name);
+            _logger.Debug("Adding projection {@projectionCorrelationId}@{@projection} to list", projectionCorrelationId, name);
             return managedProjectionInstance;
         }
 
@@ -1140,7 +1140,7 @@ namespace EventStore.Projections.Core.Services.Management
                 return;
             }
             _logger.Info(
-                "Projection '{@name}' registration has not been written to {@eventStreamId}. Error: {@e}",
+                "Projection '{@projection}' registration has not been written to {@stream}. Error: {@e}",
                 name,
                 eventStreamId,
                 Enum.GetName(typeof (OperationResult), message.Result));
@@ -1150,7 +1150,7 @@ namespace EventStore.Projections.Core.Services.Management
             {
                 if (retryCount > 0)
                 {
-                    _logger.Info("Retrying write projection registration for {@name}", name);
+                    _logger.Info("Retrying write projection registration for {@projection}", name);
                     BeginWriteProjectionRegistration(name, eventId, completed, replyEnvelope, --retryCount);
                     return;
                 }

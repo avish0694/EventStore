@@ -49,12 +49,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)(DateTime.Now - started).TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("=================== Start run #{@iteration}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
+                Log.Info("=================== Start run #{@iteration}, elapsed {@elapsed} of {@executionPeriod} minutes, {@type} =================== ",
                                         GetIterationCode(),
                                         (int)(DateTime.Now - started).TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("##teamcity[message '{@msg}']", msg);
+                Log.Info("##teamcity[message '{@message}']", msg);
 
                 
                 InnerRun();
@@ -163,7 +163,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 var position = GetProjectionPosition(projectionName);
                 if (position == expectedAllEventsCount)
                 {
-                    Log.Debug("Expected position reached in {@projectionName}, done.", projectionName);
+                    Log.Debug("Expected position reached in {@projection}, done.", projectionName);
                     completed = true;
                 }
             }

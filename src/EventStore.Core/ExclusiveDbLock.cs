@@ -36,7 +36,7 @@ namespace EventStore.Core
             catch (AbandonedMutexException exc)
             {
                 Log.InfoException(exc, 
-                                  "DB mutex '{@mutexName}' is said to be abandoned. " 
+                                  "DB mutex '{@mutex}' is said to be abandoned. " 
                                   + "Probably previous instance of server was terminated abruptly.", 
                                   MutexName);
             }

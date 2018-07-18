@@ -57,7 +57,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("##teamcity[message '{@msg}']", msg);
+                Log.Info("##teamcity[message '{@message}']", msg);
 
                 SetStartupWaitInterval(TimeSpan.FromSeconds(10 + (2 * (runIndex % 200))));
                 InnerRun(runIndex);

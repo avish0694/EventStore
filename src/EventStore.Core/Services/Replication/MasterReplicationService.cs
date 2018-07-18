@@ -132,8 +132,8 @@ namespace EventStore.Core.Services.Replication
                 {
                     ReplicaSubscription existingSubscr;
                     _subscriptions.TryGetValue(subscription.SubscriptionId, out existingSubscr);
-                    Log.Error("There is already a subscription with SubscriptionID {@subscriptionId:B}: {@existingSubscr}.", subscription.SubscriptionId, existingSubscr);
-                    Log.Error("Subscription we tried to add: {@existingSubscr}.", existingSubscr);
+                    Log.Error("There is already a subscription with SubscriptionID {@subscriptionId:B}: {@existingSubscription}.", subscription.SubscriptionId, existingSubscr);
+                    Log.Error("Subscription we tried to add: {@existingSubscription}.", existingSubscr);
                     subscription.SendBadRequestAndClose(message.CorrelationId, string.Format("There is already a subscription with SubscriptionID {0:B}: {1}.\nSubscription we tried to add: {2}",
                                             subscription.SubscriptionId, existingSubscr, subscription));
                     subscription.Dispose();

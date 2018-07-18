@@ -232,7 +232,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.Success:
                 case OperationResult.WrongExpectedVersion: // already created
                 {
-                    Log.Trace("Created stats stream '{@nodeStatsStream}', code = {@result}", _nodeStatsStream, message.Result);
+                    Log.Trace("Created stats stream '{@stream}', code = {@result}", _nodeStatsStream, message.Result);
                     _statsStreamCreated = true;
                     break;
                 }
@@ -240,7 +240,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.CommitTimeout:
                 case OperationResult.ForwardTimeout:
                 {
-                    Log.Debug("Failed to create stats stream '{@nodeStatsStream}'. Reason : {@result}({@message}). Retrying...", _nodeStatsStream, message.Result, message.Message);
+                    Log.Debug("Failed to create stats stream '{@stream}'. Reason : {@e}({@message}). Retrying...", _nodeStatsStream, message.Result, message.Message);
                     SetStatsStreamMetadata();
                     break;
                 }
@@ -252,7 +252,7 @@ namespace EventStore.Core.Services.Monitoring
                 case OperationResult.StreamDeleted:
                 case OperationResult.InvalidTransaction: // should not happen at all
                 {
-                    Log.Error("Monitoring service got unexpected response code when trying to create stats stream ({@result}).", message.Result);
+                    Log.Error("Monitoring service got unexpected response code when trying to create stats stream ({@e}).", message.Result);
                     break;
                 }
                 default:

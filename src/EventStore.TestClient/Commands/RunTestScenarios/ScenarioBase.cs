@@ -196,7 +196,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
 
         protected Task Write(WriteMode mode, string[] streams, int eventsPerStream, Func<int, EventData> createEvent)
         {
-            Log.Info("Writing. Mode : {@mode,-15} Streams : {@streams,-10} Events per stream : {@eventsPerStream,-10}",
+            Log.Info("Writing. Mode : {@mode,-15} Streams : {@streamsLength,-10} Events per stream : {@eventsPerStream,-10}",
                      mode,
                      streams.Length,
                      eventsPerStream);

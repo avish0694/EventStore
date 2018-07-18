@@ -45,7 +45,7 @@ namespace EventStore.Transport.Http.Server
         {
             try
             {
-                Logger.Info("Starting HTTP server on [{@listenerPrefixes}]...", string.Join(",", _listener.Prefixes));
+                Logger.Info("Starting HTTP server on [{@listenPrefixes}]...", string.Join(",", _listener.Prefixes));
                 try
                 {
                     _listener.Start();
@@ -57,14 +57,14 @@ namespace EventStore.Transport.Http.Server
                         if (_listenPrefixes.Length > 0)
                             TryAddAcl(_listenPrefixes[0]);
                         CreateListener(_listenPrefixes);
-                        Logger.Info("Retrying HTTP server on [{@listenerPrefixes}]...", string.Join(",", _listener.Prefixes));
+                        Logger.Info("Retrying HTTP server on [{@listenPrefixes}]...", string.Join(",", _listener.Prefixes));
                         _listener.Start();
                     }
                 }
 
                 _listener.BeginGetContext(ContextAcquired, null);
 
-                Logger.Info("HTTP server is up and listening on [{@listenerPrefixes}]", string.Join(",", _listener.Prefixes));
+                Logger.Info("HTTP server is up and listening on [{@listenPrefixes}]", string.Join(",", _listener.Prefixes));
 
                 return true;
             }

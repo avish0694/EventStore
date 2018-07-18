@@ -259,7 +259,7 @@ namespace EventStore.Transport.Tcp
 
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
-            Log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {@sslPolicyErrors}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
+            Log.Error("[S{@remoteEndPoint}, L{@localEndPoint}]: Certificate error: {@e}", RemoteEndPoint, LocalEndPoint, sslPolicyErrors);
             // Do not allow this client to communicate with unauthenticated servers. 
             return false;
         }
@@ -336,7 +336,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@socketErrorCode}' during BeginWrite.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{@e}' during BeginWrite.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginWrite.");
             }
             catch (ObjectDisposedException)
@@ -365,7 +365,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@socketErrorCode}' during EndWrite.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{@e}' during EndWrite.", exc.SocketErrorCode);
                 NotifySendCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndWrite.");
             }
@@ -403,7 +403,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@socketErrorCode}' during BeginRead.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{@e}' during BeginRead.", exc.SocketErrorCode);
                 CloseInternal(exc.SocketErrorCode, "SocketException during BeginRead.");
             }
             catch (ObjectDisposedException)
@@ -426,7 +426,7 @@ namespace EventStore.Transport.Tcp
             }
             catch (SocketException exc)
             {
-                Log.DebugException(exc, "SocketException '{@socketErrorCode}' during EndRead.", exc.SocketErrorCode);
+                Log.DebugException(exc, "SocketException '{@e}' during EndRead.", exc.SocketErrorCode);
                 NotifyReceiveCompleted(0);
                 CloseInternal(exc.SocketErrorCode, "SocketException during EndRead.");
                 return;
@@ -522,7 +522,7 @@ namespace EventStore.Transport.Tcp
 
             if (_verbose)
             {
-                Log.Info("ES {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         TotalBytesReceived, TotalBytesSent);
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",
@@ -531,7 +531,7 @@ namespace EventStore.Transport.Tcp
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Receive calls: {@receiveCalls}, callbacks: {@receiveCallbacks}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         ReceiveCalls, ReceiveCallbacks);
-                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Close reason: [{@socketError}] {@reason}",
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Close reason: [{@e}] {@reason}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         socketError, reason);
             }

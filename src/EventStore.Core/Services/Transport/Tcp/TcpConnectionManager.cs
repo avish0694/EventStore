@@ -175,7 +175,7 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionFailed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{@connectionName}' ({@connectionId:B}) to [{@remoteEndPoint}] failed: {@socketError}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError);
+            Log.Info("Connection '{@connectionName}' ({@connectionId:B}) to [{@remoteEndPoint}] failed: {@e}.", ConnectionName, ConnectionId, connection.RemoteEndPoint, socketError);
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
         }
@@ -183,7 +183,7 @@ namespace EventStore.Core.Services.Transport.Tcp
         private void OnConnectionClosed(ITcpConnection connection, SocketError socketError)
         {
             if (Interlocked.CompareExchange(ref _isClosed, 1, 0) != 0) return;
-            Log.Info("Connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, {@connectionId:B}] closed: {@socketError}.", 
+            Log.Info("Connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, {@connectionId:B}] closed: {@e}.", 
                      ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, connection.RemoteEndPoint, ConnectionId, socketError);
             if (_connectionClosed != null)
                 _connectionClosed(this, socketError);
@@ -274,7 +274,7 @@ namespace EventStore.Core.Services.Transport.Tcp
                 {
                     var reason = string.Empty;
                     Helper.EatException(() => reason = Helper.UTF8NoBom.GetString(package.Data.Array, package.Data.Offset, package.Data.Count));
-                    Log.Error("Bad request received from '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}], will stop server. CorrelationId: {@correlationId:B}, Error: {@error}.",
+                    Log.Error("Bad request received from '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}], will stop server. CorrelationId: {@correlationId:B}, Error: {@e}.",
                                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, 
                                       LocalEndPoint, ConnectionId, package.CorrelationId, reason.IsEmptyString() ? "<reason missing>" : reason);
                     break;
@@ -357,7 +357,7 @@ namespace EventStore.Core.Services.Transport.Tcp
             Ensure.NotNull(message, "message");
 
             SendPackage(new TcpPackage(TcpCommand.BadRequest, correlationId, Helper.UTF8NoBom.GetBytes(message)), checkQueueSize: false);
-            Log.Error("Closing connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] due to error. Reason: {@message}",
+            Log.Error("Closing connection '{@connectionName}{@clientConnectionName}' [{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}] due to error. Reason: {@e}",
                       ConnectionName, ClientConnectionName.IsEmptyString() ? string.Empty : ":" + ClientConnectionName, RemoteEndPoint, LocalEndPoint, ConnectionId, message);
             _connection.Close(message);
         }

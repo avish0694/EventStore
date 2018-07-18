@@ -53,7 +53,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("##teamcity[message '{@msg}']", msg);
+                Log.Info("##teamcity[message '{@message}']", msg);
 
                 var iterationTask = RunIteration();
 
@@ -106,10 +106,10 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                 }
 
                 if (! CheckProjectionState(countItem, "count", x => x == expectedAllEventsCount))
-                    Log.Error("Projection '{@countItem}' has not completed with expected result {@expectedAllEventsCount} in time. ", countItem, expectedAllEventsCount);
+                    Log.Error("Projection '{@projection}' has not completed with expected result {@expectedCount} in time. ", countItem, expectedAllEventsCount);
 
                 if (!CheckProjectionState(sumCheckForBankAccount0, "success", x => x == lastExpectedEventVersion))
-                    Log.Error("Projection '{@sumCheckForBankAccount0}' has not completed with expected result {@lastExpectedEventVersion} in time.", sumCheckForBankAccount0, lastExpectedEventVersion);
+                    Log.Error("Projection '{@projection}' has not completed with expected result {@lastExpectedEventVersion} in time.", sumCheckForBankAccount0, lastExpectedEventVersion);
 
                 return success;
             });

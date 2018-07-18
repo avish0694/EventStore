@@ -65,7 +65,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 var chunk = _db.Manager.GetChunkFor(scavengePos);
                 if (!chunk.IsReadOnly)
                 {
-                    Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePos}.", scavengePos);
+                    Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePosition}.", scavengePos);
                     break;
                 }
 
@@ -94,7 +94,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         var chunk = _db.Manager.GetChunkFor(scavengePos);
                         if (!chunk.IsReadOnly)
                         {
-                            Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePos}.", scavengePos);
+                            Log.Trace("SCAVENGING: stopping scavenging pass due to non-completed TFChunk for position {@scavengePosition}.", scavengePos);
                             break;
                         }
                         if (totalDataSize + chunk.PhysicalDataSize > _maxChunkDataSize)
@@ -123,7 +123,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                             mergedSomething = true;
                         }
                     }
-                    Log.Trace("SCAVENGING: merge pass #{@passNum} completed in {@elapsed}. {@merged} merged.",
+                    Log.Trace("SCAVENGING: merge pass #{@pass} completed in {@elapsed}. {@merged} merged.",
                               passNum, sw.Elapsed, mergedSomething ? "Some chunks" : "Nothing");
                 } while (mergedSomething);
             }
@@ -296,7 +296,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         +"\nScavenging of following chunks will be skipped:"
                         +"\n{@oldChunksList}"
                         +"\nStopping scavenging and removing temp chunk '{@tmpChunkPath}'..."
-                        +"\nException message: {@message}.",
+                        +"\nException message: {@e}.",
                         oldChunksList, tmpChunkPath, exc.Message);
 
                 DeleteTempChunk(tmpChunkPath, MaxRetryCount);
@@ -362,7 +362,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                 if(retryCount > 0){
                     WriteScavengeChunkCompletedEvent(streamId, eventToWrite, --retryCount);
                 }else{
-                    Log.Error("Failed to write an event to the {@streamId} stream. Retry limit of {@maxRetryCount} reached. Reason: {@result}", streamId, MaxRetryCount, msg.Result);
+                    Log.Error("Failed to write an event to the {@stream} stream. Retry limit of {@maxRetryCount} reached. Reason: {@e}", streamId, MaxRetryCount, msg.Result);
                 }
             }
         }
@@ -376,7 +376,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             if (prepare.Flags.HasAnyOf(PrepareFlags.StreamDelete))
             {
                 if(_unsafeIgnoreHardDeletes) {
-                    Log.Info("Removing hard deleted stream tombstone for stream {@eventStreamId} at position {@transactionPosition}", prepare.EventStreamId, prepare.TransactionPosition);
+                    Log.Info("Removing hard deleted stream tombstone for stream {@stream} at position {@transactionPosition}", prepare.EventStreamId, prepare.TransactionPosition);
                     commitInfo.TryNotToKeep();
                 } else {
                     commitInfo.ForciblyKeep();

@@ -137,7 +137,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("create subscription {@key}", key);
+            Log.Debug("create subscription {@subscriptionKey}", key);
             //TODO revisit for permissions. maybe make admin only?
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
@@ -187,7 +187,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                                     message.NamedConsumerStrategy,
                                     ToTimeout(message.MessageTimeoutMilliseconds)
                                     );
-            Log.Debug("New persistent subscription {@groupName}.", message.GroupName);
+            Log.Debug("New persistent subscription {@group}.", message.GroupName);
             _config.Updated = DateTime.Now;
             _config.UpdatedBy = message.User.Identity.Name;
             _config.Entries.Add(new PersistentSubscriptionEntry
@@ -216,7 +216,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         {
             if (!_started) return;
             var key = BuildSubscriptionGroupKey(message.EventStreamId, message.GroupName);
-            Log.Debug("update subscription {@key}" , key);
+            Log.Debug("update subscription {@subscriptionKey}" , key);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -338,7 +338,7 @@ namespace EventStore.Core.Services.PersistentSubscription
         public void Handle(ClientMessage.DeletePersistentSubscription message)
         {
             if (!_started) return;
-            Log.Debug("delete subscription {@groupName}", message.GroupName);
+            Log.Debug("delete subscription {@group}", message.GroupName);
             var streamAccess = _readIndex.CheckStreamAccess(SystemStreams.SettingsStream, StreamAccessType.Write, message.User);
 
             if (!streamAccess.Granted)
@@ -651,7 +651,7 @@ namespace EventStore.Core.Services.PersistentSubscription
                         {
                             if (!_consumerStrategyRegistry.ValidateStrategy(entry.NamedConsumerStrategy))
                             {
-                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{@namedConsumerStrategy}'. Ignoring it.", entry.NamedConsumerStrategy);
+                                Log.Error("A persistent subscription exists with an invalid consumer strategy '{@strategy}'. Ignoring it.", entry.NamedConsumerStrategy);
                                 continue;
                             }
 

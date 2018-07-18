@@ -63,7 +63,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while starting transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info("Error while starting transaction: {@message} ({@result}).", dto.Message, dto.Result);
+                                    context.Log.Info("Error while starting transaction: {@message} ({@e}).", dto.Message, dto.Result);
                                     context.Fail(reason: msg);
                                 }
                                 else
@@ -105,7 +105,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     
-                                    context.Log.Info("Error while writing transactional event: {@message} ({@result}).", dto.Message, dto.Result);
+                                    context.Log.Info("Error while writing transactional event: {@message} ({@e}).", dto.Message, dto.Result);
                                     var msg = String.Format("Error while writing transactional event: {0} ({1}).", dto.Message, dto.Result);
                                     context.Fail(reason: msg);
                                 }
@@ -138,7 +138,7 @@ namespace EventStore.TestClient.Commands
                                 if (dto.Result != TcpClientMessageDto.OperationResult.Success)
                                 {
                                     var msg = string.Format("Error while committing transaction: {0} ({1}).", dto.Message, dto.Result);
-                                    context.Log.Info("Error while committing transaction: {@message} ({@result}).", dto.Message, dto.Result);
+                                    context.Log.Info("Error while committing transaction: {@message} ({@e}).", dto.Message, dto.Result);
                                     context.Log.Info("Transaction took: {@elapsed}.", sw.Elapsed);
                                     context.Fail(reason: msg);
                                 }

@@ -310,7 +310,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{@masterInternalHttp},{@masterId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.PreReplica;
             _outputBus.Publish(message);
@@ -323,7 +323,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS CATCHING UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] IS CATCHING UP... MASTER IS [{@masterInternalHttp},{@masterId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.CatchingUp;
             _outputBus.Publish(message);
@@ -335,7 +335,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS CLONE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] IS CLONE... MASTER IS [{@masterInternalHttp},{@masterId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.Clone;
             _outputBus.Publish(message);
@@ -347,7 +347,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@internalHttp}] IS SLAVE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] IS SLAVE... MASTER IS [{@masterInternalHttp},{@masterId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.Slave;
             _outputBus.Publish(message);
@@ -813,7 +813,7 @@ namespace EventStore.Core.Services.VNode
             if (message.SubscriptionId == Guid.Empty) throw new Exception("IReplicationMessage with empty SubscriptionId provided.");
             if (message.SubscriptionId != _subscriptionId)
             {
-                Log.Trace("Ignoring {@messageName} because SubscriptionId {@messageSubscriptionId:B} is wrong. Current SubscriptionId is {@subscriptionId:B}.",
+                Log.Trace("Ignoring {@message} because SubscriptionId {@receivedSubscriptionId:B} is wrong. Current SubscriptionId is {@subscriptionId:B}.",
                           message.GetType().Name, message.SubscriptionId, _subscriptionId);
                 return false;
             }

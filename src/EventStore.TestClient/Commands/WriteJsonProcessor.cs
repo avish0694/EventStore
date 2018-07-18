@@ -80,7 +80,7 @@ namespace EventStore.TestClient.Commands
                     }
                     else
                     {
-                        context.Log.Info("Error while writing: {@message} ({@result}).", dto.Message, dto.Result);
+                        context.Log.Info("Error while writing: {@message} ({@e}).", dto.Message, dto.Result);
                     }
 
                     context.Log.Info("Write request took: {@elapsed}.", sw.Elapsed);

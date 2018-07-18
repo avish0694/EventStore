@@ -89,7 +89,7 @@ namespace EventStore.TestClient.Commands
                         {
                             var elapsed = sw2.Elapsed;
                             sw2.Restart();
-                            context.Log.Trace("\nDONE TOTAL {@localAll} READS IN {@elapsed} ({@rate:0.0}/s).", localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds);
+                            context.Log.Trace("\nDONE TOTAL {@reads} READS IN {@elapsed} ({@rate:0.0}/s).", localAll, elapsed, 1000.0*100000/elapsed.TotalMilliseconds);
                         }
                         if (localAll == requestsCnt)
                         {

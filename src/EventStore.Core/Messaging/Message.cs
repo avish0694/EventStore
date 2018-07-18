@@ -93,7 +93,7 @@ namespace EventStore.Core.Messaging
 
                 foreach (var wrongType in wrongTypes)
                 {
-                    Log.Fatal("MsgTypeId {@typeId} is assigned to type: {@msgTypes}",
+                    Log.Fatal("MsgTypeId {@typeId} is assigned to type: {@messageTypes}",
                               wrongType.TypeId,
                               string.Join(", ", wrongType.MsgTypes.Select(x => x.Name)));
                 }

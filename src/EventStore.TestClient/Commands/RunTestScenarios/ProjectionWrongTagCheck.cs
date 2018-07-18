@@ -43,12 +43,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                            _executionPeriod.TotalMinutes,
                            GetType().Name);
 
-                Log.Info("=================== Start run #{@iteration}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
+                Log.Info("=================== Start run #{@iteration}, elapsed {@elapsed} of {@executionPeriod} minutes, {@type} =================== ",
                            GetIterationCode(),
                            (int)stopWatch.Elapsed.TotalMinutes,
                            _executionPeriod.TotalMinutes,
                            GetType().Name); 
-                Log.Info("##teamcity[message '{@msg}']", msg);
+                Log.Info("##teamcity[message '{@message}']", msg);
 
                 var iterationTask = RunIteration();
                 iterationTask.Wait();

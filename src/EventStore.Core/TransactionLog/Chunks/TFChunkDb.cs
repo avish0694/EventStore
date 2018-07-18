@@ -134,9 +134,9 @@ namespace EventStore.Core.TransactionLog.Chunks
                         }
                         catch (FileBeingDeletedException exc)
                         {
-                            Log.Trace("{@name} exception was thrown while doing background validation of chunk {@chunk}.",
+                            Log.Trace("{@exceptionType} exception was thrown while doing background validation of chunk {@chunk}.",
                                       exc.GetType().Name, chunk);
-                            Log.Trace("That's probably OK, especially if truncation was request at the same time: {@message}.",
+                            Log.Trace("That's probably OK, especially if truncation was request at the same time: {@e}.",
                                       exc.Message);
                         }
                         catch (Exception exc)
@@ -226,7 +226,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                     var files = Config.FileNamingStrategy.GetAllVersionsFor(i);
                     for (int j = (i == chunk.ChunkHeader.ChunkStartNumber ? 1 : 0); j < files.Length; ++j)
                     {
-                        RemoveFile("Removing excess chunk version: {@file}...", files[j]);
+                        RemoveFile("Removing excess chunk version: {@chunk}...", files[j]);
                     }
                 }
                 chunkNum = chunk.ChunkHeader.ChunkEndNumber + 1;

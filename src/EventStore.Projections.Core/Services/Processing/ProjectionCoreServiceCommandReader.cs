@@ -146,7 +146,7 @@ namespace EventStore.Projections.Core.Services.Processing
                             readResult = completed;
                             success = true;
                         },
-                        () => Log.Warn("Read backward of stream {@coreControlStreamID} timed out. Retrying", coreControlStreamID));
+                        () => Log.Warn("Read backward of stream {@stream} timed out. Retrying", coreControlStreamID));
             }
 
             long from = 0;
@@ -193,7 +193,7 @@ namespace EventStore.Projections.Core.Services.Processing
                                 foreach (var e in completed.Events)
                                     PublishCommand(e);
                             },
-                            () => Log.Warn("Read forward of stream {@coreControlStreamID} timed out. Retrying", coreControlStreamID));
+                            () => Log.Warn("Read forward of stream {@stream} timed out. Retrying", coreControlStreamID));
                 } while (!eof);
                 yield return
                     _ioDispatcher.BeginSubscribeAwake(_cancellationScope, coreControlStreamID, subscribeFrom, message => { });
@@ -205,7 +205,7 @@ namespace EventStore.Projections.Core.Services.Processing
             var command = resolvedEvent.Event.EventType;
             if (!Logging.FilteredMessages.Contains(command))
             {
-                Log.Debug("PROJECTIONS: Command received: {@originalEventNumber}@{@command}", resolvedEvent.OriginalEventNumber, command);
+                Log.Debug("PROJECTIONS: Command received: {@eventNumber}@{@command}", resolvedEvent.OriginalEventNumber, command);
             }
             switch (command)
             {

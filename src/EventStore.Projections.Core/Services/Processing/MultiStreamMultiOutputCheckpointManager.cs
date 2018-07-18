@@ -193,7 +193,7 @@ namespace EventStore.Projections.Core.Services.Processing
             _ioDispatcher.ReadBackward(
                 streamId, eventNumber, 1, true, SystemAccount.Principal, action, () =>
                 {
-                    _logger.Warn("Read backward of stream {@streamId} timed out. Retrying", streamId);
+                    _logger.Warn("Read backward of stream {@stream} timed out. Retrying", streamId);
                     ReadPrerecordedEventStream(streamId, eventNumber, action);
                 }, Guid.NewGuid());
         }

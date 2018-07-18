@@ -117,9 +117,9 @@ namespace EventStore.TestClient.Commands
             context.IsAsync();
 
             Log.Info("\n---" +
-                     "\nRunning scenario {@scenarioName} using {@connections} connections with {@maxConcurrentRequests} max concurrent requests," +
+                     "\nRunning scenario {@scenario} using {@connections} connections with {@maxConcurrentRequests} max concurrent requests," +
                      "\nfor {@streams} streams {@eventsPerStream} events each deleting every {@streamDeleteStep}th stream. " +
-                     "\nExecution period {@executionPeriodMinutes} minutes. " +
+                     "\nExecution period {@executionPeriod} minutes. " +
                      "\nDatabase path {@dbParentPath};" +
                      "\nCustom Node {@customNode};" +
                      "\n---",
@@ -222,7 +222,7 @@ namespace EventStore.TestClient.Commands
                 {
                     try
                     {
-                        Log.Info("Run scenario {@name}", scenario.GetType().Name);
+                        Log.Info("Run scenario {@type}", scenario.GetType().Name);
                         scenario.Run();
                         scenario.Clean();
                         Log.Info("Scenario run successfully");

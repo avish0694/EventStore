@@ -32,7 +32,7 @@ namespace EventStore.Core
             catch (AbandonedMutexException exc)
             {
                 Log.InfoException(exc,
-                                  "Cluster Node mutex '{@mutexName}' is said to be abandoned. "
+                                  "Cluster Node mutex '{@mutex}' is said to be abandoned. "
                                   + "Probably previous instance of server was terminated abruptly.",
                                   MutexName);
             }
@@ -62,7 +62,7 @@ namespace EventStore.Core
             }
             catch (Exception exc)
             {
-                Log.TraceException(exc, "Exception while trying to open Cluster Node mutex '{@mutexName}': {@e}.", mutexName, exc.Message);
+                Log.TraceException(exc, "Exception while trying to open Cluster Node mutex '{@mutex}': {@e}.", mutexName, exc.Message);
             }
             return false;
         }

@@ -57,7 +57,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 foreach (var chunkFile in _config.FileNamingStrategy.GetAllVersionsFor(i))
                 {
-                    Log.Info("File {@chunkFile} will be deleted during TruncateDb procedure.", chunkFile);
+                    Log.Info("File {@chunk} will be deleted during TruncateDb procedure.", chunkFile);
                     File.SetAttributes(chunkFile, FileAttributes.Normal);
                     File.Delete(chunkFile);
                 }
@@ -81,7 +81,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                         var chunksToDelete = _config.FileNamingStrategy.GetAllVersionsFor(i);
                         foreach (var chunkFile in chunksToDelete)
                         {
-                            Log.Info("File {@chunkFile} will be deleted during TruncateDb procedure.", chunkFile);
+                            Log.Info("File {@chunk} will be deleted during TruncateDb procedure.", chunkFile);
                             File.SetAttributes(chunkFile, FileAttributes.Normal);
                             File.Delete(chunkFile);
                         }

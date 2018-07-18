@@ -87,7 +87,7 @@ namespace EventStore.Core.Index
             _id = id;
             _filename = filename;
 
-            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{@ptable}' started...", Path.GetFileName(Filename));
+            Log.Trace("Loading "+(skipIndexVerify?"":"and Verification ")+"of PTable '{@pTable}' started...", Path.GetFileName(Filename));
             var sw = Stopwatch.StartNew();
             _size = new FileInfo(_filename).Length;
 
@@ -199,10 +199,10 @@ namespace EventStore.Core.Index
             }
             catch (PossibleToHandleOutOfMemoryException)
             {
-                Log.Error("Unable to create midpoints for PTable '{@ptable}' ({@count} entries, depth {@depth} requested). "
+                Log.Error("Unable to create midpoints for PTable '{@pTable}' ({@count} entries, depth {@depth} requested). "
                           + "Performance hit will occur. OOM Exception.", Path.GetFileName(Filename), Count, depth);
             }
-            Log.Trace("Loading PTable (Version: {@version}) '{@ptable}' ({@count} entries, cache depth {@calcdepth}) done in {@elapsed}.",
+            Log.Trace("Loading PTable (Version: {@version}) '{@pTable}' ({@count} entries, cache depth {@depth}) done in {@elapsed}.",
                       _version, Path.GetFileName(Filename), Count, calcdepth, sw.Elapsed);
         }
 

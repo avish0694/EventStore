@@ -205,7 +205,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             {
                 if (!ReplaceChunksWith(newChunk, "Old"))
                 {
-                    Log.Info("Chunk {@newChunk} will be not switched, marking for remove...", newChunk);
+                    Log.Info("Chunk {@chunk} will be not switched, marking for remove...", newChunk);
                     newChunk.MarkForDeletion();
                 }
 

@@ -96,7 +96,7 @@ namespace EventStore.TestClient.Commands
                                         evnt.EventType);
                         total += 1;
                     }
-                    context.Log.Info("Next {@events} events read:\n{@sb}", dto.Events.Length, sb.ToString());
+                    context.Log.Info("Next {@count} events read:\n{@events}", dto.Events.Length, sb.ToString());
 
                     var readDto = new TcpClientMessageDto.ReadAllEvents(dto.NextCommitPosition, dto.NextPreparePosition, 10, resolveLinkTos, requireMaster);
                     var package = new TcpPackage(tcpCommand, Guid.NewGuid(), readDto.Serialize()).AsByteArray();

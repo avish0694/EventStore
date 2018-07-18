@@ -333,7 +333,7 @@ namespace EventStore.Transport.Tcp
 
             if (_verbose)
             {
-                Log.Info("ES {@name} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
+                Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Received bytes: {@totalBytesReceived}, Sent bytes: {@totalBytesSent}",
                         GetType().Name, DateTime.UtcNow, RemoteEndPoint, LocalEndPoint, _connectionId,
                         TotalBytesReceived, TotalBytesSent);
                 Log.Info("ES {@connectionType} closed [{@dateTime:HH:mm:ss.fff}: N{@remoteEndPoint}, L{@localEndPoint}, {@connectionId:B}]:Send calls: {@sendCalls}, callbacks: {@sendCallbacks}",

@@ -157,7 +157,7 @@ namespace EventStore.Projections.Core.Services.Management
             }
             else
             {
-                Log.Error("Failed reading stream {@stream}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
+                Log.Error("Failed reading stream {@stream}. Read result: {@readResult}, Error: '{@e}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
                 ReadForward();
             }
         }
@@ -187,7 +187,7 @@ namespace EventStore.Projections.Core.Services.Management
             //TODO: PROJECTIONS: Remove before release
             if (!Logging.FilteredMessages.Contains(x => x == command))
             {
-                Log.Debug("PROJECTIONS: Response received: {@originalEventNumber}@{@command}", resolvedEvent.OriginalEventNumber, command);
+                Log.Debug("PROJECTIONS: Response received: {@eventNumber}@{@command}", resolvedEvent.OriginalEventNumber, command);
             }
             switch (command)
             {

@@ -30,7 +30,7 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionConfirmation:
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionConfirmation>();
-                                context.Log.Info("Subscription to <{@streamByCorrId}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
+                                context.Log.Info("Subscription to <{@stream}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
                                                  streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber);
                                 break;
                             }
@@ -38,7 +38,7 @@ namespace EventStore.TestClient.Commands
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.StreamEventAppeared>();
                                 context.Log.Info("NEW EVENT:\n\n"
-                                                 + "\tEventStreamId: {@eventStreamId}\n"
+                                                 + "\tEventStreamId: {@stream}\n"
                                                  + "\tEventNumber:   {@eventNumber}\n"
                                                  + "\tEventType:     {@eventType}\n"
                                                  + "\tData:          {@data}\n"
@@ -53,7 +53,7 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionDropped:
                             {
                                 pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionDropped>();
-                                context.Log.Error("Subscription to <{@streamByCorrId}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]);
+                                context.Log.Error("Subscription to <{@stream}> WAS DROPPED!", streamByCorrId[pkg.CorrelationId]);
                                 break;
                             }
                             default:

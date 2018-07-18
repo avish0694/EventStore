@@ -76,12 +76,12 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
+                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionPeriod} minutes, {@type} =================== ",
                                         runIndex,
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("##teamcity[message '{@msg}']", msg);
+                Log.Info("##teamcity[message '{@message}']", msg);
 
                 InnerRun(runIndex);
                 runIndex += 1;
