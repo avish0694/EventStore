@@ -720,7 +720,7 @@ namespace EventStore.Projections.Core.Services.Management
 
         private void ReadProjectionsList(string projectionsRegistrationStreamId, IDictionary<string, long> registeredProjections, Action completedAction, long from = 0)
         {
-            _logger.Debug("PROJECTIONS: Reading Existing Projections from {@projectionsRegistrationStreamId}", projectionsRegistrationStreamId);
+            _logger.Debug("PROJECTIONS: Reading Existing Projections from {@stream}", projectionsRegistrationStreamId);
             var corrId = Guid.NewGuid();
             _readForwardDispatcher.Publish(
                 new ClientMessage.ReadStreamEventsForward(
@@ -782,7 +782,7 @@ namespace EventStore.Projections.Core.Services.Management
                 case ReadStreamResult.StreamDeleted:
                 case ReadStreamResult.Error:
                 case ReadStreamResult.AccessDenied:
-                    _logger.Fatal("There was an error reading the projections list due to {@result}. Projections could not be loaded.", msg.Result);
+                    _logger.Fatal("There was an error reading the projections list due to {@e}. Projections could not be loaded.", msg.Result);
                     return;
             }
             StartRegisteredProjections(registeredProjections, completedAction);
@@ -792,7 +792,7 @@ namespace EventStore.Projections.Core.Services.Management
         {
             if(!registeredProjections.Any())
             {
-                _logger.Debug("PROJECTIONS: No projections were found in {@projectionsRegistrationStream}, starting from empty stream", ProjectionNamesBuilder.ProjectionsRegistrationStream);
+                _logger.Debug("PROJECTIONS: No projections were found in {@stream}, starting from empty stream", ProjectionNamesBuilder.ProjectionsRegistrationStream);
                 WriteProjectionsInitialized(
                     () =>
                     {

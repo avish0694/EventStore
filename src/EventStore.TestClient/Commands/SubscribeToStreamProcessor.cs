@@ -30,7 +30,7 @@ namespace EventStore.TestClient.Commands
                             case TcpCommand.SubscriptionConfirmation:
                             {
                                 var dto = pkg.Data.Deserialize<TcpClientMessageDto.SubscriptionConfirmation>();
-                                context.Log.Info("Subscription to <{@streambyCorrId}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
+                                context.Log.Info("Subscription to <{@streamByCorrId}> WAS CONFIRMED! Subscribed at {@lastCommitPosition} ({@lastEventNumber})", 
                                                  streamByCorrId[pkg.CorrelationId], dto.LastCommitPosition, dto.LastEventNumber);
                                 break;
                             }

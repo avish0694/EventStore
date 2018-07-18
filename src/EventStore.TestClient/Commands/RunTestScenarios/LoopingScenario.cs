@@ -52,7 +52,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionElapsed} minutes, {@type} =================== ",
+                Log.Info("=================== Start run #{@runIndex}, elapsed {@elapsed} of {@executionPeriod} minutes, {@type} =================== ",
                                         runIndex,
                                         (int)stopWatch.Elapsed.TotalMinutes,
                                         _executionPeriod.TotalMinutes,

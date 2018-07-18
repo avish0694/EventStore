@@ -49,7 +49,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                                         (int)(DateTime.Now - started).TotalMinutes,
                                         _executionPeriod.TotalMinutes,
                                         GetType().Name);
-                Log.Info("=================== Start run #{@iterationCode}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
+                Log.Info("=================== Start run #{@iteration}, elapsed {@elapsed} of {@executionPeriod} minutes, {@name} =================== ",
                                         GetIterationCode(),
                                         (int)(DateTime.Now - started).TotalMinutes,
                                         _executionPeriod.TotalMinutes,

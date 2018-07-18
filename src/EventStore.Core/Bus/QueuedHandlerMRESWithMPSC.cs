@@ -142,7 +142,7 @@ namespace EventStore.Core.Bus
                                             _queue.EstimageCurrentQueueCount());
                                         if (elapsed > QueuedHandler.VerySlowMsgThreshold &&
                                             !(msg is SystemMessage.SystemInit))
-                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@elapsed}ms. Q: {@estimatedQueueCount}/{@currentQueueCount}.",
+                                            Log.Error("---!!! VERY SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@elapsed}ms. Q: {@estimatedQueueCount}/{@curEstimatedQueueCount}.",
                                                 Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds,
                                                 estimatedQueueCount, _queue.EstimageCurrentQueueCount());
                                     }

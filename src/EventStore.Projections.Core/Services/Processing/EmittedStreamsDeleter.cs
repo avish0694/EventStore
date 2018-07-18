@@ -87,7 +87,7 @@ namespace EventStore.Projections.Core.Services.Processing
                         }
                         else
                         {
-                            Log.Error("PROJECTIONS: Failed to delete projection stream '{@emittedStreamsCheckpointStreamId}'. Reason: {@result}", _emittedStreamsCheckpointStreamId, x.Result);
+                            Log.Error("PROJECTIONS: Failed to delete projection stream '{@emittedStreamsCheckpointStreamId}'. Reason: {@e}", _emittedStreamsCheckpointStreamId, x.Result);
                         }
                         _ioDispatcher.DeleteStream(_emittedStreamsId, ExpectedVersion.Any, false, SystemAccount.Principal, y =>
                         {

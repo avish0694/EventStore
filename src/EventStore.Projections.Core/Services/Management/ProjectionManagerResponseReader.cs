@@ -157,7 +157,7 @@ namespace EventStore.Projections.Core.Services.Management
             }
             else
             {
-                Log.Error("Failed reading stream {@projectionsMasterStream}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
+                Log.Error("Failed reading stream {@stream}. Read result: {@result}, Error: '{@error}'", ProjectionNamesBuilder._projectionsMasterStream, completed.Result, completed.Error);
                 ReadForward();
             }
         }

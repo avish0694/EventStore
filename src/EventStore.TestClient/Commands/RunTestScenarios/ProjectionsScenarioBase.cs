@@ -166,7 +166,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
                     }
                     else
                     {
-                        Log.Debug("Already enabled *{@byCategoryProjection}* projection", byCategoryProjection);
+                        Log.Debug("Already enabled *{@projection}* projection", byCategoryProjection);
                     }
 
                     exception = null;

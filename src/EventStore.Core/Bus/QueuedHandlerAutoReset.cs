@@ -121,7 +121,7 @@ namespace EventStore.Core.Bus
                             var elapsed = DateTime.UtcNow - start;
                             if (elapsed > _slowMsgThreshold)
                             {
-                                Log.Trace("SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@elapsedTime}ms. Q: {@cnt}/{@queue}.",
+                                Log.Trace("SLOW QUEUE MSG [{@name}]: {@inProgressMessage} - {@elapsed}ms. Q: {@cnt}/{@queue}.",
                                           Name, _queueStats.InProgressMessage.Name, (int)elapsed.TotalMilliseconds, cnt, _queue.Count);
                                 if (elapsed > QueuedHandler.VerySlowMsgThreshold && !(msg is SystemMessage.SystemInit))
                                     Log.Error("---!!! VERY SLOW QUEUE MSG [{@queue}]: {@inProgressMessage} - {@elapsed}ms. Q: {@prevQueueCount}/{@curQueueCount}.",

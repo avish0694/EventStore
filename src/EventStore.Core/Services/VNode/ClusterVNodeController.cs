@@ -310,7 +310,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@nodeInfoInternalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] PRE-REPLICA STATE, WAITING FOR CHASER TO CATCH UP... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.PreReplica;
             _outputBus.Publish(message);
@@ -347,7 +347,7 @@ namespace EventStore.Core.Services.VNode
             if (_stateCorrelationId != message.CorrelationId)
                 return;
 
-            Log.Info("========== [{@nodeInfoInternalHttp}] IS SLAVE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
+            Log.Info("========== [{@internalHttp}] IS SLAVE... MASTER IS [{@masterInternalHttp},{@masterInstanceId:B}]",
                      _nodeInfo.InternalHttp, _master.InternalHttp, _master.InstanceId);
             _state = VNodeState.Slave;
             _outputBus.Publish(message);

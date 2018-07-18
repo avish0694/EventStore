@@ -41,7 +41,7 @@ namespace EventStore.TestClient
                 }
                 catch (Exception exc)
                 {
-                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for TcpListener. Error: {@message}.", port, exc.Message);
+                    Log.TraceException(exc, "PortsHelper: port {@port} unavailable for TcpListener. Error: {@e}.", port, exc.Message);
                     continue;
                 }
 
@@ -88,7 +88,7 @@ namespace EventStore.TestClient
                 succ += 1;
             }
 
-            Log.Trace("PortsHelper: {@succ} ports are available at [{@ip}].", succ, ip);
+            Log.Trace("PortsHelper: {@ports} ports are available at [{@ip}].", succ, ip);
             if (succ <= PortCount/2)
                 throw new Exception("More than half requested ports are unavailable.");
 

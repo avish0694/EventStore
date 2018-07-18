@@ -64,7 +64,7 @@ namespace EventStore.Transport.Http.Server
 
                 _listener.BeginGetContext(ContextAcquired, null);
 
-                Logger.Info("HTTP server is up and listening on [{@listeners}]", string.Join(",", _listener.Prefixes));
+                Logger.Info("HTTP server is up and listening on [{@listenerPrefixes}]", string.Join(",", _listener.Prefixes));
 
                 return true;
             }
@@ -185,7 +185,7 @@ namespace EventStore.Transport.Http.Server
             }
             catch (Exception e)
             {
-                Logger.ErrorException(e, "BeginGetContext error. Status : {@isListening}.", IsListening ? "listening" : "stopped");
+                Logger.ErrorException(e, "BeginGetContext error. Status : {@status}.", IsListening ? "listening" : "stopped");
             }
         }
 

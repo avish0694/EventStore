@@ -451,7 +451,7 @@ namespace EventStore.TestClient.Commands.RunTestScenarios
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to kill started nodes: {@message}.", ex.Message);
+                Log.Error("Failed to kill started nodes: {@e}.", ex.Message);
             }
         }
 

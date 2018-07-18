@@ -826,7 +826,7 @@ namespace EventStore.Projections.Core.Services.Management
                 return;
             }
             _logger.Info(
-                "PROJECTIONS: Projection stream '{@streamId}' could not be deleted. Error: {@name}",
+                "PROJECTIONS: Projection stream '{@streamId}' could not be deleted. Error: {@e}",
                 streamId,
                 Enum.GetName(typeof (OperationResult), message.Result));
             if (message.Result == OperationResult.CommitTimeout ||

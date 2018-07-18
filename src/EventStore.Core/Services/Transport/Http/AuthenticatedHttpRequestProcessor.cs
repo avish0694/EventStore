@@ -40,7 +40,7 @@ namespace EventStore.Core.Services.Transport.Http
                     {
                         req = _pending.DeleteMin();
                         req.Item2.ReplyStatus(HttpStatusCode.RequestTimeout, "Server was unable to handle request in time",
-                                              e => Log.Debug("Error occurred while closing timed out connection (HTTP service core): {@message}.", e.Message));
+                                              e => Log.Debug("Error occurred while closing timed out connection (HTTP service core): {@e}.", e.Message));
                     }
                     else 
                         break;
@@ -147,7 +147,7 @@ namespace EventStore.Core.Services.Transport.Http
         {
             var entity = httpEntity.CreateManager(Codec.NoCodec, Codec.NoCodec, allowed, _ => { });
             entity.ReplyStatus(HttpStatusCode.OK, "OK",
-                               e => Log.Debug("Error while closing HTTP connection (http service core): {@message}.", e.Message));
+                               e => Log.Debug("Error while closing HTTP connection (http service core): {@e}.", e.Message));
         }
 
         private void MethodNotAllowed(HttpEntity httpEntity, string[] allowed)

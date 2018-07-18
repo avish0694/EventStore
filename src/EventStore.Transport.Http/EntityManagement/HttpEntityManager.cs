@@ -120,7 +120,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content type on HTTP response: {@message}.", e.Message);
+                Log.Debug("Error during setting content type on HTTP response: {@e}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -140,7 +140,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (InvalidOperationException e)
             {
-                Log.Debug("Error during setting content length on HTTP response: {@message}.", e.Message);
+                Log.Debug("Error during setting content length on HTTP response: {@e}.", e.Message);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -165,7 +165,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set required response headers: {@message}.", e.Message);
+                Log.Debug("Failed to set required response headers: {@e}.", e.Message);
             }
         }
 
@@ -177,7 +177,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set Content-Encoding header: {@message}.", e.Message);
+                Log.Debug("Failed to set Content-Encoding header: {@e}.", e.Message);
             }
         }
 
@@ -196,7 +196,7 @@ namespace EventStore.Transport.Http.EntityManagement
             }
             catch (Exception e)
             {
-                Log.Debug("Failed to set additional response headers: {@message}.", e.Message);
+                Log.Debug("Failed to set additional response headers: {@e}.", e.Message);
             }
         }
 
@@ -438,7 +438,7 @@ namespace EventStore.Transport.Http.EntityManagement
                 {
                     bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
-                Log.Debug("HTTP Request Received\n{@dateTime}\nFrom: {@remoteEndpoint}\n{@httpMethod} {@requestUrl}\n{@headers}\n{@body}"
+                Log.Debug("HTTP Request Received\n{@dateTime}\nFrom: {@remoteEndPoint}\n{@httpMethod} {@requestUrl}\n{@headers}\n{@body}"
                 , DateTime.Now
                 , HttpEntity.Request.RemoteEndPoint.ToString()
                 , HttpEntity.Request.HttpMethod

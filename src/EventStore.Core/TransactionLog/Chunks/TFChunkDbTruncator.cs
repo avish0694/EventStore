@@ -73,7 +73,7 @@ namespace EventStore.Core.TransactionLog.Chunks
                     truncateChk = newLastChunkHeader.ChunkStartPosition;
 
                     // we need to delete EVERYTHING from ChunkStartNumber up to newLastChunkNum, inclusive
-                    Log.Info("Setting TruncateCheckpoint to {@truncateChk} and deleting ALL chunks from #{@chunkStartNumber} inclusively "
+                    Log.Info("Setting TruncateCheckpoint to {@truncateCheckpoint} and deleting ALL chunks from #{@chunkStartNumber} inclusively "
                              + "as truncation position is in the middle of scavenged chunk.",
                              truncateChk, newLastChunkHeader.ChunkStartNumber);
                     for (int i = newLastChunkNum; i >= newLastChunkHeader.ChunkStartNumber; --i)
@@ -111,7 +111,7 @@ namespace EventStore.Core.TransactionLog.Chunks
             if (_config.WriterCheckpoint.Read() > truncateChk)
             {
                 var writerCheckpoint = _config.WriterCheckpoint.Read();
-                Log.Info("Truncating writer from {@writerCheckpoint} (0x{@writerCheckpoint:X}) to {@truncateChk} (0x{@truncateChk:X}).", writerCheckpoint ,writerCheckpoint, truncateChk, truncateChk);
+                Log.Info("Truncating writer from {@writerCheckpoint} (0x{@writerCheckpoint:X}) to {@truncateCheckpoint} (0x{@truncateCheckpoint:X}).", writerCheckpoint ,writerCheckpoint, truncateChk, truncateChk);
                 _config.WriterCheckpoint.Write(truncateChk);
                 _config.WriterCheckpoint.Flush();
             }

@@ -250,13 +250,13 @@ namespace EventStore.Core.Services
                     }
                     catch(Exception ex) 
                     {
-                        Log.Debug("Error in SendAsync for forwarded request for '{@requestedUrl}': {@message}.",
+                        Log.Debug("Error in SendAsync for forwarded request for '{@requestedUrl}': {@e}.",
                                   manager.RequestedUrl, ex.InnerException.Message);
                         ForwardReplyFailed(manager);
                         return;
                     }
 
-                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{@requestedUrl}': {@message}.", manager.RequestedUrl, exc.Message));
+                    manager.ForwardReply(response, exc => Log.Debug("Error forwarding response for '{@requestedUrl}': {@e}.", manager.RequestedUrl, exc.Message));
                 });
         }
     }

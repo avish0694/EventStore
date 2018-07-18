@@ -181,7 +181,7 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@newEntryCount}).",
+            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@dumpedEntryCount}).",
                       watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }
@@ -286,7 +286,7 @@ namespace EventStore.Core.Index
                     f.FlushToDisk();
                 }
             }
-            Log.Trace("PTables merge finished in {@elapsed} ([{@tables}] entries merged into {@dumpedEntryCount}).",
+            Log.Trace("PTables merge finished in {@elapsed} ([{@entryCount}] entries merged into {@dumpedEntryCount}).",
                       watch.Elapsed, string.Join(", ", tables.Select(x => x.Count)), dumpedEntryCount);
             return new PTable(outputFile, Guid.NewGuid(), depth: cacheDepth, skipIndexVerify: skipIndexVerify);
         }

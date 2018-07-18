@@ -204,7 +204,7 @@ namespace EventStore.Core.Services.Replication
                                             replicaEndPoint, subscriptionId,
                                             string.Join(", ", epochs.Select(x => x.AsString())), logPosition);
                     Log.Info(
-                        "Replica [{@replicaEndpoint},S:{@subscriptionId},{@epochs}] has positive LogPosition {@logPosition} (0x{@logPosition:X}), but does not have epochs.",
+                        "Replica [{@replicaEndPoint},S:{@subscriptionId},{@epochs}] has positive LogPosition {@logPosition} (0x{@logPosition:X}), but does not have epochs.",
                         replicaEndPoint, subscriptionId,
                         string.Join(", ", epochs.Select(x => x.AsString())), logPosition, logPosition);
                     throw new Exception(msg);
@@ -259,7 +259,7 @@ namespace EventStore.Core.Services.Replication
                                         commonEpoch.AsString(), afterCommonEpoch == null ? "<none>" : afterCommonEpoch.AsString());
                 Log.Error(
                     "Replica [{@replicaEndPoint},S:{@subscriptionId},{@logPosition}(0x{@logPosition:X}),epochs:\n{@epochs}]\n provided epochs which are not in "
-                    + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterLogPosition} (0x{@masterLogPosition:X}). "
+                    + "EpochManager (possibly too old, known epochs:\n{@lastEpochs}).\nMaster LogPosition: {@masterCheckpoint} (0x{@masterCheckpoint:X}). "
                     + "We do not support this case as of now.\n"
                     + "CommonEpoch: {@commonEpoch}, AfterCommonEpoch: {@afterCommonEpoch}",
                     replicaEndPoint,
@@ -304,7 +304,7 @@ namespace EventStore.Core.Services.Replication
                                  sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos, logPosition, logPosition);
                         if (chunkStartPos != logPosition)
                         {
-                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPos} (0x{@chunkStartPos:X})...",
+                            Log.Info("Forcing replica [{@replicaEndPoint}, S:{@subscriptionId}] to recreate chunk from position {@chunkStartPosition} (0x{@chunkStartPosition:X})...",
                                      sub.ReplicaEndPoint, sub.SubscriptionId, chunkStartPos, chunkStartPos); 
                         }
                     }

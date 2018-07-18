@@ -55,7 +55,7 @@ namespace EventStore.Core.Services.Transport.Http.Controllers
 
         private void LogReplyError(Exception exc)
         {
-            Log.Debug("Error while closing HTTP connection (admin controller): {@message}.", exc.Message);
+            Log.Debug("Error while closing HTTP connection (admin controller): {@e}.", exc.Message);
         }
     }
 }

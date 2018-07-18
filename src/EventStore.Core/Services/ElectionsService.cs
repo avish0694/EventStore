@@ -339,7 +339,7 @@ namespace EventStore.Core.Services
 
             _masterProposal = master;
 
-            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) SENDING PROPOSAL CANDIDATE: {@formatNodeInfo}, ME: {@getOwnInfo}.",
+            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) SENDING PROPOSAL CANDIDATE: {@formatNodeInfo}, ME: {@ownInfo}.",
                       _lastAttemptedView, FormatNodeInfo(master), FormatNodeInfo(GetOwnInfo()));
 
             var proposal = new ElectionMessage.Proposal(_nodeInfo.InstanceId, _nodeInfo.InternalHttp,
@@ -400,7 +400,7 @@ namespace EventStore.Core.Services
                     || (candidate.EpochNumber == master.EpochNumber && candidate.EpochId != master.EpochId))
                     return true;
 
-                Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{@proposingServerId:B}] M={@candidate}. "
+                Log.Debug("ELECTIONS: (V={@view}) NOT LEGITIMATE MASTER PROPOSAL FROM [{@proposingServerEndPoint},{@proposingServerId:B}] M={@candidateInfo}. "
                           + "PREVIOUS MASTER IS ALIVE: [{@masterInternalHttpEndPoint},{@masterInstanceId:B}].",
                           view, proposingServerEndPoint, proposingServerId, FormatNodeInfo(candidate),
                           master.InternalHttpEndPoint, master.InstanceId);
@@ -448,7 +448,7 @@ namespace EventStore.Core.Services
             if (!IsLegitimateMaster(message.View, message.ServerInternalHttp, message.ServerId, candidate))
                 return;
 
-            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PROPOSAL FROM [{@serverInternalHttp},{@serverId:B}] M={@candidate}. ME={@getOwnInfo}.", _lastAttemptedView,
+            Log.Debug("ELECTIONS: (V={@lastAttemptedView}) PROPOSAL FROM [{@serverInternalHttp},{@serverId:B}] M={@candidateInfo}. ME={@ownInfo}.", _lastAttemptedView,
                       message.ServerInternalHttp, message.ServerId, FormatNodeInfo(candidate), FormatNodeInfo(GetOwnInfo()));
 
             if (_masterProposal == null)

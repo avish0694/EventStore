@@ -62,7 +62,7 @@ namespace EventStore.Core
             }
             catch (Exception exc)
             {
-                Log.TraceException(exc, "Exception while trying to open Cluster Node mutex '{@mutexName}': {@message}.", mutexName, exc.Message);
+                Log.TraceException(exc, "Exception while trying to open Cluster Node mutex '{@mutexName}': {@e}.", mutexName, exc.Message);
             }
             return false;
         }

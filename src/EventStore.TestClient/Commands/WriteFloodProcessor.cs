@@ -180,7 +180,7 @@ namespace EventStore.TestClient.Commands
             sw.Stop();
             clients.ForEach(client => client.Close());
 
-            context.Log.Info("Completed. Successes: {@success}, failures: {@fail} (WRONG VERSION: {@wrongExpVersion}, P: {@prepTimeout}, C: {@commitTimeout}, F: {@forwardTimeout}, D: {@streamDeleted})",
+            context.Log.Info("Completed. Successes: {@success}, failures: {@failures} (WRONG VERSION: {@wrongExpectedVersion}, P: {@prepareTimeout}, C: {@commitTimeout}, F: {@forwardTimeout}, D: {@streamDeleted})",
                              succ, fail,
                              wrongExpVersion, prepTimeout, commitTimeout, forwardTimeout, streamDeleted);
 
