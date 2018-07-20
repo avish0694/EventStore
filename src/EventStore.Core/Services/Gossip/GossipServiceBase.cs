@@ -279,19 +279,34 @@ namespace EventStore.Core.Services.Gossip
         private static void LogClusterChange(ClusterInfo oldCluster, ClusterInfo newCluster, string source)
         {
             var ipEndPointComparer = new IPEndPointComparer();
-            List<string> oldMembers = oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).Select(x => x.ToString()).ToList();
-            List<string> newMembers = newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).Select(x => x.ToString()).ToList();
-            Log.Trace(
-                "CLUSTER HAS CHANGED {source}"
-                +"\nOld:"
-                +"\n{oldMembers}"
-                +"\nNew:"
-                +"\n{newMembers}"
-                +new string('-', 80)
-                , source.IsNotEmptyString() ? "(" + source + ")" : string.Empty
-                , oldMembers
-                , newMembers
-            ); /*TODO: structured-log test this*/
+
+            if(!LogManager.StructuredLog){
+                Log.Trace("CLUSTER HAS CHANGED{0}", source.IsNotEmptyString() ? " (" + source + ")" : string.Empty);
+                Log.Trace("Old:");
+                foreach (var oldMember in oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
+                {
+                    Log.Trace(oldMember.ToString());
+                }
+                Log.Trace("New:");
+                foreach (var newMember in newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer))
+                {
+                    Log.Trace(newMember.ToString());
+                }
+                Log.Trace(new string('-', 80));
+            } else{
+                List<MemberInfo> oldMembers = oldCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).ToList();
+                List<MemberInfo> newMembers = newCluster.Members.OrderByDescending(x => x.InternalHttpEndPoint, ipEndPointComparer).ToList();
+                Log.Trace(
+                    "CLUSTER HAS CHANGED {source}"
+                    +"\nOld:"
+                    +"\n{@oldMembers}"
+                    +"\nNew:"
+                    +"\n{@newMembers}"
+                    , source.IsNotEmptyString() ? source : string.Empty
+                    , oldMembers
+                    , newMembers
+                );
+            }
         }
     }
 }

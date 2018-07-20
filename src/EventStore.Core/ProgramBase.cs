@@ -154,7 +154,7 @@ namespace EventStore.Core
             if(!structuredLog)
                 Log.Info("{esOptions}", EventStoreOptions.DumpOptions());
             else
-                Log.Info("{esOptions}", EventStoreOptions.DumpOptionsStructured());
+                Log.Info("{@esOptions}", EventStoreOptions.DumpOptionsStructured());
 
             if (options.WhatIf)
                 Application.Exit(ExitCode.Success, "WhatIf option specified");

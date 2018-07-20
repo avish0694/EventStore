@@ -26,9 +26,9 @@ namespace EventStore.Common.Log
             }
         }
 
-       public static bool IsStructured
+        public static bool StructuredLog
         {
-            get 
+            get
             {
                 return _isStructured;
             }

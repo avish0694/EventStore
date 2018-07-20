@@ -802,10 +802,14 @@ namespace EventStore.Projections.Core.Services.Management
                     Guid.NewGuid());
                 return;
             }
+
             List<string> projections = registeredProjections
                     .Where(x => x.Key != ProjectionEventTypes.ProjectionsInitialized)
                     .Select(x => x.Key).ToList();
-            _logger.Debug("PROJECTIONS: Found the following projections in {stream}: {projections}", ProjectionNamesBuilder.ProjectionsRegistrationStream,projections); /*TODO: structured-log test this*/
+            _logger.Debug("PROJECTIONS: Found the following projections in {stream}: "+(LogManager.StructuredLog?"{@projections}":"{projections}"),
+            ProjectionNamesBuilder.ProjectionsRegistrationStream,
+            LogManager.StructuredLog?(object)projections:(object)String.Join(", ", projections));
+
             foreach (var projectionRegistration in registeredProjections.Where(x => x.Key != ProjectionEventTypes.ProjectionsInitialized))
             {
                 int queueIndex = GetNextWorkerIndex();

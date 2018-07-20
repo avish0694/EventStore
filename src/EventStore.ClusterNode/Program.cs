@@ -206,7 +206,7 @@ namespace EventStore.ClusterNode
                         .WithProjectionQueryExpirationOf(TimeSpan.FromMinutes(options.ProjectionsQueryExpiry))
                         .WithTfCachedChunks(options.CachedChunks)
                         .WithTfChunksCacheSize(options.ChunksCacheSize)
-                        .WithStatsStorage(StatsStorage.StreamAndCsv)
+                        .WithStatsStorage(StatsStorage.StreamAndFile)
                         .AdvertiseInternalIPAs(options.IntIpAdvertiseAs)
                         .AdvertiseExternalIPAs(options.ExtIpAdvertiseAs)
                         .AdvertiseInternalHttpPortAs(options.IntHttpPortAdvertiseAs)

@@ -429,6 +429,16 @@ namespace EventStore.Transport.Http.EntityManagement
             return logBuilder.ToString();
         }
 
+        private Dictionary<string,object> CreateHeaderLogStructured(NameValueCollection headers)
+        {
+            var dict = new Dictionary<string, object>();
+            foreach (var header in HttpEntity.Request.Headers)
+            {
+                dict.Add(header.ToString(), HttpEntity.Request.Headers[header.ToString()]);
+            }
+            return dict;
+        }
+
         private void LogRequest(byte[] body)
         {
             if (_logHttpRequests)
@@ -438,14 +448,14 @@ namespace EventStore.Transport.Http.EntityManagement
                 {
                     bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
-                Log.Debug("HTTP Request Received\n{dateTime}\nFrom: {remoteEndPoint}\n{httpMethod} {requestUrl}\n{headers}\n{body}"
+                Log.Debug("HTTP Request Received\n{dateTime}\nFrom: {remoteEndPoint}\n{httpMethod} {requestUrl}\n"+(LogManager.StructuredLog?"{@headers}":"{headers}")+"\n{body}"
                 , DateTime.Now
                 , HttpEntity.Request.RemoteEndPoint.ToString()
                 , HttpEntity.Request.HttpMethod
                 , HttpEntity.Request.Url
-                , CreateHeaderLog(HttpEntity.Request.Headers)
+                , LogManager.StructuredLog? (object)CreateHeaderLogStructured(HttpEntity.Request.Headers): (object)CreateHeaderLog(HttpEntity.Request.Headers)
                 , bodyStr
-                ); /*TODO: structured-log test this*/
+                );
             }
         }
 
@@ -459,13 +469,13 @@ namespace EventStore.Transport.Http.EntityManagement
                     bodyStr = System.Text.Encoding.Default.GetString(body);
                 }
 
-                Log.Debug("HTTP Response\n{dateTime}\n{statusCode} {statusDescription}\n{headers}\n{body}",
+                Log.Debug("HTTP Response\n{dateTime}\n{statusCode} {statusDescription}\n"+(LogManager.StructuredLog?"{@headers}":"{headers}")+"\n{body}",
                     DateTime.Now,
                     HttpEntity.Response.StatusCode,
                     HttpEntity.Response.StatusDescription,
-                    CreateHeaderLog(HttpEntity.Response.Headers),
+                    LogManager.StructuredLog? (object)CreateHeaderLogStructured(HttpEntity.Request.Headers): (object)CreateHeaderLog(HttpEntity.Response.Headers),
                     bodyStr
-                ); /*TODO: structured-log test this*/
+                );
             }
         }
 

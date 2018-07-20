@@ -21,8 +21,8 @@ namespace EventStore.Core.Services.Monitoring
     {
         None = 0x0,       // only for tests
         Stream = 0x1,
-        Csv = 0x2,
-        StreamAndCsv = Stream | Csv
+        File = 0x2,
+        StreamAndFile = Stream | File
     }
 
     public class MonitoringService : IHandle<SystemMessage.SystemInit>,
@@ -114,8 +114,8 @@ namespace EventStore.Core.Services.Monitoring
                 {
                     var rawStats = stats.GetStats(useGrouping: false, useMetadata: false);
 
-                    if ((_statsStorage & StatsStorage.Csv) != 0)
-                        SaveStatsToCsvFile(rawStats);
+                    if ((_statsStorage & StatsStorage.File) != 0)
+                        SaveStatsToFile(LogManager.StructuredLog?StatsContainer.Group(rawStats):rawStats);
 
                     if ((_statsStorage & StatsStorage.Stream) != 0)
                     {
@@ -147,10 +147,9 @@ namespace EventStore.Core.Services.Monitoring
             return statsContainer;
         }
 
-        private void SaveStatsToCsvFile(Dictionary<string, object> rawStats)
+        private void SaveStatsToFile(Dictionary<string, object> rawStats)
         {
-            
-            if(LogManager.IsStructured)
+            if(LogManager.StructuredLog)
             {
                  RegularLog.Info("{@stats}",rawStats);
             }
@@ -174,7 +173,7 @@ namespace EventStore.Core.Services.Monitoring
             var data = rawStats.ToJsonBytes();
             var evnt = new Event(Guid.NewGuid(), SystemEventTypes.StatsCollection, true, data, null);
             var corrId = Guid.NewGuid();
-            var msg = new ClientMessage.WriteEvents(corrId, corrId, NoopEnvelope, false, _nodeStatsStream, 
+            var msg = new ClientMessage.WriteEvents(corrId, corrId, NoopEnvelope, false, _nodeStatsStream,
                                                     ExpectedVersion.Any, new[]{evnt}, SystemAccount.Principal);
             _mainBus.Publish(msg);
         }
@@ -211,7 +210,7 @@ namespace EventStore.Core.Services.Monitoring
             {
                 // ok, no problem if already disposed
             }
-            
+
         }
 
         public void Handle(SystemMessage.BecomeShutdown message)
