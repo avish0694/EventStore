@@ -149,6 +149,12 @@ namespace EventStore.Core.Services.Monitoring
 
         private void SaveStatsToCsvFile(Dictionary<string, object> rawStats)
         {
+            
+            if(LogManager.IsStructured)
+            {
+                RegularLog.Info("{@stats}",rawStats);
+            }
+
             var header = StatsCsvEncoder.GetHeader(rawStats);
             if (header != _lastWrittenCsvHeader)
             {

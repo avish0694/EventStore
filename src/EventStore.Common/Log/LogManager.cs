@@ -26,6 +26,14 @@ namespace EventStore.Common.Log
             }
         }
 
+       public static bool IsStructured
+        {
+            get 
+            {
+                return _isStructured;
+            }
+        }
+
         private const string EVENTSTORE_LOG_FILENAME = "log.config";
         private static readonly ILogger GlobalLogger = GetLogger("GLOBAL-LOGGER");
         private static bool _initialized;
