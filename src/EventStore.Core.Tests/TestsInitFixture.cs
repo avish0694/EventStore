@@ -6,8 +6,10 @@ using EventStore.Common.Log;
 using EventStore.Common.Utils;
 using EventStore.Core.Tests.Helpers;
 using NLog;
+using NLog.Config;
 using NLog.Targets;
 using NUnit.Framework;
+
 namespace EventStore.Core.Tests
 {
     [SetUpFixture]
@@ -18,6 +20,7 @@ namespace EventStore.Core.Tests
         {
             Console.WriteLine("Initializing tests (setting console loggers)...");
             
+            ConfigurationItemFactory.Default.ValueFormatter = new ESValueFormatter(false);
             ConsoleTarget consoleTarget = new ConsoleTarget("testconsole");
             var config = new NLog.Config.LoggingConfiguration();        
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget);

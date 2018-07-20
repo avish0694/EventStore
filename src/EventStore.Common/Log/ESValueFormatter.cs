@@ -44,7 +44,7 @@ namespace EventStore.Common.Log
     /// <summary>
     /// Convert Render or serialize a value, with optionnally backwardscompatible with <see cref="string.Format(System.IFormatProvider,string,object[])"/>
     /// </summary>
-    internal class ESValueFormatter : IValueFormatter
+    public class ESValueFormatter : IValueFormatter
     {
         private bool _isStructured;
         public static ESValueFormatter Instance
