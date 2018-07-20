@@ -152,19 +152,21 @@ namespace EventStore.Core.Services.Monitoring
             
             if(LogManager.IsStructured)
             {
-                RegularLog.Info("{@stats}",rawStats);
+                 RegularLog.Info("{@stats}",rawStats);
             }
-
-            var header = StatsCsvEncoder.GetHeader(rawStats);
-            if (header != _lastWrittenCsvHeader)
+            else
             {
-                _lastWrittenCsvHeader = header;
-                RegularLog.Info(Environment.NewLine);
-                RegularLog.Info(header);
-            }
+                var header = StatsCsvEncoder.GetHeader(rawStats);
+                if (header != _lastWrittenCsvHeader)
+                {
+                  _lastWrittenCsvHeader = header;
+                  RegularLog.Info(Environment.NewLine);
+                  RegularLog.Info(header);
+                }
 
-            var line = StatsCsvEncoder.GetLine(rawStats);
-            RegularLog.Info(line);
+                var line = StatsCsvEncoder.GetLine(rawStats);
+                RegularLog.Info(line);
+            }
         }
 
         private void SaveStatsToStream(Dictionary<string, object> rawStats)
