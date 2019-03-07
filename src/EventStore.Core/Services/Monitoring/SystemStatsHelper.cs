@@ -10,6 +10,7 @@ using EventStore.Core.Services.Monitoring.Stats;
 using EventStore.Core.Services.Monitoring.Utils;
 using EventStore.Core.TransactionLog.Checkpoint;
 using EventStore.Transport.Tcp;
+using System.Threading;
 
 namespace EventStore.Core.Services.Monitoring {
 	public class SystemStatsHelper : IDisposable {
@@ -39,7 +40,8 @@ namespace EventStore.Core.Services.Monitoring {
 			sw.Start();
 			var diskIo = DiskIo.GetDiskIo(process.Id, _log);
 			sw.Stop();
-			Console.WriteLine("Time elapsed GetDiskIo: {0}", sw.Elapsed.Milliseconds);
+			Console.WriteLine();
+			_log.Info("Time elapsed GetDiskIo: {0}", sw.Elapsed.TotalMilliseconds);
 			sw.Reset();
 			if (diskIo != null) {
 				stats["proc-diskIo-readBytes"] = diskIo.ReadBytes;
@@ -50,7 +52,8 @@ namespace EventStore.Core.Services.Monitoring {
 			sw.Start();
 			var tcp = TcpConnectionMonitor.Default.GetTcpStats();
 			sw.Stop();
-			Console.WriteLine("Time elapsed GetTcpStats: {0}", sw.Elapsed.Milliseconds);
+			Console.WriteLine();
+			_log.Info("Time elapsed TcpConnectionMonitor: {0}", sw.Elapsed.TotalMilliseconds);
 			sw.Reset();
 
 			stats["proc-tcp-connections"] = tcp.Connections;
@@ -70,7 +73,7 @@ namespace EventStore.Core.Services.Monitoring {
 			sw.Start();
 			var drive = EsDriveInfo.FromDirectory(_dbPath, _log);
 			sw.Stop();
-			Console.WriteLine("Time elapsed EsDriveInfo: {0}", sw.Elapsed.Milliseconds);
+			_log.Info("Time elapsed EsDriveInfo: {0}", sw.Elapsed.TotalMilliseconds);
 			sw.Reset();
 
 			if (drive != null) {
@@ -87,7 +90,7 @@ namespace EventStore.Core.Services.Monitoring {
 			sw.Start();
 			var queues = QueueMonitor.Default.GetStats();
 			sw.Stop();
-			Console.WriteLine("Time elapsed QueueMonitor.Default.GetStats: {0}", sw.Elapsed.Milliseconds);
+			_log.Info("Time elapsed QueueMonitor GetStats: {0}: {0}", sw.Elapsed.TotalMilliseconds);
 			sw.Reset();
 			foreach (var queue in queues) {
 				stats[queueStat(queue.Name, "queueName")] = queue.Name;
@@ -125,7 +128,7 @@ namespace EventStore.Core.Services.Monitoring {
 				sw.Start();
 				var procCpuUsage = _perfCounter.GetProcCpuUsage();
 				sw.Stop();
-				Console.WriteLine("Time elapsed .GetProcCpuUsage: {0}", sw.Elapsed.Milliseconds);
+				_log.Info("Time elapsed GetProcCpuUsage: {0}", sw.Elapsed.TotalMilliseconds);
 				sw.Reset();
 				stats["proc-startTime"] = process.StartTime.ToUniversalTime().ToString("O");
 				stats["proc-id"] = process.Id;
@@ -142,7 +145,7 @@ namespace EventStore.Core.Services.Monitoring {
 				sw.Start();
 				var gcStats = _perfCounter.GetGcStats();
 				sw.Stop();
-				Console.WriteLine("Time elapsed GetGcStats: {0}", sw.Elapsed.Milliseconds);
+				_log.Info("Time elapsed GetGcStats: {0}", sw.Elapsed.TotalMilliseconds);
 				sw.Reset();
 
 				stats["proc-gc-allocationSpeed"] = gcStats.AllocationSpeed;
