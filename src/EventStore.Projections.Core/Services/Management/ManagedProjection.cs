@@ -385,6 +385,7 @@ namespace EventStore.Projections.Core.Services.Management {
 		}
 
 		public void Handle(ProjectionManagementMessage.Command.Enable message) {
+			Console.WriteLine("Hello world!! 2020");
 			_lastAccessed = _timeProvider.Now;
 			if (Enabled
 			    && !(_state == ManagedProjectionState.Completed || _state == ManagedProjectionState.Faulted
@@ -404,6 +405,14 @@ namespace EventStore.Projections.Core.Services.Management {
 			StopUnlessPreparedOrLoaded();
 		}
 
+		public void CheckpointLastEvent()
+		{
+			/* 
+			new ProjectionCheckpoint(
+					null, _ioDispatcher, new ProjectionVersion(1, 0, 0), null, _readyHandler,
+					CheckpointTag.FromPosition(0, 100, 50), new TransactionFilePositionTagger(0), 250, 1);
+			*/
+		}
 		public void Handle(ProjectionManagementMessage.Command.SetRunAs message) {
 			_lastAccessed = _timeProvider.Now;
 			Prepared = false;
@@ -601,8 +610,10 @@ namespace EventStore.Projections.Core.Services.Management {
 		}
 
 		public void InitializeNew(PersistedState persistedState, IEnvelope replyEnvelope) {
+			Console.WriteLine("Initializing new projection");
 			LoadPersistedState(persistedState);
 			UpdateProjectionVersion();
+			CheckpointLastEvent();
 			_pendingWritePersistedState = true;
 			SetLastReplyEnvelope(replyEnvelope);
 			PrepareOrWriteStartOrLoadStopped();
